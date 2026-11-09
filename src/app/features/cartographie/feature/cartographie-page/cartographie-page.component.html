@@ -1,0 +1,64 @@
+<div class="page-entete">
+  <h1 class="page-titre">{{ 'cartographie.titre' | transloco }}</h1>
+</div>
+
+@if (ressource.error()) {
+  <div class="message-etat" role="alert">
+    <p>{{ 'cartographie.erreur' | transloco }}</p>
+    <button type="button" class="message-etat__action" (click)="recharger()">
+      {{ 'cartographie.reessayer' | transloco }}
+    </button>
+  </div>
+}
+
+@if (donnees()) {
+  @let indicateur = indicateurs();
+  <section class="grille-indicateurs" [attr.aria-label]="'cartographie.indicateurs.titre' | transloco">
+    <app-carte-indicateur
+      [libelle]="'cartographie.indicateurs.parcelles' | transloco"
+      [valeur]="indicateur.parcelles"
+    />
+    <app-carte-indicateur
+      [libelle]="'cartographie.indicateurs.part_vanille' | transloco"
+      [valeur]="indicateur.partVanille + ' %'"
+    />
+    <app-carte-indicateur
+      [libelle]="'cartographie.indicateurs.production' | transloco"
+      [valeur]="indicateur.production + ' ' + ('cartographie.indicateurs.unite_production' | transloco)"
+      [detail]="'cartographie.indicateurs.detail_production' | transloco"
+    />
+  </section>
+
+  <div class="disposition-carte">
+    <app-carte
+      [parcelles]="marqueurs()"
+      [centres]="centres()"
+      [idBulle]="idBulle()"
+      (parcelleChoisie)="choisir($event)"
+      (bulleFermee)="effacerChoix()"
+    >
+      @if (fiche(); as f) {
+        <app-fiche-parcelle
+          [producteur]="f.producteur"
+          [cooperative]="f.cooperative"
+          [pieds]="f.pieds"
+          [production]="f.production + ' ' + ('cartographie.indicateurs.unite_production' | transloco)"
+          [libelleCooperative]="'cartographie.fiche.cooperative' | transloco"
+          [libellePieds]="'cartographie.fiche.pieds' | transloco"
+          [libelleProduction]="'cartographie.fiche.production' | transloco"
+        />
+      }
+    </app-carte>
+
+    <aside class="disposition-carte__panneau">
+      <app-legende-cooperatives
+        [titre]="'cartographie.legende.titre' | transloco"
+        [libelleCentre]="'cartographie.legende.centre' | transloco"
+        [elements]="legende()"
+        (basculer)="basculerCooperative($event)"
+      />
+    </aside>
+  </div>
+} @else if (ressource.isLoading()) {
+  <p class="message-etat" role="status">{{ 'cartographie.chargement' | transloco }}</p>
+}

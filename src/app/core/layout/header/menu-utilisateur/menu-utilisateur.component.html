@@ -1,0 +1,35 @@
+<div class="menu-utilisateur">
+  <button
+    type="button"
+    class="menu-utilisateur__declencheur pastille-entete"
+    aria-haspopup="menu"
+    aria-controls="menu-utilisateur-liste"
+    [attr.aria-expanded]="ouvert()"
+    [attr.aria-label]="'layout.menu_utilisateur.compte' | transloco: { identifiant: identifiant() ?? '' }"
+    (click)="basculer()"
+  >
+    <svg
+      class="menu-utilisateur__icone"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" />
+    </svg>
+    <span class="menu-utilisateur__nom">{{ identifiant() }}</span>
+  </button>
+
+  @if (ouvert()) {
+    <div id="menu-utilisateur-liste" class="menu-utilisateur__liste" role="menu">
+      <p class="menu-utilisateur__identifiant">{{ identifiant() }}</p>
+      <button type="button" role="menuitem" class="menu-utilisateur__action" (click)="seDeconnecter()">
+        {{ 'layout.menu_utilisateur.se_deconnecter' | transloco }}
+      </button>
+    </div>
+  }
+</div>

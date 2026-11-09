@@ -1,0 +1,15 @@
+<dialog #dialogue class="dialogue dialogue--large" aria-labelledby="modale-titre" (cancel)="abandonner($event)">
+  <div class="dialogue__entete">
+    <h2 id="modale-titre" class="carte__libelle">{{ titre() }}</h2>
+    <button
+      type="button"
+      class="bouton-icone"
+      [attr.aria-label]="libelleFermer()"
+      [attr.title]="libelleFermer()"
+      (click)="fermer.emit()"
+    >
+      <app-icone nom="fermer" />
+    </button>
+  </div>
+  <ng-content />
+</dialog>

@@ -1,0 +1,62 @@
+{
+  "titre": "Data quality and validation",
+  "chargement": "Loading the quality overview…",
+  "erreur": "Unable to load the data quality overview.",
+  "reessayer": "Retry",
+  "filtres": {
+    "campagne": "Campaign",
+    "en_cours": "current",
+    "cooperative": "Cooperative",
+    "toutes_cooperatives": "All cooperatives",
+    "zone": "Zone",
+    "toutes_zones": "All zones"
+  },
+  "indicateurs": {
+    "titre": "Quality indicators",
+    "score": {
+      "libelle": "Quality score",
+      "detail": "Combines monthly completeness and validation rate"
+    },
+    "completude": {
+      "libelle": "Monthly completeness",
+      "detail": "First component of the score"
+    },
+    "validation": {
+      "libelle": "Validation rate",
+      "detail": "{{validees}} observations validated out of {{total}}"
+    },
+    "en_attente": {
+      "libelle": "Pending entries",
+      "detail": "{{part}} % of observations, not counted in the official indicators until validated"
+    },
+    "statuts": {
+      "libelle": "Completeness status by month"
+    }
+  },
+  "statut": {
+    "complet": "Complete",
+    "partiel": "Partial",
+    "en_attente": "Pending"
+  },
+  "anomalies": {
+    "titre": "Detected anomalies",
+    "types": {
+      "valeur-aberrante": "Outliers",
+      "doublon": "Duplicates",
+      "champ-manquant": "Missing fields"
+    },
+    "colonnes": {
+      "type": "Anomaly type",
+      "producteur": "Farmer",
+      "cooperative": "Cooperative",
+      "zone": "Zone",
+      "mois": "Month"
+    },
+    "vide": "No anomaly matches these criteria."
+  },
+  "pagination": {
+    "resume": "Page {{page}} of {{pages}} · {{total}} anomalies",
+    "precedent": "Previous",
+    "suivant": "Next"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "titre": "Qualité des données et validation",
+  "chargement": "Chargement du suivi de la qualité…",
+  "erreur": "Impossible de charger le suivi de la qualité des données.",
+  "reessayer": "Réessayer",
+  "filtres": {
+    "campagne": "Campagne",
+    "en_cours": "en cours",
+    "cooperative": "Coopérative",
+    "toutes_cooperatives": "Toutes les coopératives",
+    "zone": "Zone",
+    "toutes_zones": "Toutes les zones"
+  },
+  "indicateurs": {
+    "titre": "Indicateurs de qualité",
+    "score": {
+      "libelle": "Score de qualité",
+      "detail": "Synthèse de la complétude mensuelle et du taux de validation"
+    },
+    "completude": {
+      "libelle": "Complétude mensuelle",
+      "detail": "Première composante du score"
+    },
+    "validation": {
+      "libelle": "Taux de validation",
+      "detail": "{{validees}} observations validées sur {{total}}"
+    },
+    "en_attente": {
+      "libelle": "Saisies en attente",
+      "detail": "{{part}} % des observations, non comptées dans les indicateurs officiels tant qu'elles ne sont pas validées"
+    },
+    "statuts": {
+      "libelle": "Statut de complétude par mois"
+    }
+  },
+  "statut": {
+    "complet": "Complet",
+    "partiel": "Partiel",
+    "en_attente": "En attente"
+  },
+  "anomalies": {
+    "titre": "Anomalies détectées",
+    "types": {
+      "valeur-aberrante": "Valeurs aberrantes",
+      "doublon": "Doublons",
+      "champ-manquant": "Champs manquants"
+    },
+    "colonnes": {
+      "type": "Type d'anomalie",
+      "producteur": "Producteur",
+      "cooperative": "Coopérative",
+      "zone": "Zone",
+      "mois": "Mois"
+    },
+    "vide": "Aucune anomalie ne correspond à ces critères."
+  },
+  "pagination": {
+    "resume": "Page {{page}} sur {{pages}} · {{total}} anomalies",
+    "precedent": "Précédent",
+    "suivant": "Suivant"
+  }
+}

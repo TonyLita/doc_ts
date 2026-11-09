@@ -1,0 +1,17 @@
+<div class="onglets" role="tablist" [attr.aria-label]="libelle()">
+  @for (onglet of onglets(); track onglet.id; let indice = $index) {
+    <button
+      type="button"
+      class="onglets__onglet"
+      role="tab"
+      [id]="identifiant() + '-onglet-' + onglet.id"
+      [attr.aria-selected]="onglet.id === actif()"
+      [attr.aria-controls]="identifiant() + '-panneau-' + onglet.id"
+      [attr.tabindex]="onglet.id === actif() ? 0 : -1"
+      (click)="choisi.emit(onglet.id)"
+      (keydown)="naviguer($event, indice)"
+    >
+      {{ onglet.libelle }}
+    </button>
+  }
+</div>

@@ -1,0 +1,65 @@
+<div class="tableau__defilement">
+  <table class="tableau">
+    <caption class="carte__libelle">{{ titre() }}</caption>
+    <thead>
+      <tr>
+        <th scope="col">{{ libelles().identifiant }}</th>
+        <th scope="col">{{ libelles().role }}</th>
+        <th scope="col">{{ libelles().langue }}</th>
+        <th scope="col">{{ libelles().statut }}</th>
+        <th scope="col">{{ libelles().actions }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (ligne of lignes(); track ligne.identifiant) {
+        <tr>
+          <th scope="row">
+            {{ ligne.identifiant }}@if (ligne.estMoi) { <span class="carte__detail">{{ libelles().moi }}</span> }
+          </th>
+          <td>{{ libelles().profils[ligne.profil] }}</td>
+          <td>{{ ligne.langue }}</td>
+          <td>
+            <span
+              class="statut-validation"
+              [class.pastille-statut--complet]="ligne.actif"
+              [class.pastille-statut--en-attente]="!ligne.actif"
+            >
+              <app-pastille class="statut-validation__pastille" [remplissage]="ligne.actif ? 'plein' : 'vide'" />
+              {{ ligne.actif ? libelles().actif : libelles().desactive }}
+            </span>
+          </td>
+          <td>
+            <div class="actions-ligne">
+              <button
+                type="button"
+                class="bouton bouton--petit bouton--secondaire"
+                [disabled]="ligne.estMoi || !ligne.actif"
+                (click)="changerRole.emit(ligne.identifiant)"
+              >
+                {{ libelles().changerRole }}
+              </button>
+              @if (ligne.actif) {
+                <button
+                  type="button"
+                  class="bouton bouton--petit bouton--secondaire"
+                  [disabled]="ligne.estMoi"
+                  (click)="desactiver.emit(ligne.identifiant)"
+                >
+                  {{ libelles().desactiver }}
+                </button>
+              } @else {
+                <button type="button" class="bouton bouton--petit" (click)="reactiver.emit(ligne.identifiant)">
+                  {{ libelles().reactiver }}
+                </button>
+              }
+            </div>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td class="tableau__vide" colspan="5">{{ libelles().vide }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

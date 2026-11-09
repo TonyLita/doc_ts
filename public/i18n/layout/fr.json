@@ -1,0 +1,35 @@
+{
+  "navigation_principale": "Navigation principale",
+  "bouton_menu": {
+    "reduire": "Réduire le menu",
+    "afficher": "Afficher le menu"
+  },
+  "menu_utilisateur": {
+    "compte": "Compte de {{identifiant}}",
+    "se_deconnecter": "Se déconnecter"
+  },
+  "groupe": {
+    "operations_terrain": "Opérations terrain",
+    "analyses_rapports": "Analyses & rapports",
+    "referentiels": "Référentiels",
+    "gestion_donnees": "Gestion des données",
+    "systeme": "Système"
+  },
+  "menu": {
+    "tableau_de_bord": "Tableau de bord",
+    "cartographie": "Cartographie",
+    "analyse_zones": "Analyse par zone",
+    "echantillonnage": "Échantillonnage",
+    "observations": "Observations",
+    "qualite_donnees": "Qualité des données",
+    "campagnes": "Campagnes",
+    "rapports": "Rapports IA",
+    "synchronisation": "Synchronisation",
+    "import_export": "Import / Export",
+    "administration": "Administration",
+    "referentiel_geographique": "Zones géographiques",
+    "referentiel_cooperatives": "Coopératives",
+    "referentiel_producteurs": "Producteurs",
+    "referentiel_parcelles": "Parcelles"
+  }
+}

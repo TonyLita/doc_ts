@@ -1,0 +1,70 @@
+<h2 class="carte__libelle">{{ titre() }}</h2>
+
+@if (modifiable()) {
+  <app-statut-echantillonnage [statut]="valeurs().statut" [libelles]="libelles().statuts" />
+  <form class="formulaire" [formGroup]="formulaire" (ngSubmit)="valider()" novalidate>
+    <label class="champ-filtre">
+      <span>{{ libelles().cooperative }}</span>
+      <select formControlName="cooperative" required>
+        <option value="">{{ libelles().choisir }}</option>
+        @for (cooperative of cooperatives(); track cooperative.valeur) {
+          <option [value]="cooperative.valeur">{{ cooperative.libelle }}</option>
+        }
+      </select>
+    </label>
+    <label class="champ-filtre">
+      <span>{{ libelles().pieds }}</span>
+      <input type="number" inputmode="numeric" min="0" step="1" formControlName="pieds" required />
+    </label>
+    <label class="champ-filtre">
+      <span>{{ libelles().ageMoyen }}</span>
+      <input type="number" inputmode="decimal" min="0" [attr.max]="ageMax" step="0.1" formControlName="ageMoyen" required />
+    </label>
+    <fieldset class="champ-groupe">
+      <legend>{{ libelles().statut }}</legend>
+      <ul class="legende">
+        <li>
+          <label class="legende__element">
+            <input type="radio" formControlName="statut" value="suivi-actif" />
+            {{ libelles().suiviActif }}
+          </label>
+        </li>
+        <li>
+          <label class="legende__element">
+            <input type="radio" formControlName="statut" value="recense" />
+            {{ libelles().recense }}
+          </label>
+        </li>
+      </ul>
+    </fieldset>
+
+    <div class="formulaire__actions">
+      <button type="submit" class="bouton" [disabled]="enCours()">{{ libelles().enregistrer }}</button>
+    </div>
+  </form>
+
+  @if (formulaire.touched && formulaire.invalid) {
+    <p class="carte__detail" role="alert">{{ libelles().champsInvalides }}</p>
+  }
+
+  <dl class="fiche">
+    <dt>{{ libelles().zone }}</dt>
+    <dd>{{ lecture().zone }}</dd>
+  </dl>
+  <div class="actions-ligne">
+    <a routerLink="/referentiels/geographique" class="bouton bouton--petit bouton--secondaire">{{ libelles().lienZone }}</a>
+  </div>
+} @else {
+  <dl class="fiche">
+    <dt>{{ libelles().cooperative }}</dt>
+    <dd>{{ lecture().cooperative }}</dd>
+    <dt>{{ libelles().zone }}</dt>
+    <dd>{{ lecture().zone }}</dd>
+    <dt>{{ libelles().pieds }}</dt>
+    <dd>{{ lecture().pieds }}</dd>
+    <dt>{{ libelles().ageMoyen }}</dt>
+    <dd>{{ lecture().ageMoyen }}</dd>
+    <dt>{{ libelles().statut }}</dt>
+    <dd><app-statut-echantillonnage [statut]="valeurs().statut" [libelles]="libelles().statuts" /></dd>
+  </dl>
+}

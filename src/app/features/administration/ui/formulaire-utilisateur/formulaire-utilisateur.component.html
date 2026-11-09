@@ -1,0 +1,40 @@
+<h2 class="carte__libelle">{{ titre() }}</h2>
+<form class="formulaire" [formGroup]="formulaire" (ngSubmit)="valider()" novalidate>
+  <label class="champ-filtre">
+    <span>{{ libelles().identifiant }}</span>
+    <input type="text" autocomplete="off" formControlName="identifiant" required />
+  </label>
+  @if (!utilisateur()) {
+    <label class="champ-filtre">
+      <span>{{ libelles().motDePasse }}</span>
+      <input type="password" autocomplete="new-password" formControlName="motDePasse" required [attr.minlength]="longueurMin" />
+    </label>
+  }
+  <label class="champ-filtre">
+    <span>{{ libelles().role }}</span>
+    <select formControlName="profil">
+      @for (option of profils(); track option.valeur) {
+        <option [value]="option.valeur">{{ option.libelle }}</option>
+      }
+    </select>
+  </label>
+  @if (!utilisateur()) {
+    <label class="champ-filtre">
+      <span>{{ libelles().langue }}</span>
+      <select formControlName="langue">
+        @for (option of langues(); track option.valeur) {
+          <option [value]="option.valeur">{{ option.libelle }}</option>
+        }
+      </select>
+    </label>
+  }
+
+  <div class="formulaire__actions">
+    <button type="submit" class="bouton" [disabled]="enCours()">{{ libelles().enregistrer }}</button>
+    <button type="button" class="bouton bouton--secondaire" (click)="annuler.emit()">{{ libelles().annuler }}</button>
+  </div>
+</form>
+
+@if (formulaire.touched && formulaire.invalid) {
+  <p class="carte__detail" role="alert">{{ libelles().champsInvalides }}</p>
+}

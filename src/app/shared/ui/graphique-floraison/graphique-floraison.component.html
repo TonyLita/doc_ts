@@ -1,0 +1,60 @@
+@if (avecTitre() || bascule()) {
+  <div class="carte__entete">
+    @if (avecTitre()) {
+      <h2 class="carte__libelle">{{ titre() }}</h2>
+    }
+    @if (bascule()) {
+      <div class="bascule" role="group" [attr.aria-label]="titre()">
+        @for (option of modes(); track option.mode) {
+          <button
+            type="button"
+            class="bascule__option"
+            [class.bascule__option--active]="mode() === option.mode"
+            [attr.aria-pressed]="mode() === option.mode"
+            (click)="choisir(option.mode)"
+          >
+            {{ option.libelle }}
+          </button>
+        }
+      </div>
+    }
+  </div>
+}
+
+<svg class="graphique" [attr.viewBox]="boiteDessin()" role="img" [attr.aria-label]="titre()">
+  @for (graduation of dessin().graduations; track graduation.y) {
+    <line class="graphique__grille" [attr.x1]="gauche" [attr.x2]="droite()" [attr.y1]="graduation.y" [attr.y2]="graduation.y" />
+    <text class="graphique__texte" text-anchor="end" [attr.x]="gauche - 8" [attr.y]="graduation.y + 4">{{ graduation.libelle }}</text>
+  }
+  @for (etiquette of dessin().etiquettes; track etiquette.x) {
+    <text class="graphique__texte" text-anchor="middle" [attr.x]="etiquette.x" [attr.y]="bas() + 20">{{ etiquette.libelle }}</text>
+  }
+
+  @if (mode() === 'empile') {
+    @for (barre of dessin().barres; track $index) {
+      <rect
+        class="couleur-zone-{{ barre.zone % 5 }}"
+        fill="currentColor"
+        [attr.x]="barre.x"
+        [attr.y]="barre.y"
+        [attr.width]="barre.largeur"
+        [attr.height]="barre.hauteur"
+      >
+        <title>{{ barre.titre }}</title>
+      </rect>
+    }
+  } @else {
+    @for (courbe of dessin().courbes; track courbe.zone) {
+      <polyline class="couleur-zone-{{ courbe.zone % 5 }} graphique__courbe" [attr.points]="courbe.points" />
+      @for (sommet of courbe.sommets; track $index) {
+        <circle class="couleur-zone-{{ courbe.zone % 5 }}" fill="currentColor" r="4" [attr.cx]="sommet.x" [attr.cy]="sommet.y">
+          <title>{{ sommet.titre }}</title>
+        </circle>
+      }
+    }
+  }
+</svg>
+
+@if (legende()) {
+  <app-legende-zones [zones]="zones()" />
+}

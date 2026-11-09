@@ -1,0 +1,63 @@
+{
+  "titre": "Tableau de bord",
+  "chargement": "Chargement du tableau de bord…",
+  "erreur": "Impossible de charger le tableau de bord.",
+  "reessayer": "Réessayer",
+  "filtres": {
+    "campagne": "Campagne",
+    "en_cours": "en cours",
+    "cooperative": "Coopérative",
+    "toutes_cooperatives": "Toutes les coopératives"
+  },
+  "indicateurs": {
+    "titre": "Indicateurs clés",
+    "producteurs": {
+      "libelle": "Producteurs suivis",
+      "detail": "{{taux}} % de couverture de l'échantillon"
+    },
+    "fleurs": {
+      "libelle": "Fleurs observées",
+      "detail": "Cumul sur la campagne"
+    },
+    "pic": {
+      "libelle": "Mois de pic de floraison",
+      "detail": "Mois avec le plus de fleurs observées"
+    },
+    "production": {
+      "libelle": "Production estimée",
+      "unite": "kg",
+      "detail": "Vanille verte, estimation indicative"
+    },
+    "cooperatives": {
+      "libelle": "Coopératives actives",
+      "detail": "Organisations de producteurs suivies"
+    },
+    "saisies": {
+      "libelle": "Saisies valides",
+      "detail": "Part des saisies validées par les techniciens"
+    },
+    "statuts": {
+      "libelle": "Statut des données par mois"
+    }
+  },
+  "statut": {
+    "complet": "Complet",
+    "partiel": "Partiel",
+    "en_attente": "En attente"
+  },
+  "graphiques": {
+    "floraison": {
+      "titre": "Évolution mensuelle de la floraison",
+      "empile": "Empilé",
+      "courbes": "Courbes"
+    },
+    "zones": {
+      "titre": "Répartition par zone agro-écologique"
+    }
+  },
+  "synthese": {
+    "titre": "Synthèse",
+    "texte": "Campagne {{campagne}} : {{producteurs}} producteurs suivis ({{couverture}} % de l'échantillon), {{fleurs}} fleurs observées, pic en {{mois}}, production estimée à {{production}} kg de vanille verte. {{saisies}} % des saisies sont validées.",
+    "derniere_synchronisation": "Dernière synchronisation : {{date}}"
+  }
+}

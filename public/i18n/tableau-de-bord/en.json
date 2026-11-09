@@ -1,0 +1,63 @@
+{
+  "titre": "Dashboard",
+  "chargement": "Loading the dashboard…",
+  "erreur": "Unable to load the dashboard.",
+  "reessayer": "Retry",
+  "filtres": {
+    "campagne": "Campaign",
+    "en_cours": "current",
+    "cooperative": "Cooperative",
+    "toutes_cooperatives": "All cooperatives"
+  },
+  "indicateurs": {
+    "titre": "Key indicators",
+    "producteurs": {
+      "libelle": "Farmers followed",
+      "detail": "{{taux}}% of the sample covered"
+    },
+    "fleurs": {
+      "libelle": "Flowers observed",
+      "detail": "Total for the campaign"
+    },
+    "pic": {
+      "libelle": "Peak flowering month",
+      "detail": "Month with the most flowers observed"
+    },
+    "production": {
+      "libelle": "Estimated production",
+      "unite": "kg",
+      "detail": "Green vanilla, indicative estimate"
+    },
+    "cooperatives": {
+      "libelle": "Active cooperatives",
+      "detail": "Producer organisations followed"
+    },
+    "saisies": {
+      "libelle": "Valid entries",
+      "detail": "Share of entries validated by technicians"
+    },
+    "statuts": {
+      "libelle": "Data status by month"
+    }
+  },
+  "statut": {
+    "complet": "Complete",
+    "partiel": "Partial",
+    "en_attente": "Pending"
+  },
+  "graphiques": {
+    "floraison": {
+      "titre": "Monthly flowering trend",
+      "empile": "Stacked",
+      "courbes": "Lines"
+    },
+    "zones": {
+      "titre": "Breakdown by agro-ecological zone"
+    }
+  },
+  "synthese": {
+    "titre": "Summary",
+    "texte": "Campaign {{campagne}}: {{producteurs}} farmers followed ({{couverture}}% of the sample), {{fleurs}} flowers observed, peak in {{mois}}, estimated production of {{production}} kg of green vanilla. {{saisies}}% of entries are validated.",
+    "derniere_synchronisation": "Last synchronisation: {{date}}"
+  }
+}

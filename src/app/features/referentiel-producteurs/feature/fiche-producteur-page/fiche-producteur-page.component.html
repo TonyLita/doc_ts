@@ -1,0 +1,142 @@
+<div class="page-entete">
+  <h1 class="page-titre">{{ 'referentiel_producteurs.fiche.titre' | transloco }}</h1>
+  <div class="actions-ligne">
+    @if (donnees()?.peutSaisir) {
+      <button type="button" class="bouton" (click)="ouvrirSaisie()">
+        {{ 'referentiel_producteurs.floraison.saisir' | transloco }}
+      </button>
+    }
+    <a routerLink="/referentiels/producteurs" class="bouton bouton--secondaire">{{ 'referentiel_producteurs.fiche.retour' | transloco }}</a>
+  </div>
+</div>
+
+@if (introuvable()) {
+  <p class="message-etat" role="alert">{{ 'referentiel_producteurs.fiche.introuvable' | transloco }}</p>
+} @else if (ressource.error()) {
+  <div class="message-etat" role="alert">
+    <p>{{ 'referentiel_producteurs.fiche.erreur' | transloco }}</p>
+    <button type="button" class="message-etat__action" (click)="recharger()">
+      {{ 'referentiel_producteurs.reessayer' | transloco }}
+    </button>
+  </div>
+}
+
+@if (cleErreur(); as cle) {
+  <p class="message-etat" role="alert">{{ 'referentiel_producteurs.erreurs.' + cle | transloco }}</p>
+}
+
+@if (enregistre()) {
+  <p class="message-etat" role="status">{{ 'referentiel_producteurs.fiche.enregistre' | transloco }}</p>
+}
+
+@if (donnees(); as d) {
+  @if (vue(); as v) {
+    @if (!d.identiteComplete) {
+      <p class="message-etat" role="note">{{ 'referentiel_producteurs.identite_reduite' | transloco }}</p>
+    }
+
+    <app-bloc-identite
+      [titre]="'referentiel_producteurs.identite.titre' | transloco"
+      [source]="'referentiel_producteurs.identite.source' | transloco"
+      [valeurs]="{
+        nom: v.identite.nom,
+        prenom: v.identite.prenom,
+        genre: v.identite.genre ? ('referentiel_producteurs.genre.' + v.identite.genre | transloco) : '–',
+        village: v.identite.village,
+        commune: v.identite.commune,
+        code: v.identite.code,
+      }"
+      [libelles]="{
+        nom: ('referentiel_producteurs.identite.nom' | transloco),
+        prenom: ('referentiel_producteurs.identite.prenom' | transloco),
+        genre: ('referentiel_producteurs.identite.genre' | transloco),
+        village: ('referentiel_producteurs.identite.village' | transloco),
+        commune: ('referentiel_producteurs.identite.commune' | transloco),
+        code: ('referentiel_producteurs.identite.code' | transloco),
+      }"
+    />
+
+    <app-bloc-programme
+      [titre]="('referentiel_producteurs.programme.' + (d.peutParametrer ? 'titre_modifiable' : 'titre')) | transloco"
+      [valeurs]="d.programme"
+      [lecture]="v.programme"
+      [cooperatives]="optionsCooperatives()"
+      [modifiable]="d.peutParametrer"
+      [enCours]="enCours()"
+      [libelles]="{
+        cooperative: ('referentiel_producteurs.programme.cooperative' | transloco),
+        zone: ('referentiel_producteurs.programme.zone' | transloco),
+        pieds: ('referentiel_producteurs.programme.pieds' | transloco),
+        ageMoyen: ('referentiel_producteurs.programme.age_moyen' | transloco),
+        statut: ('referentiel_producteurs.programme.statut' | transloco),
+        suiviActif: ('referentiel_producteurs.statut.suivi_actif' | transloco),
+        recense: ('referentiel_producteurs.statut.recense' | transloco),
+        choisir: ('referentiel_producteurs.programme.choisir' | transloco),
+        lienZone: ('referentiel_producteurs.programme.lien_zone' | transloco),
+        enregistrer: ('referentiel_producteurs.programme.enregistrer' | transloco),
+        champsInvalides: ('referentiel_producteurs.programme.champs_invalides' | transloco),
+        statuts: {
+          suiviActif: ('referentiel_producteurs.statut.suivi_actif' | transloco),
+          recense: ('referentiel_producteurs.statut.recense' | transloco),
+          aCompleter: ('referentiel_producteurs.statut.a_completer' | transloco),
+        },
+      }"
+      (enregistrer)="enregistrerProgramme($event)"
+    />
+
+    <app-cartes-parcelles
+      [titre]="'referentiel_producteurs.parcelles.titre' | transloco"
+      [lignes]="v.parcelles"
+      [libelles]="{
+        zone: ('referentiel_producteurs.parcelles.zone' | transloco),
+        fleurs: ('referentiel_producteurs.parcelles.fleurs' | transloco),
+        derniereSaisie: ('referentiel_producteurs.parcelles.derniere_saisie' | transloco),
+        sansZone: ('referentiel_producteurs.parcelles.sans_zone' | transloco),
+        vide: ('referentiel_producteurs.parcelles.vide' | transloco),
+      }"
+    />
+
+    <app-tableau-historique
+      [titre]="'referentiel_producteurs.historique.titre' | transloco"
+      [lignes]="v.observations"
+      [libelles]="{
+        date: ('referentiel_producteurs.historique.date' | transloco),
+        campagne: ('referentiel_producteurs.historique.campagne' | transloco),
+        quantite: ('referentiel_producteurs.historique.quantite' | transloco),
+        periode: ('referentiel_producteurs.historique.periode' | transloco),
+        calibrage: ('referentiel_producteurs.historique.calibrage' | transloco),
+        validation: ('referentiel_producteurs.historique.validation' | transloco),
+        vide: ('referentiel_producteurs.historique.vide' | transloco),
+        quantites: {
+          faible: ('referentiel_producteurs.historique.valeurs.quantite.faible' | transloco),
+          normal: ('referentiel_producteurs.historique.valeurs.quantite.normal' | transloco),
+          beaucoup: ('referentiel_producteurs.historique.valeurs.quantite.beaucoup' | transloco),
+        },
+        periodes: {
+          precoce: ('referentiel_producteurs.historique.valeurs.periode.precoce' | transloco),
+          normal: ('referentiel_producteurs.historique.valeurs.periode.normal' | transloco),
+          retard: ('referentiel_producteurs.historique.valeurs.periode.retard' | transloco),
+        },
+        calibrages: {
+          court: ('referentiel_producteurs.historique.valeurs.calibrage.court' | transloco),
+          normal: ('referentiel_producteurs.historique.valeurs.calibrage.normal' | transloco),
+          long: ('referentiel_producteurs.historique.valeurs.calibrage.long' | transloco),
+        },
+        statuts: {
+          valide: ('referentiel_producteurs.historique.statut.valide' | transloco),
+          'en-attente': ('referentiel_producteurs.historique.statut.en_attente' | transloco),
+        },
+      }"
+    />
+
+    @if (saisieOuverte()) {
+      <app-saisie-floraison
+        [producteur]="{ id: d.id, nom: v.nomComplet }"
+        (fermer)="fermerSaisie()"
+        (enregistre)="apresSaisie()"
+      />
+    }
+  }
+} @else if (ressource.isLoading()) {
+  <p class="message-etat" role="status">{{ 'referentiel_producteurs.fiche.chargement' | transloco }}</p>
+}

@@ -1,0 +1,8 @@
+<dialog #dialogue class="dialogue" aria-labelledby="dialogue-titre" (cancel)="abandonner($event)">
+  <h2 id="dialogue-titre" class="carte__libelle">{{ titre() }}</h2>
+  <p class="carte__texte">{{ message() }}</p>
+  <div class="dialogue__actions">
+    <button type="button" class="bouton bouton--secondaire" (click)="annuler.emit()">{{ libelleAnnuler() }}</button>
+    <button type="button" class="bouton" (click)="confirmer.emit()">{{ libelleConfirmer() }}</button>
+  </div>
+</dialog>

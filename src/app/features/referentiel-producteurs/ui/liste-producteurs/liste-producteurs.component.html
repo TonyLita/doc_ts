@@ -1,0 +1,79 @@
+<ng-content select="[haut]" />
+
+<div class="tableau__defilement">
+  <table class="tableau tableau--compact">
+    <caption class="sr-only">{{ titre() }}</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="tableau__nombre">{{ libelles().numero }}</th>
+        <th scope="col">{{ libelles().producteur }}</th>
+        <th scope="col">{{ libelles().village }}</th>
+        <th scope="col">{{ libelles().zone }}</th>
+        <th scope="col" class="tableau__nombre">{{ libelles().pieds }}</th>
+        <th scope="col" class="tableau__nombre">{{ libelles().age }}</th>
+        @for (nomMois of mois(); track $index) {
+          <th scope="col" class="tableau__nombre">{{ nomMois }}</th>
+        }
+        <th scope="col" class="tableau__nombre">{{ libelles().total }}</th>
+        <th scope="col">{{ libelles().action }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (ligne of lignes(); track ligne.id) {
+        <tr>
+          <td class="tableau__nombre">{{ ligne.numero }}</td>
+          <th scope="row">{{ ligne.nom }}</th>
+          <td>{{ ligne.village }}</td>
+          <td>
+            @if (ligne.zone; as zone) {
+              <span class="badge-zone couleur-zone-{{ zone.rang }}">
+                <span class="badge-zone__pastille"></span>
+                <span class="badge-zone__nom">{{ zone.nom }}</span>
+              </span>
+            } @else {
+              <span class="badge-zone badge-zone--aucune">
+                <span class="badge-zone__pastille"></span>
+                <span class="badge-zone__nom">{{ libelles().sansZone }}</span>
+              </span>
+            }
+          </td>
+          <td class="tableau__nombre">{{ ligne.pieds }}</td>
+          <td class="tableau__nombre">{{ ligne.age === undefined ? libelles().absent : ligne.age + libelles().uniteAge }}</td>
+          @for (valeur of ligne.mois; track $index) {
+            <td class="tableau__nombre">{{ valeur }}</td>
+          }
+          <td class="tableau__nombre tableau__total">{{ ligne.fleurs }}</td>
+          <td class="tableau__actions">
+            <div class="actions-ligne">
+              <a
+                class="bouton-icone"
+                [routerLink]="['/referentiels/producteurs', ligne.id]"
+                [attr.aria-label]="libelles().details + ' ' + ligne.nom"
+                [attr.title]="libelles().details + ' ' + ligne.nom"
+              >
+                <app-icone nom="details" />
+              </a>
+              @if (peutSaisir()) {
+                <button
+                  type="button"
+                  class="bouton-icone"
+                  [attr.aria-label]="libelles().saisir + ' ' + ligne.nom"
+                  [attr.title]="libelles().saisir + ' ' + ligne.nom"
+                  (click)="saisir.emit(ligne.id)"
+                >
+                  <app-icone nom="saisie" />
+                </button>
+              }
+            </div>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td class="tableau__vide" [attr.colspan]="colonnesFixes + mois().length">{{ libelles().vide }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<ng-content select="[bas]" />

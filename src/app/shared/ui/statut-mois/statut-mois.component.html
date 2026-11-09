@@ -1,0 +1,27 @@
+<h2 class="carte__libelle">{{ libelle() }}</h2>
+<ul class="statut-mois__liste">
+  @for (element of elements(); track element.libelle) {
+    <li class="statut-mois__element">
+      <span class="statut-mois__mois">{{ element.libelle }}</span>
+      <app-pastille
+        class="pastille-statut pastille-statut--{{ element.statut }}"
+        role="img"
+        [remplissage]="remplissages[element.statut]"
+        [attr.aria-label]="libellesStatut()[element.statut]"
+        [attr.title]="libellesStatut()[element.statut]"
+      />
+    </li>
+  }
+</ul>
+<ul class="legende">
+  @for (statut of statuts; track statut) {
+    <li class="legende__element">
+      <app-pastille
+        class="pastille-statut pastille-statut--{{ statut }}"
+        aria-hidden="true"
+        [remplissage]="remplissages[statut]"
+      />
+      {{ libellesStatut()[statut] }}
+    </li>
+  }
+</ul>

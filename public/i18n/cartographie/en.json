@@ -1,0 +1,23 @@
+{
+  "titre": "Map",
+  "chargement": "Loading the map…",
+  "erreur": "Unable to load the map.",
+  "reessayer": "Retry",
+  "indicateurs": {
+    "titre": "Map indicators",
+    "parcelles": "Plots",
+    "part_vanille": "Share under vanilla cultivation",
+    "production": "Total estimated production",
+    "unite_production": "kg",
+    "detail_production": "Indicative estimate"
+  },
+  "legende": {
+    "titre": "Cooperatives",
+    "centre": "Cooperative centre"
+  },
+  "fiche": {
+    "cooperative": "Cooperative",
+    "pieds": "Number of plants",
+    "production": "Estimated production"
+  }
+}

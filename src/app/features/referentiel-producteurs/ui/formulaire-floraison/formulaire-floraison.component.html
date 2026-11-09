@@ -1,0 +1,38 @@
+<form class="formulaire" [formGroup]="formulaire" (ngSubmit)="valider()" novalidate>
+  <label class="champ-filtre">
+    <span>{{ libelles().date }}</span>
+    <input type="date" formControlName="date" required />
+  </label>
+  <label class="champ-filtre">
+    <span>{{ libelles().producteur }}</span>
+    <select formControlName="producteur" required (change)="choisirProducteur($event)">
+      <option value="">{{ libelles().choisir }}</option>
+      @for (producteur of producteurs(); track producteur.valeur) {
+        <option [value]="producteur.valeur">{{ producteur.libelle }}</option>
+      }
+    </select>
+  </label>
+  <label class="champ-filtre">
+    <span>{{ libelles().parcelle }}</span>
+    <select formControlName="parcelle" required>
+      <option value="">{{ libelles().choisir }}</option>
+      @for (parcelle of parcelles(); track parcelle.valeur) {
+        <option [value]="parcelle.valeur">{{ parcelle.libelle }}</option>
+      }
+    </select>
+  </label>
+  <label class="champ-filtre">
+    <span>{{ libelles().fleurs }}</span>
+    <input type="number" inputmode="numeric" min="1" step="1" formControlName="fleurs" required />
+  </label>
+
+  <div class="formulaire__actions">
+    <button type="submit" class="bouton" [disabled]="enCours()">{{ libelles().enregistrer }}</button>
+  </div>
+</form>
+
+@if (formulaire.controls.fleurs.touched && formulaire.controls.fleurs.hasError('positif')) {
+  <p class="carte__detail" role="alert">{{ libelles().fleursInvalides }}</p>
+} @else if (formulaire.touched && formulaire.invalid) {
+  <p class="carte__detail" role="alert">{{ libelles().champObligatoire }}</p>
+}

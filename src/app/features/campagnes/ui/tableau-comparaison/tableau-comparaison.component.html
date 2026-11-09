@@ -1,0 +1,29 @@
+<div class="tableau__defilement">
+  <table class="tableau">
+    <caption class="carte__libelle">{{ titre() }}</caption>
+    <thead>
+      <tr>
+        <th scope="col">{{ libelles().campagne }}</th>
+        <th scope="col" class="tableau__nombre">{{ libelles().totalFleurs }}</th>
+        <th scope="col" class="tableau__nombre">{{ libelles().producteursSuivis }}</th>
+        <th scope="col">{{ libelles().moisPic }}</th>
+        <th scope="col" class="tableau__nombre">{{ libelles().production }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (ligne of lignes(); track ligne.campagne) {
+        <tr>
+          <th scope="row">{{ ligne.campagne }}</th>
+          <td class="tableau__nombre">{{ ligne.totalFleurs }}</td>
+          <td class="tableau__nombre">{{ ligne.producteursSuivis }}</td>
+          <td>{{ ligne.moisPic }}</td>
+          <td class="tableau__nombre">{{ ligne.production }}</td>
+        </tr>
+      } @empty {
+        <tr>
+          <td class="tableau__vide" colspan="5">{{ libelles().vide }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

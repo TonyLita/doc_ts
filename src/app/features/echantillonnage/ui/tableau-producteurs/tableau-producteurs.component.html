@@ -1,0 +1,36 @@
+<div class="tableau__defilement">
+  <table class="tableau">
+    <caption class="carte__libelle">{{ titre() }}</caption>
+    <thead>
+      <tr>
+        <th scope="col">{{ libelles().producteur }}</th>
+        <th scope="col">{{ libelles().village }}</th>
+        <th scope="col">{{ libelles().cooperative }}</th>
+        <th scope="col">{{ libelles().zone }}</th>
+        <th scope="col">{{ libelles().leadFarmers }}</th>
+        <th scope="col">{{ libelles().statut }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (ligne of lignes(); track ligne.id) {
+        <tr>
+          <th scope="row">{{ ligne.nom }}</th>
+          <td>{{ ligne.village }}, {{ ligne.commune }}</td>
+          <td>{{ ligne.cooperative }}</td>
+          <td>{{ ligne.zone }}</td>
+          <td>{{ ligne.leadFarmers.join(', ') || '–' }}</td>
+          <td>
+            <span class="statut-validation {{ classesStatut[ligne.statutValidation] }}">
+              <app-pastille class="statut-validation__pastille" [remplissage]="remplissages[ligne.statutValidation]" />
+              {{ libelles().statuts[ligne.statutValidation] }}
+            </span>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td class="tableau__vide" colspan="6">{{ libelles().vide }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,165 @@
+{
+  "titre": "Farmers reference data",
+  "identite_reduite": "For your profile, farmers' identity is reduced (initials, no gender) to protect personal data.",
+  "chargement": "Loading the farmers…",
+  "erreur": "Unable to load the farmers.",
+  "reessayer": "Retry",
+  "erreurs": {
+    "interdit": "Editing the programme data is reserved for the Super Administrator.",
+    "introuvable": "This farmer or cooperative no longer exists. Reload the page.",
+    "invalide": "The values entered are not valid (vines: whole number; average age: 0 to 100 years).",
+    "trop_de_demandes": "Too many requests in a short time. Please wait a moment before trying again.",
+    "indisponible": "The service is currently unavailable.",
+    "delai_depasse": "The operation took too long. Please try again.",
+    "generique": "The data could not be saved. Please try again."
+  },
+  "filtres": {
+    "recherche": "Search by first and last name",
+    "zone": "Zone",
+    "toutes_zones": "All zones"
+  },
+  "statut": {
+    "suivi_actif": "Actively monitored",
+    "recense": "Listed only",
+    "a_completer": "To complete"
+  },
+  "liste": {
+    "titre": "Farmers",
+    "producteur": "Name",
+    "village": "Village",
+    "fleurs": "Number of flowers",
+    "derniere_saisie": "Date of last entry",
+    "action": "Action",
+    "details": "Details of",
+    "saisir": "Enter flowering data for",
+    "vide": "No farmer matches this search.",
+    "numero": "No.",
+    "zone": "Zone",
+    "sans_zone": "No zone",
+    "pieds": "Trees",
+    "age": "Age",
+    "unite_age": "y",
+    "total": "Total"
+  },
+  "pagination": {
+    "resume": "Page {{page}} of {{pages}} · {{total}} farmers",
+    "precedent": "Previous",
+    "suivant": "Next"
+  },
+  "floraison": {
+    "bouton": "Enter flowering data",
+    "saisir": "Enter flowering data",
+    "titre": "Flowering data entry",
+    "fermer": "Close",
+    "date": "Entry date",
+    "producteur": "Farmer",
+    "parcelle": "Plot",
+    "fleurs": "Number of pollinated flowers",
+    "choisir": "Choose…",
+    "enregistrer": "Save",
+    "champ_obligatoire": "Enter the date, the farmer, the plot and the number of pollinated flowers.",
+    "fleurs_invalides": "The number of pollinated flowers must be a whole number greater than 0.",
+    "enregistre": "The entry has been saved.",
+    "erreur_chargement": "Unable to load the entry data.",
+    "erreurs": {
+      "interdit": "Entering flowering data is reserved for the Super Administrator.",
+      "introuvable": "This farmer or plot no longer exists. Close the window and reload the page.",
+      "invalide": "The values entered are not valid (valid date, the farmer's plot, whole number greater than 0).",
+      "trop_de_demandes": "Too many requests in a short time. Please wait a moment before trying again.",
+      "indisponible": "The service is currently unavailable.",
+      "delai_depasse": "The operation took too long. Please try again.",
+      "generique": "The entry could not be saved. Please try again."
+    },
+    "historique": {
+      "titre": "Entry history",
+      "date": "Entry date",
+      "fleurs": "Number of flowers",
+      "vide": "No entry for this farmer."
+    }
+  },
+  "fiche": {
+    "titre": "Farmer record",
+    "retour": "Back to the list",
+    "chargement": "Loading the record…",
+    "erreur": "Unable to load this farmer's record.",
+    "introuvable": "This farmer does not exist in the reference data.",
+    "enregistre": "The programme data has been saved."
+  },
+  "genre": {
+    "homme": "Male",
+    "femme": "Female"
+  },
+  "identite": {
+    "titre": "Identity and location",
+    "source": "Source: external API, read-only",
+    "nom": "Last name",
+    "prenom": "First name",
+    "genre": "Gender",
+    "village": "Village / Fokontany",
+    "commune": "Commune",
+    "code": "Farmer code"
+  },
+  "programme": {
+    "titre": "Programme data",
+    "titre_modifiable": "Programme data (editable by the Super Administrator)",
+    "cooperative": "Cooperative",
+    "zone": "Agro-ecological zone (inherited from the village)",
+    "pieds": "Number of vanilla vines",
+    "age_moyen": "Average age of the vines (years)",
+    "statut": "Sampling status",
+    "choisir": "Choose…",
+    "lien_zone": "Correct the zone in the geographic reference data",
+    "enregistrer": "Save",
+    "champs_invalides": "Enter the cooperative, the number of vines (whole number), the average age (0 to 100 years) and the status."
+  },
+  "parcelles": {
+    "titre": "Plots",
+    "zone": "Zone type",
+    "fleurs": "Pollinated flowers",
+    "derniere_saisie": "Last entry",
+    "sans_zone": "No zone",
+    "vide": "No plot is attached to this farmer."
+  },
+  "historique": {
+    "titre": "Flowering observation history",
+    "date": "Date",
+    "campagne": "Campaign",
+    "quantite": "Quantity",
+    "periode": "Period",
+    "calibrage": "Size grading",
+    "validation": "Validation",
+    "vide": "No flowering observation for this farmer.",
+    "statut": {
+      "valide": "Validated",
+      "en_attente": "Pending"
+    },
+    "valeurs": {
+      "quantite": {
+        "faible": "Low",
+        "normal": "Normal",
+        "beaucoup": "High"
+      },
+      "periode": {
+        "precoce": "Early",
+        "normal": "Normal",
+        "retard": "Late"
+      },
+      "calibrage": {
+        "court": "Short",
+        "normal": "Normal",
+        "long": "Long"
+      }
+    }
+  },
+  "export": {
+    "excel": "Excel",
+    "pdf": "PDF",
+    "erreurs": {
+      "interdit": "Exporting the list is reserved to authorised profiles.",
+      "trop_de_demandes": "Too many requests in a short time. Please wait a moment before trying again.",
+      "indisponible": "The export service is currently unavailable.",
+      "delai_depasse": "The export took too long. Please try again.",
+      "generique": "The export could not be generated. Please try again."
+    }
+  }
+}

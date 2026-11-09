@@ -1,0 +1,16 @@
+{
+    "commun": {
+        "theme": {
+            "mode_clair": "Fomba mazava",
+            "mode_sombre": "Fomba maizina",
+            "nom_accessible": "Lohahevitra mazava"
+        },
+        "langue": {
+            "titre": "Fiteny"
+        },
+        "import_export": {
+            "import": "Fanafarana angona",
+            "export": "Famoahana angona"
+        }
+    }
+}

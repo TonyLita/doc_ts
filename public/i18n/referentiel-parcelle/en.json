@@ -1,0 +1,84 @@
+{
+  "titre": "Plots",
+  "importer": "Import plots",
+  "nouvelle": "New plot",
+  "identite_reduite": "For your profile, farmers' identity is reduced (initials) to protect personal data.",
+  "chargement": "Loading the plots…",
+  "erreur": "Unable to load the plots.",
+  "reessayer": "Retry",
+  "erreurs": {
+    "interdit": "Managing plots is reserved for the Super Administrator.",
+    "introuvable": "This plot no longer exists. Reload the page.",
+    "invalide": "The information entered is not valid (latitude from -90 to 90, longitude from -180 to 180, whole number of vines, existing farmer and cooperative).",
+    "trop_de_demandes": "Too many requests in a short time. Please wait a moment before trying again.",
+    "indisponible": "The service is currently unavailable.",
+    "delai_depasse": "The operation took too long. Please try again.",
+    "generique": "The action could not be completed. Please try again."
+  },
+  "indicateurs": {
+    "titre": "Plot indicators",
+    "parcelles": "Plots",
+    "part_vanille": "Share grown with vanilla",
+    "production": "Estimated production",
+    "unite_production": "kg",
+    "detail_production": "Indicative estimate"
+  },
+  "filtres": {
+    "recherche": "Search a code or a farmer",
+    "cooperative": "Cooperative",
+    "toutes_cooperatives": "All cooperatives",
+    "zone": "Area",
+    "toutes_zones": "All areas",
+    "statut": "Status",
+    "actives": "Active",
+    "archivees": "Archived",
+    "toutes": "All"
+  },
+  "liste": {
+    "titre": "Vanilla growing plots",
+    "code": "Plot",
+    "producteur": "Farmer",
+    "cooperative": "Cooperative",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "pieds": "Estimated vines",
+    "production": "Estimated production (kg)",
+    "zone": "Area",
+    "vanille": "Vanilla",
+    "oui": "Yes",
+    "non": "No",
+    "archivee": "archived",
+    "actions": "Actions",
+    "vide": "No plot matches these criteria."
+  },
+  "actions": {
+    "modifier": "Edit",
+    "archiver": "Archive",
+    "restaurer": "Restore"
+  },
+  "formulaire": {
+    "titre_creation": "New plot",
+    "titre_modification": "Edit plot {{code}}",
+    "producteur": "Owner farmer",
+    "cooperative": "Cooperative",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "pieds": "Estimated number of vines",
+    "vanille": "Plot grown with vanilla",
+    "choisir": "Choose…",
+    "enregistrer": "Save",
+    "annuler": "Cancel",
+    "champs_invalides": "Fill in every field: latitude from -90 to 90, longitude from -180 to 180, whole number of vines (zero or more)."
+  },
+  "pagination": {
+    "resume": "Page {{page}} of {{pages}} · {{total}} plots",
+    "precedent": "Previous",
+    "suivant": "Next"
+  },
+  "confirmation": {
+    "titre": "Archive the plot",
+    "message": "The plot {{code}} will be archived: it will no longer be offered for data entry, but its existing entries remain available. You can restore it.",
+    "confirmer": "Archive",
+    "annuler": "Cancel"
+  }
+}

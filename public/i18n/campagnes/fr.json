@@ -1,0 +1,73 @@
+{
+  "titre": "Campagnes",
+  "chargement": "Chargement des campagnes…",
+  "erreur": "Impossible de charger les campagnes.",
+  "reessayer": "Réessayer",
+  "erreurs": {
+    "interdit": "Cette action est réservée au Super Administrateur.",
+    "invalide": "Les dates de la campagne ne sont pas valides.",
+    "generique": "L'action n'a pas pu être effectuée. Réessayez."
+  },
+  "active": {
+    "libelle": "Campagne active",
+    "aucune": "Aucune campagne n'est active."
+  },
+  "affichee": {
+    "libelle": "Campagne sélectionnée"
+  },
+  "selecteur": {
+    "libelle": "Campagne à afficher"
+  },
+  "statut": {
+    "en-cours": "En cours",
+    "cloturee": "Clôturée"
+  },
+  "liste": {
+    "titre": "Liste des campagnes",
+    "campagne": "Campagne",
+    "debut": "Début",
+    "fin": "Fin",
+    "statut": "Statut",
+    "active": "Active",
+    "active_oui": "Active",
+    "actions": "Actions",
+    "vide": "Aucune campagne."
+  },
+  "actions": {
+    "modifier": "Modifier",
+    "cloturer": "Clôturer",
+    "definir_active": "Définir active"
+  },
+  "formulaire": {
+    "titre_modification": "Modifier la campagne",
+    "campagne": "Campagne",
+    "debut": "Date de début",
+    "fin": "Date de fin",
+    "enregistrer": "Enregistrer",
+    "annuler": "Annuler",
+    "champ_obligatoire": "Tous les champs sont obligatoires.",
+    "periode_invalide": "La date de fin ne peut pas précéder la date de début."
+  },
+  "confirmation": {
+    "activer": {
+      "titre": "Changer la campagne active",
+      "message": "La campagne {{campagne}} deviendra la campagne active. Elle alimentera par défaut le tableau de bord de tous les utilisateurs."
+    },
+    "cloturer": {
+      "titre": "Clôturer la campagne",
+      "message": "Clôturer la campagne {{campagne}} ? Les saisies sur cette campagne ne seront plus acceptées."
+    },
+    "confirmer": "Confirmer",
+    "annuler": "Annuler"
+  },
+  "comparaison": {
+    "titre": "Comparaison pluriannuelle",
+    "graphique": "Fleurs observées par mois",
+    "tableau": "Indicateurs par campagne",
+    "total_fleurs": "Total de fleurs",
+    "producteurs": "Producteurs suivis",
+    "mois_pic": "Mois de pic",
+    "production": "Production estimée (kg)",
+    "vide": "Cochez au moins une campagne à comparer."
+  }
+}

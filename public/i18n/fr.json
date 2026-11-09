@@ -1,0 +1,17 @@
+{
+  "commun": {
+    "theme": {
+      "mode_clair": "Mode clair",
+      "mode_sombre": "Mode sombre",
+      "nom_accessible": "Thème clair"
+    },
+    "langue": {
+      "titre": "Langue"
+    },
+    "import_export": {
+      "libelle": "Import et export",
+      "import": "Import",
+      "export": "Export"
+    }
+  }
+}

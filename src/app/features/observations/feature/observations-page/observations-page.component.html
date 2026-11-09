@@ -1,0 +1,90 @@
+<div class="page-entete">
+  <h1 class="page-titre">{{ 'observations.titre' | transloco }}</h1>
+
+  @if (donnees(); as d) {
+    <app-filtres-campagne-cooperative
+      [campagnes]="d.campagnes"
+      [campagne]="d.campagne"
+      [campagneEnCours]="d.campagneEnCours"
+      [cooperatives]="d.cooperatives"
+      [cooperative]="cooperative()"
+      [libelleCampagne]="'observations.filtres.campagne' | transloco"
+      [libelleEnCours]="'observations.filtres.en_cours' | transloco"
+      [libelleCooperative]="'observations.filtres.cooperative' | transloco"
+      [libelleToutes]="'observations.filtres.toutes_cooperatives' | transloco"
+      (campagneChoisie)="choisirCampagne($event)"
+      (cooperativeChoisie)="choisirCooperative($event)"
+    >
+      <app-champ-liste
+        [libelle]="'observations.filtres.zone' | transloco"
+        [options]="optionsZones()"
+        [valeur]="zone() ?? ''"
+        [libelleToutes]="'observations.filtres.toutes_zones' | transloco"
+        (choisie)="choisirZone($event)"
+      />
+      <app-champ-liste
+        [libelle]="'observations.filtres.statut' | transloco"
+        [options]="[
+          { valeur: 'valide', libelle: ('observations.statut.valide' | transloco) },
+          { valeur: 'en-attente', libelle: ('observations.statut.en_attente' | transloco) },
+        ]"
+        [valeur]="statut() ?? ''"
+        [libelleToutes]="'observations.filtres.tous_statuts' | transloco"
+        (choisie)="choisirStatut($event)"
+      />
+    </app-filtres-campagne-cooperative>
+  }
+</div>
+
+@if (ressource.error()) {
+  <div class="message-etat" role="alert">
+    <p>{{ 'observations.erreur' | transloco }}</p>
+    <button type="button" class="message-etat__action" (click)="recharger()">
+      {{ 'observations.reessayer' | transloco }}
+    </button>
+  </div>
+}
+
+@if (donnees(); as d) {
+  @if (statut() === 'valide' && d.enAttente > 0) {
+    <p class="message-etat" role="status">
+      {{ 'observations.en_attente' | transloco: { nombre: d.enAttente } }}
+    </p>
+  }
+
+  <!-- Libellés des valeurs, indexés par « <famille>.<code> » : les codes viennent du serveur, les textes des fichiers i18n. -->
+  @let libelles = {
+    'quantite.faible': ('observations.valeurs.quantite.faible' | transloco),
+    'quantite.normal': ('observations.valeurs.quantite.normal' | transloco),
+    'quantite.beaucoup': ('observations.valeurs.quantite.beaucoup' | transloco),
+    'periode.precoce': ('observations.valeurs.periode.precoce' | transloco),
+    'periode.normal': ('observations.valeurs.periode.normal' | transloco),
+    'periode.retard': ('observations.valeurs.periode.retard' | transloco),
+    'calibrage.court': ('observations.valeurs.calibrage.court' | transloco),
+    'calibrage.normal': ('observations.valeurs.calibrage.normal' | transloco),
+    'calibrage.long': ('observations.valeurs.calibrage.long' | transloco),
+  };
+  <section class="grille-familles">
+    @for (famille of familles(); track famille.famille) {
+      <app-bloc-famille
+        [titre]="('observations.familles.' + famille.famille) | transloco"
+        [famille]="famille.famille"
+        [libelles]="libelles"
+        [lignes]="famille.lignes"
+        [total]="famille.totalFormate"
+        [representatif]="famille.representatif"
+        [libelleRepresentativite]="
+          ('observations.representativite.' + (famille.representatif ? 'oui' : 'non'))
+            | transloco: { total: famille.totalFormate }
+        "
+        [enTetes]="{
+          valeur: ('observations.tableau.valeur' | transloco),
+          effectif: ('observations.tableau.effectif' | transloco),
+          pourcentage: ('observations.tableau.pourcentage' | transloco),
+        }"
+      />
+    }
+  </section>
+} @else if (ressource.isLoading()) {
+  <p class="message-etat" role="status">{{ 'observations.chargement' | transloco }}</p>
+}

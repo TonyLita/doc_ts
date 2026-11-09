@@ -1,0 +1,66 @@
+{
+  "titre": "Cooperatives reference data",
+  "nouvelle": "New cooperative",
+  "calcules": "The numbers of farmers and plots are calculated from the farmers and plots attached to each cooperative: they are not entered here.",
+  "chargement": "Loading the cooperatives…",
+  "erreur": "Unable to load the cooperatives.",
+  "reessayer": "Retry",
+  "erreurs": {
+    "interdit": "Managing cooperatives is reserved for the Super Administrator.",
+    "introuvable": "This cooperative no longer exists. Reload the page.",
+    "doublon": "A cooperative already has this name.",
+    "rattachee": "Farmers or plots are attached to this cooperative: it cannot be deleted.",
+    "invalide": "The information entered is not valid (the village must belong to the commune).",
+    "trop_de_demandes": "Too many requests in a short time. Please wait a moment before trying again.",
+    "indisponible": "The service is currently unavailable.",
+    "delai_depasse": "The operation took too long. Please try again.",
+    "generique": "The action could not be completed. Please try again."
+  },
+  "indicateurs": {
+    "titre": "Cooperative indicators",
+    "cooperatives": "Cooperatives",
+    "producteurs": "Member farmers",
+    "parcelles": "Geolocated plots"
+  },
+  "recherche": {
+    "libelle": "Search a cooperative, a village or a commune"
+  },
+  "tri": {
+    "libelle": "Sort by",
+    "nom": "Name",
+    "commune": "Commune",
+    "producteurs": "Farmers (highest first)",
+    "parcelles": "Plots (highest first)"
+  },
+  "liste": {
+    "titre": "Cooperatives / Producer Organizations",
+    "nom": "Cooperative name",
+    "village": "Pivot village",
+    "commune": "Home commune",
+    "producteurs": "Member farmers",
+    "parcelles": "Geolocated plots",
+    "actions": "Actions",
+    "vide": "No cooperative matches these criteria."
+  },
+  "actions": {
+    "modifier": "Edit",
+    "supprimer": "Delete"
+  },
+  "formulaire": {
+    "titre_creation": "New cooperative",
+    "titre_modification": "Edit the cooperative",
+    "nom": "Cooperative name",
+    "commune": "Home commune",
+    "village": "Pivot village",
+    "choisir": "Choose…",
+    "enregistrer": "Save",
+    "annuler": "Cancel",
+    "champ_obligatoire": "Enter the name, the commune and the pivot village."
+  },
+  "confirmation": {
+    "titre": "Delete the cooperative",
+    "message": "The cooperative {{nom}} will be permanently deleted. Deletion is refused if farmers or plots are attached to it.",
+    "confirmer": "Delete",
+    "annuler": "Cancel"
+  }
+}

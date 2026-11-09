@@ -1,0 +1,11 @@
+<h2 class="carte__libelle">{{ titre() }}</h2>
+<ul class="legende">
+  @for (element of choix(); track element.id) {
+    <li>
+      <label class="legende__element">
+        <input type="checkbox" [checked]="element.choisie" (change)="basculer.emit(element.id)" />
+        {{ element.id }}
+      </label>
+    </li>
+  }
+</ul>

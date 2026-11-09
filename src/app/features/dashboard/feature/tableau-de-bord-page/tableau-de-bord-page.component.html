@@ -1,0 +1,111 @@
+<div class="page-entete">
+  <h1 class="page-titre">{{ 'tableau_de_bord.titre' | transloco }}</h1>
+
+  @if (donnees(); as d) {
+    <app-filtres-campagne-cooperative
+      [campagnes]="d.campagnes"
+      [campagne]="d.campagne"
+      [campagneEnCours]="d.campagneEnCours"
+      [cooperatives]="d.cooperatives"
+      [cooperative]="cooperative()"
+      [libelleCampagne]="'tableau_de_bord.filtres.campagne' | transloco"
+      [libelleEnCours]="'tableau_de_bord.filtres.en_cours' | transloco"
+      [libelleCooperative]="'tableau_de_bord.filtres.cooperative' | transloco"
+      [libelleToutes]="'tableau_de_bord.filtres.toutes_cooperatives' | transloco"
+      (campagneChoisie)="choisirCampagne($event)"
+      (cooperativeChoisie)="choisirCooperative($event)"
+    />
+  }
+</div>
+
+@if (ressource.error()) {
+  <div class="message-etat" role="alert">
+    <p>{{ 'tableau_de_bord.erreur' | transloco }}</p>
+    <button type="button" class="message-etat__action" (click)="recharger()">
+      {{ 'tableau_de_bord.reessayer' | transloco }}
+    </button>
+  </div>
+}
+
+@if (donnees(); as d) {
+  @if (vue(); as v) {
+    <section class="grille-indicateurs" [attr.aria-label]="'tableau_de_bord.indicateurs.titre' | transloco">
+      <app-carte-indicateur
+        [libelle]="'tableau_de_bord.indicateurs.producteurs.libelle' | transloco"
+        [valeur]="v.producteurs"
+        [progression]="d.tauxCouverture"
+        [detail]="'tableau_de_bord.indicateurs.producteurs.detail' | transloco: { taux: v.couverture }"
+      />
+      <app-carte-indicateur
+        [libelle]="'tableau_de_bord.indicateurs.fleurs.libelle' | transloco"
+        [valeur]="v.fleurs"
+        [detail]="'tableau_de_bord.indicateurs.fleurs.detail' | transloco"
+      />
+      <app-carte-indicateur
+        [libelle]="'tableau_de_bord.indicateurs.pic.libelle' | transloco"
+        [valeur]="v.moisPic"
+        [detail]="'tableau_de_bord.indicateurs.pic.detail' | transloco"
+      />
+      <app-carte-indicateur
+        [libelle]="'tableau_de_bord.indicateurs.production.libelle' | transloco"
+        [valeur]="v.production + ' ' + ('tableau_de_bord.indicateurs.production.unite' | transloco)"
+        [detail]="'tableau_de_bord.indicateurs.production.detail' | transloco"
+      />
+      <app-carte-indicateur
+        [libelle]="'tableau_de_bord.indicateurs.cooperatives.libelle' | transloco"
+        [valeur]="v.cooperatives"
+        [detail]="'tableau_de_bord.indicateurs.cooperatives.detail' | transloco"
+      />
+      <app-carte-indicateur
+        [libelle]="'tableau_de_bord.indicateurs.saisies.libelle' | transloco"
+        [valeur]="v.saisies + ' %'"
+        [progression]="d.tauxSaisiesValides"
+        [detail]="'tableau_de_bord.indicateurs.saisies.detail' | transloco"
+      />
+      <app-statut-mois
+        [libelle]="'tableau_de_bord.indicateurs.statuts.libelle' | transloco"
+        [elements]="v.statuts"
+        [libellesStatut]="{
+          complet: ('tableau_de_bord.statut.complet' | transloco),
+          partiel: ('tableau_de_bord.statut.partiel' | transloco),
+          'en-attente': ('tableau_de_bord.statut.en_attente' | transloco),
+        }"
+      />
+    </section>
+
+    <section class="grille-graphiques">
+      <app-graphique-floraison
+        [titre]="'tableau_de_bord.graphiques.floraison.titre' | transloco"
+        [libelleEmpile]="'tableau_de_bord.graphiques.floraison.empile' | transloco"
+        [libelleCourbes]="'tableau_de_bord.graphiques.floraison.courbes' | transloco"
+        [zones]="d.zones"
+        [mois]="v.mois"
+      />
+      <app-graphique-zones
+        [titre]="'tableau_de_bord.graphiques.zones.titre' | transloco"
+        [zones]="v.zones"
+        [libelleTotal]="v.fleurs"
+      />
+    </section>
+
+    <app-bloc-synthese
+      [titre]="'tableau_de_bord.synthese.titre' | transloco"
+      [texte]="
+        'tableau_de_bord.synthese.texte'
+          | transloco
+            : {
+                campagne: d.campagne,
+                producteurs: v.producteurs,
+                couverture: v.couverture,
+                fleurs: v.fleurs,
+                mois: v.moisPic,
+                production: v.production,
+                saisies: v.saisies,
+              }
+      "
+      [note]="'tableau_de_bord.synthese.derniere_synchronisation' | transloco: { date: v.derniereSynchronisation }"
+    />
+  }
+} @else if (ressource.isLoading()) {
+  <p class="message-etat" role="status">{{ 'tableau_de_bord.chargement' | transloco }}</p>
+}

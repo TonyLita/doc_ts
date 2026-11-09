@@ -1,0 +1,102 @@
+<div class="page-entete">
+  <h1 class="page-titre">{{ 'referentiel_cooperatives.titre' | transloco }}</h1>
+
+  @if (donnees()?.peutAdministrer && !formulaire()) {
+    <button type="button" class="bouton" (click)="ouvrirCreation()">{{ 'referentiel_cooperatives.nouvelle' | transloco }}</button>
+  }
+</div>
+
+
+
+@if (ressource.error()) {
+  <div class="message-etat" role="alert">
+    <p>{{ 'referentiel_cooperatives.erreur' | transloco }}</p>
+    <button type="button" class="message-etat__action" (click)="recharger()">
+      {{ 'referentiel_cooperatives.reessayer' | transloco }}
+    </button>
+  </div>
+}
+
+@if (cleErreur(); as cle) {
+  <p class="message-etat" role="alert">{{ 'referentiel_cooperatives.erreurs.' + cle | transloco }}</p>
+}
+
+@if (donnees(); as d) {
+  @if (vue(); as v) {
+    @if (formulaire(); as ouvert) {
+      <app-formulaire-cooperative
+        [titre]="(ouvert.cooperative ? 'referentiel_cooperatives.formulaire.titre_modification' : 'referentiel_cooperatives.formulaire.titre_creation') | transloco"
+        [cooperative]="ouvert.cooperative"
+        [communes]="d.communes"
+        [enCours]="enCours()"
+        [libelles]="{
+          nom: ('referentiel_cooperatives.formulaire.nom' | transloco),
+          commune: ('referentiel_cooperatives.formulaire.commune' | transloco),
+          village: ('referentiel_cooperatives.formulaire.village' | transloco),
+          choisir: ('referentiel_cooperatives.formulaire.choisir' | transloco),
+          enregistrer: ('referentiel_cooperatives.formulaire.enregistrer' | transloco),
+          annuler: ('referentiel_cooperatives.formulaire.annuler' | transloco),
+          champObligatoire: ('referentiel_cooperatives.formulaire.champ_obligatoire' | transloco),
+        }"
+        (enregistrer)="enregistrer($event)"
+        (annuler)="fermerFormulaire()"
+      />
+    }
+
+    <section class="grille-indicateurs" [attr.aria-label]="'referentiel_cooperatives.indicateurs.titre' | transloco">
+      <app-carte-indicateur [libelle]="'referentiel_cooperatives.indicateurs.cooperatives' | transloco" [valeur]="v.cooperatives" />
+      <app-carte-indicateur [libelle]="'referentiel_cooperatives.indicateurs.producteurs' | transloco" [valeur]="v.producteurs" />
+      <app-carte-indicateur [libelle]="'referentiel_cooperatives.indicateurs.parcelles' | transloco" [valeur]="v.parcelles" />
+    </section>
+
+    <div class="barre-filtres">
+      <label class="champ-recherche">
+        <span>{{ 'referentiel_cooperatives.recherche.libelle' | transloco }}</span>
+        <input type="search" [value]="recherche()" (input)="rechercher($event)" />
+      </label>
+      <app-champ-liste
+        [libelle]="'referentiel_cooperatives.tri.libelle' | transloco"
+        [options]="[
+          { valeur: 'nom', libelle: ('referentiel_cooperatives.tri.nom' | transloco) },
+          { valeur: 'commune', libelle: ('referentiel_cooperatives.tri.commune' | transloco) },
+          { valeur: 'producteurs', libelle: ('referentiel_cooperatives.tri.producteurs' | transloco) },
+          { valeur: 'parcelles', libelle: ('referentiel_cooperatives.tri.parcelles' | transloco) },
+        ]"
+        [valeur]="tri()"
+        (choisie)="choisirTri($event)"
+      />
+    </div>
+
+    <app-tableau-cooperatives
+      [titre]="'referentiel_cooperatives.liste.titre' | transloco"
+      [lignes]="v.lignes"
+      [peutAdministrer]="d.peutAdministrer"
+      [libelles]="{
+        nom: ('referentiel_cooperatives.liste.nom' | transloco),
+        village: ('referentiel_cooperatives.liste.village' | transloco),
+        commune: ('referentiel_cooperatives.liste.commune' | transloco),
+        producteurs: ('referentiel_cooperatives.liste.producteurs' | transloco),
+        parcelles: ('referentiel_cooperatives.liste.parcelles' | transloco),
+        actions: ('referentiel_cooperatives.liste.actions' | transloco),
+        modifier: ('referentiel_cooperatives.actions.modifier' | transloco),
+        supprimer: ('referentiel_cooperatives.actions.supprimer' | transloco),
+        vide: ('referentiel_cooperatives.liste.vide' | transloco),
+      }"
+      (modifier)="ouvrirModification($event)"
+      (supprimer)="demanderSuppression($event)"
+    />
+
+    @if (confirmation(); as demande) {
+      <app-dialogue-confirmation
+        [titre]="'referentiel_cooperatives.confirmation.titre' | transloco"
+        [message]="'referentiel_cooperatives.confirmation.message' | transloco: { nom: demande.nom }"
+        [libelleConfirmer]="'referentiel_cooperatives.confirmation.confirmer' | transloco"
+        [libelleAnnuler]="'referentiel_cooperatives.confirmation.annuler' | transloco"
+        (confirmer)="confirmer()"
+        (annuler)="annulerConfirmation()"
+      />
+    }
+  }
+} @else if (ressource.isLoading()) {
+  <p class="message-etat" role="status">{{ 'referentiel_cooperatives.chargement' | transloco }}</p>
+}

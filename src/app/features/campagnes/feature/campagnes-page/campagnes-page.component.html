@@ -1,0 +1,124 @@
+<div class="page-entete">
+  <h1 class="page-titre">{{ 'campagnes.titre' | transloco }}</h1>
+</div>
+
+@if (ressource.error()) {
+  <div class="message-etat" role="alert">
+    <p>{{ 'campagnes.erreur' | transloco }}</p>
+    <button type="button" class="message-etat__action" (click)="recharger()">
+      {{ 'campagnes.reessayer' | transloco }}
+    </button>
+  </div>
+}
+
+@if (cleErreur(); as cle) {
+  <p class="message-etat" role="alert">{{ 'campagnes.erreurs.' + cle | transloco }}</p>
+}
+
+@if (donnees(); as d) {
+  @if (vue(); as v) {
+    @if (formulaire(); as ouvert) {
+      <app-formulaire-campagne
+        [titre]="'campagnes.formulaire.titre_modification' | transloco"
+        [campagne]="ouvert"
+        [enCours]="enCours()"
+        [libelles]="{
+          campagne: ('campagnes.formulaire.campagne' | transloco),
+          debut: ('campagnes.formulaire.debut' | transloco),
+          fin: ('campagnes.formulaire.fin' | transloco),
+          enregistrer: ('campagnes.formulaire.enregistrer' | transloco),
+          annuler: ('campagnes.formulaire.annuler' | transloco),
+          champObligatoire: ('campagnes.formulaire.champ_obligatoire' | transloco),
+          periodeInvalide: ('campagnes.formulaire.periode_invalide' | transloco),
+        }"
+        (enregistrer)="enregistrer($event)"
+        (annuler)="fermerFormulaire()"
+      />
+    }
+
+    @if (v.affichee; as affichee) {
+      <section class="grille-indicateurs" [attr.aria-label]="'campagnes.active.libelle' | transloco">
+        <app-carte-indicateur
+          class="carte--large"
+          [libelle]="(affichee.estActive ? 'campagnes.active.libelle' : 'campagnes.affichee.libelle') | transloco"
+          [valeur]="affichee.id"
+          [detail]="affichee.detail + ' · ' + (('campagnes.statut.' + affichee.statut) | transloco)"
+        />
+        <app-champ-liste
+          [libelle]="'campagnes.selecteur.libelle' | transloco"
+          [options]="optionsCampagnes()"
+          [valeur]="affichee.id"
+          (choisie)="choisirAffichee($event)"
+        />
+      </section>
+    } @else {
+      <p class="message-etat" role="status">{{ 'campagnes.active.aucune' | transloco }}</p>
+    }
+
+    <app-tableau-campagnes
+      [titre]="'campagnes.liste.titre' | transloco"
+      [lignes]="v.lignes"
+      [peutAdministrer]="d.peutAdministrer"
+      [libelles]="{
+        campagne: ('campagnes.liste.campagne' | transloco),
+        debut: ('campagnes.liste.debut' | transloco),
+        fin: ('campagnes.liste.fin' | transloco),
+        statut: ('campagnes.liste.statut' | transloco),
+        active: ('campagnes.liste.active' | transloco),
+        actions: ('campagnes.liste.actions' | transloco),
+        activeOui: ('campagnes.liste.active_oui' | transloco),
+        modifier: ('campagnes.actions.modifier' | transloco),
+        cloturer: ('campagnes.actions.cloturer' | transloco),
+        definirActive: ('campagnes.actions.definir_active' | transloco),
+        vide: ('campagnes.liste.vide' | transloco),
+        statuts: {
+          'en-cours': ('campagnes.statut.en-cours' | transloco),
+          cloturee: ('campagnes.statut.cloturee' | transloco),
+        },
+      }"
+      (modifier)="ouvrirModification($event)"
+      (cloturer)="demanderConfirmation('cloturer', $event)"
+      (activer)="demanderConfirmation('activer', $event)"
+    />
+
+    <app-selecteur-campagnes
+      [titre]="'campagnes.comparaison.titre' | transloco"
+      [choix]="v.choix"
+      (basculer)="basculerCampagne($event)"
+    />
+
+    <app-graphique-floraison
+      [titre]="'campagnes.comparaison.graphique' | transloco"
+      [zones]="v.series"
+      [mois]="v.mois"
+      modeInitial="courbes"
+      [bascule]="false"
+    />
+
+    <app-tableau-comparaison
+      [titre]="'campagnes.comparaison.tableau' | transloco"
+      [lignes]="v.comparaison"
+      [libelles]="{
+        campagne: ('campagnes.liste.campagne' | transloco),
+        totalFleurs: ('campagnes.comparaison.total_fleurs' | transloco),
+        producteursSuivis: ('campagnes.comparaison.producteurs' | transloco),
+        moisPic: ('campagnes.comparaison.mois_pic' | transloco),
+        production: ('campagnes.comparaison.production' | transloco),
+        vide: ('campagnes.comparaison.vide' | transloco),
+      }"
+    />
+
+    @if (confirmation(); as demande) {
+      <app-dialogue-confirmation
+        [titre]="('campagnes.confirmation.' + demande.action + '.titre') | transloco"
+        [message]="('campagnes.confirmation.' + demande.action + '.message') | transloco: { campagne: demande.id }"
+        [libelleConfirmer]="'campagnes.confirmation.confirmer' | transloco"
+        [libelleAnnuler]="'campagnes.confirmation.annuler' | transloco"
+        (confirmer)="confirmer()"
+        (annuler)="annulerConfirmation()"
+      />
+    }
+  }
+} @else if (ressource.isLoading()) {
+  <p class="message-etat" role="status">{{ 'campagnes.chargement' | transloco }}</p>
+}

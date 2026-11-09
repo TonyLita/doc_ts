@@ -1,0 +1,81 @@
+{
+  "titre": "Administration",
+  "chargement": "Loading the administration…",
+  "erreur": "Unable to load the administration page.",
+  "reessayer": "Retry",
+  "erreurs": {
+    "interdit": "This action is reserved for the Super Administrator.",
+    "conflit": "This identifier already exists, or the action would leave the platform without a Super Administrator.",
+    "invalide": "The information entered is not valid (the password may be too short).",
+    "trop_de_demandes": "Too many requests in a short time. Please wait a moment before trying again.",
+    "indisponible": "The service is currently unavailable.",
+    "delai_depasse": "The operation took too long. Please try again.",
+    "generique": "The action could not be completed. Please try again."
+  },
+  "profils": {
+    "super-administrateur": "Super Administrator",
+    "utilisateur": "User",
+    "visiteur": "Visitor"
+  },
+  "campagne": {
+    "libelle": "Active campaign",
+    "detail": "Campaign that feeds the dashboard by default",
+    "gerer": "Manage campaigns"
+  },
+  "permissions": {
+    "titre": "Permissions by role",
+    "droit": "Right",
+    "autorise": "Allowed",
+    "refuse": "Not allowed"
+  },
+  "droits": {
+    "consultation": "Viewing all modules",
+    "rapports": "AI report generation",
+    "exports": "Exports (Excel, PDF, images)",
+    "campagnes": "Changing the active campaign",
+    "imports": "Reference data import",
+    "referentiels": "Reference data settings",
+    "utilisateurs": "User management",
+    "producteurs": "Direct editing of farmer data"
+  },
+  "utilisateurs": {
+    "titre": "Users",
+    "nouveau": "New user",
+    "identifiant": "Identifier",
+    "role": "Role",
+    "langue": "Preferred language",
+    "statut": "Account status",
+    "actions": "Actions",
+    "vide": "No user.",
+    "moi": "(you)",
+    "changer_role": "Change role",
+    "desactiver": "Deactivate",
+    "reactiver": "Reactivate",
+    "actif": "Active",
+    "desactive": "Deactivated",
+    "reserve": "User management is reserved for the Super Administrator."
+  },
+  "formulaire": {
+    "titre_creation": "New user",
+    "titre_role": "Change role",
+    "identifiant": "Identifier",
+    "mot_de_passe": "Initial password (8 characters minimum)",
+    "role": "Role",
+    "langue": "Preferred language",
+    "enregistrer": "Save",
+    "annuler": "Cancel",
+    "champs_invalides": "Enter the identifier and a password of at least 8 characters."
+  },
+  "confirmation": {
+    "desactiver": {
+      "titre": "Deactivate the account",
+      "message": "Account {{identifiant}} will no longer be able to sign in. Its data and history are kept."
+    },
+    "reactiver": {
+      "titre": "Reactivate the account",
+      "message": "Account {{identifiant}} will be able to sign in again."
+    },
+    "confirmer": "Confirm",
+    "annuler": "Cancel"
+  }
+}

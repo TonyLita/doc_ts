@@ -1,0 +1,31 @@
+<h2 class="carte__libelle">{{ titre() }}</h2>
+
+<ul class="cartes-parcelles">
+  @for (ligne of lignes(); track ligne.id) {
+    <li class="carte">
+      <h3 class="carte__valeur carte__valeur--titre">{{ ligne.nom }}</h3>
+      <dl class="fiche">
+        <dt>{{ libelles().zone }}</dt>
+        <dd>
+          @if (ligne.rang !== null) {
+            <span class="badge-zone couleur-zone-{{ ligne.rang }}">
+              <span class="badge-zone__pastille"></span>
+              <span class="badge-zone__nom">{{ ligne.zoneNom }}</span>
+            </span>
+          } @else {
+            <span class="badge-zone badge-zone--aucune">
+              <span class="badge-zone__pastille"></span>
+              <span class="badge-zone__nom">{{ libelles().sansZone }}</span>
+            </span>
+          }
+        </dd>
+        <dt>{{ libelles().fleurs }}</dt>
+        <dd>{{ ligne.fleurs }}</dd>
+        <dt>{{ libelles().derniereSaisie }}</dt>
+        <dd>{{ ligne.derniereSaisie }}</dd>
+      </dl>
+    </li>
+  } @empty {
+    <li class="message-etat" role="status">{{ libelles().vide }}</li>
+  }
+</ul>

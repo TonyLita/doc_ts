@@ -1,0 +1,15 @@
+{
+    "titre": "Fidirana",
+    "identifiant": "Anaran'ny mpampiasa",
+    "mot_de_passe": "Teny miafina",
+    "bouton": "Hiditra",
+    "erreur_obligatoire": "Tsy maintsy fenoina ity saha ity.",
+    "erreur_identifiants": "Diso ny anaran'ny mpampiasa na ny teny miafina.",
+    "erreur_reseau": "Tsy afaka mifandray: hamarino ny fifandraisana amin'ny tambajotra ary andramo indray.",
+    "erreur_inconnue": "Nisy hadisoana nitranga. Azafady, andramo indray.",
+    "titre_plateforme": {
+        "ligne_1": "Sehatra fanaraha-maso ny",
+        "ligne_2": "fivelaran'ny vonin'ny",
+        "ligne_3": "lavanila"
+    }
+}

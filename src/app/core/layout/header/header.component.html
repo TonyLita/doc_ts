@@ -1,0 +1,9 @@
+<!-- Tout élément ajouté ici partage la même hauteur et le même axe : voir .bande-entete dans core/layout/layout.css. -->
+<!-- Le contenu projeté (bouton de menu, logo…) se place à gauche ; la langue et le thème restent à droite. -->
+<!-- Le contenu marqué « fin » (utilisateur connecté) se place tout à droite, après le thème. -->
+<header class="bande-entete p-4">
+  <ng-content />
+  <app-selecteur-langue />
+  <app-theme-toggle />
+  <ng-content select="[fin]" />
+</header>

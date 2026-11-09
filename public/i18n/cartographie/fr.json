@@ -1,0 +1,23 @@
+{
+  "titre": "Cartographie",
+  "chargement": "Chargement de la carte…",
+  "erreur": "Impossible de charger la carte.",
+  "reessayer": "Réessayer",
+  "indicateurs": {
+    "titre": "Indicateurs de la carte",
+    "parcelles": "Parcelles",
+    "part_vanille": "Part en culture de vanille",
+    "production": "Production totale estimée",
+    "unite_production": "kg",
+    "detail_production": "Estimation indicative"
+  },
+  "legende": {
+    "titre": "Coopératives",
+    "centre": "Centre de coopérative"
+  },
+  "fiche": {
+    "cooperative": "Coopérative",
+    "pieds": "Nombre de pieds",
+    "production": "Production estimée"
+  }
+}

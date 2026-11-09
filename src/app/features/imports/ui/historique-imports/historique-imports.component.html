@@ -1,0 +1,33 @@
+<div class="tableau__defilement">
+  <table class="tableau">
+    <caption class="carte__libelle">{{ titre() }}</caption>
+    <thead>
+      <tr>
+        <th scope="col">{{ libelles().date }}</th>
+        <th scope="col">{{ libelles().utilisateur }}</th>
+        <th scope="col">{{ libelles().fichier }}</th>
+        <th scope="col">{{ libelles().type }}</th>
+        <th scope="col" class="tableau__nombre">{{ libelles().creees }}</th>
+        <th scope="col" class="tableau__nombre">{{ libelles().miseAJour }}</th>
+        <th scope="col" class="tableau__nombre">{{ libelles().rejetees }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (ligne of lignes(); track ligne.id) {
+        <tr>
+          <th scope="row">{{ ligne.date }}</th>
+          <td>{{ ligne.utilisateur }}</td>
+          <td>{{ ligne.fichier }}</td>
+          <td>{{ libelles().types[ligne.type] }}</td>
+          <td class="tableau__nombre">{{ ligne.creees }}</td>
+          <td class="tableau__nombre">{{ ligne.miseAJour }}</td>
+          <td class="tableau__nombre">{{ ligne.rejetees }}</td>
+        </tr>
+      } @empty {
+        <tr>
+          <td class="tableau__vide" colspan="7">{{ libelles().vide }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

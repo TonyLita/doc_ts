@@ -1,0 +1,120 @@
+<!-- Page publique : pas de coquille, mais le même header (langue, thème) que les pages protégées. -->
+<app-header class="fixed top-0 right-0 z-10 max-w-[calc(100%-6rem)]" />
+
+<main
+  class="bg-page relative flex min-h-screen flex-col gap-10 px-4 py-4 text-on-surface xl:grid xl:grid-cols-[1fr_28rem] xl:items-center xl:gap-8 xl:pr-16 xl:pl-52"
+>
+  <!--
+    Logo SoaTech, collé au coin haut gauche (hors flux sur grand écran).
+    Clair : plaque blanche sous le logo, car le dégradé de fond est bleu à cet endroit et « soa » y serait invisible.
+    Sombre : pas de plaque, le texte blanc ressort sur le fond marine.
+    Icône : hauteur fixe, centrée au-dessus du « o » de « soa » (43,8 % de la largeur du texte).
+    Le texte est calé à gauche, sous l'icône. Taille : bloc de 64 px (xl) / 58 px (mobile) de large,
+    icône de 55 px (xl) / 32 px (mobile) de haut.
+  -->
+  <div
+    class="self-start rounded-2xl bg-white p-2 shadow-lg xl:absolute xl:top-0 xl:left-0 xl:rounded-none xl:rounded-br-3xl dark:bg-transparent dark:shadow-none"
+  >
+    <div class="w-[65px] xl:w-[70px]">
+      <img
+        src="assets/soatech-icon.png"
+        alt=""
+        width="240"
+        height="320"
+        class="relative left-[50.8%] mb-1 block h-[32px] w-auto -translate-x-1/2 xl:h-[65px]"
+      />
+      <img
+        src="assets/soatech-wordmark.png"
+        alt="SoaTech — Smart solutions. Real impact."
+        width="600"
+        height="434"
+        class="h-auto w-full dark:hidden"
+      />
+      <img
+        src="assets/soatech-wordmark-on-dark.png"
+        alt="SoaTech — Smart solutions. Real impact."
+        width="600"
+        height="434"
+        class="hidden h-auto w-full dark:block"
+      />
+    </div>
+  </div>
+
+  <div class="self-center xl:justify-self-center">
+    <h1 class="font-display text-[clamp(2rem,3.4vw,4rem)] leading-tight font-bold">
+      {{ 'connexion.titre_plateforme.ligne_1' | transloco }}<br />
+      {{ 'connexion.titre_plateforme.ligne_2' | transloco }}<br />
+      {{ 'connexion.titre_plateforme.ligne_3' | transloco }}
+    </h1>
+    <span class="mt-3 block h-1 w-24 rounded-full bg-accent" aria-hidden="true"></span>
+  </div>
+
+  <section
+    class="w-full max-w-[28rem] self-center rounded-2xl border border-line/40 bg-surface p-8 shadow-2xl xl:justify-self-center"
+  >
+    <header class="mb-8 text-center">
+      <h2 class="font-display text-3xl font-bold">{{ 'connexion.titre' | transloco }}</h2>
+    </header>
+
+    <form class="flex flex-col gap-5" [formGroup]="formulaire" (ngSubmit)="seConnecter()" novalidate>
+      @if (cleErreur(); as cle) {
+        <p
+          role="alert"
+          class="rounded-md border border-danger px-3 py-2 text-sm font-semibold text-danger"
+        >
+          {{ cle | transloco }}
+        </p>
+      }
+
+      <div class="flex flex-col gap-1.5">
+        <label for="login-username" class="text-sm font-semibold">{{
+          'connexion.identifiant' | transloco
+        }}</label>
+        <input
+          id="login-username"
+          name="username"
+          type="text"
+          autocomplete="username"
+          formControlName="identifiant"
+          [attr.aria-invalid]="formulaire.controls.identifiant.touched && formulaire.controls.identifiant.invalid"
+          aria-describedby="login-username-erreur"
+          class="rounded-md border border-line bg-field px-3 py-2 text-on-surface focus:border-accent focus:ring-2 focus:ring-accent/40 focus:outline-none"
+        />
+        <p id="login-username-erreur" role="alert" class="text-sm font-semibold text-danger">
+          @if (formulaire.controls.identifiant.touched && formulaire.controls.identifiant.invalid) {
+            {{ 'connexion.erreur_obligatoire' | transloco }}
+          }
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-1.5">
+        <label for="login-password" class="text-sm font-semibold">{{
+          'connexion.mot_de_passe' | transloco
+        }}</label>
+        <input
+          id="login-password"
+          name="password"
+          type="password"
+          autocomplete="current-password"
+          formControlName="motDePasse"
+          [attr.aria-invalid]="formulaire.controls.motDePasse.touched && formulaire.controls.motDePasse.invalid"
+          aria-describedby="login-password-erreur"
+          class="rounded-md border border-line bg-field px-3 py-2 text-on-surface focus:border-accent focus:ring-2 focus:ring-accent/40 focus:outline-none"
+        />
+        <p id="login-password-erreur" role="alert" class="text-sm font-semibold text-danger">
+          @if (formulaire.controls.motDePasse.touched && formulaire.controls.motDePasse.invalid) {
+            {{ 'connexion.erreur_obligatoire' | transloco }}
+          }
+        </p>
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="enCours()"
+        class="mt-2 rounded-md bg-primary px-4 py-2.5 font-semibold text-on-primary shadow-md hover:bg-primary-hover focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-surface focus:outline-none disabled:opacity-60"
+      >
+        {{ 'connexion.bouton' | transloco }}
+      </button>
+    </form>
+  </section>
+</main>

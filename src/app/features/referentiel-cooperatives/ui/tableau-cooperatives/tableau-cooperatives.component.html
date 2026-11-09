@@ -1,0 +1,54 @@
+<div class="tableau__defilement">
+  <table class="tableau">
+    <caption class="carte__libelle">{{ titre() }}</caption>
+    <thead>
+      <tr>
+        <th scope="col">{{ libelles().nom }}</th>
+        <th scope="col">{{ libelles().village }}</th>
+        <th scope="col">{{ libelles().commune }}</th>
+        <th scope="col" class="tableau__nombre">{{ libelles().producteurs }}</th>
+        <th scope="col" class="tableau__nombre">{{ libelles().parcelles }}</th>
+        @if (peutAdministrer()) {
+          <th scope="col">{{ libelles().actions }}</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (ligne of lignes(); track ligne.id) {
+        <tr>
+          <th scope="row">{{ ligne.nom }}</th>
+          <td>{{ ligne.village }}</td>
+          <td>{{ ligne.commune }}</td>
+          <td class="tableau__nombre">{{ ligne.producteurs }}</td>
+          <td class="tableau__nombre">{{ ligne.parcelles }}</td>
+          @if (peutAdministrer()) {
+            <td>
+              <div class="actions-ligne">
+                <button
+                  type="button"
+                  class="bouton bouton--petit bouton--secondaire"
+                  [attr.aria-label]="libelles().modifier + ' ' + ligne.nom"
+                  (click)="modifier.emit(ligne.id)"
+                >
+                  {{ libelles().modifier }}
+                </button>
+                <button
+                  type="button"
+                  class="bouton bouton--petit bouton--secondaire"
+                  [attr.aria-label]="libelles().supprimer + ' ' + ligne.nom"
+                  (click)="supprimer.emit(ligne.id)"
+                >
+                  {{ libelles().supprimer }}
+                </button>
+              </div>
+            </td>
+          }
+        </tr>
+      } @empty {
+        <tr>
+          <td class="tableau__vide" [attr.colspan]="peutAdministrer() ? 6 : 5">{{ libelles().vide }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,91 @@
+<div class="page-entete">
+  <h1 class="page-titre">{{ 'analyse_zones.titre' | transloco }}</h1>
+
+  @if (donnees(); as d) {
+    <app-filtres-campagne-cooperative
+      [campagnes]="d.campagnes"
+      [campagne]="d.campagne"
+      [campagneEnCours]="d.campagneEnCours"
+      [cooperatives]="d.cooperatives"
+      [cooperative]="cooperative()"
+      [libelleCampagne]="'analyse_zones.filtres.campagne' | transloco"
+      [libelleEnCours]="'analyse_zones.filtres.en_cours' | transloco"
+      [libelleCooperative]="'analyse_zones.filtres.cooperative' | transloco"
+      [libelleToutes]="'analyse_zones.filtres.toutes_cooperatives' | transloco"
+      (campagneChoisie)="choisirCampagne($event)"
+      (cooperativeChoisie)="choisirCooperative($event)"
+    />
+  }
+</div>
+
+@if (ressource.error()) {
+  <div class="message-etat" role="alert">
+    <p>{{ 'analyse_zones.erreur' | transloco }}</p>
+    <button type="button" class="message-etat__action" (click)="recharger()">
+      {{ 'analyse_zones.reessayer' | transloco }}
+    </button>
+  </div>
+}
+
+@if (donnees()) {
+  <div class="grille-zones">
+    @for (zone of zones(); track zone.id) {
+      <article class="colonne-zone">
+        <header class="carte colonne-zone__entete">
+          <h2 class="carte__valeur carte__valeur--titre">{{ zone.nom }}</h2>
+          <app-profil-periode
+            [profil]="zone.profil"
+            [libelle]="('analyse_zones.profil.' + zone.profil) | transloco"
+          />
+        </header>
+
+        <div class="colonne-zone__chiffres">
+          <app-carte-indicateur
+            [libelle]="'analyse_zones.indicateurs.producteurs' | transloco"
+            [valeur]="zone.producteurs"
+          />
+          <app-carte-indicateur
+            [libelle]="'analyse_zones.indicateurs.fleurs' | transloco"
+            [valeur]="zone.fleurs"
+          />
+          <app-carte-indicateur
+            class="carte--large"
+            [libelle]="'analyse_zones.indicateurs.part' | transloco"
+            [valeur]="zone.part + ' %'"
+            [progression]="zone.partTotal"
+          />
+        </div>
+
+        <app-graphique-floraison
+          [titre]="'analyse_zones.graphiques.mensuel' | transloco"
+          [zones]="zone.serieMensuelle"
+          [mois]="zone.mensuel"
+          [bascule]="false"
+          [largeur]="360"
+          [hauteur]="240"
+          [legende]="false"
+        />
+        <app-graphique-floraison
+          [titre]="'analyse_zones.graphiques.comparaison' | transloco"
+          [zones]="zone.campagnes"
+          [mois]="zone.comparaison"
+          [bascule]="false"
+          [largeur]="360"
+          [hauteur]="240"
+          modeInitial="courbes"
+        />
+
+        <app-bloc-synthese
+          [class.carte--alerte]="zone.profil === 'retarde'"
+          [titre]="'analyse_zones.synthese.titre' | transloco"
+          [texte]="
+            ('analyse_zones.synthese.' + zone.profil)
+              | transloco: { zone: zone.nom, fleurs: zone.fleurs, part: zone.part }
+          "
+        />
+      </article>
+    }
+  </div>
+} @else if (ressource.isLoading()) {
+  <p class="message-etat" role="status">{{ 'analyse_zones.chargement' | transloco }}</p>
+}

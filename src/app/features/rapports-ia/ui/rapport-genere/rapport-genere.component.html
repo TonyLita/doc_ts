@@ -1,0 +1,7 @@
+<h2 class="carte__libelle">{{ titre() }}</h2>
+<p class="avertissement" role="note">⚠ {{ libelles().avertissement }}</p>
+<markdown class="rapport" [data]="texte()" />
+<div class="rapport__pied">
+  <p class="carte__detail">{{ libelles().baseSur }}</p>
+  <app-bouton-copier [texte]="texte()" [libelleCopier]="libelles().copier" [libelleCopie]="libelles().copie" />
+</div>

@@ -1,0 +1,102 @@
+<div class="page-entete">
+  <h1 class="page-titre">{{ 'synchronisation.titre' | transloco }}</h1>
+
+  @if (donnees(); as d) {
+    <app-filtres-campagne-cooperative
+      [campagnes]="d.campagnes"
+      [campagne]="d.campagne"
+      [campagneEnCours]="d.campagneEnCours"
+      [cooperatives]="d.cooperatives"
+      [cooperative]="cooperative()"
+      [libelleCampagne]="'synchronisation.filtres.campagne' | transloco"
+      [libelleEnCours]="'synchronisation.filtres.en_cours' | transloco"
+      [libelleCooperative]="'synchronisation.filtres.cooperative' | transloco"
+      [libelleToutes]="'synchronisation.filtres.toutes_cooperatives' | transloco"
+      (campagneChoisie)="choisirCampagne($event)"
+      (cooperativeChoisie)="choisirCooperative($event)"
+    >
+      <app-champ-liste
+        [libelle]="'synchronisation.filtres.statut' | transloco"
+        [options]="[
+          { valeur: 'succes', libelle: ('synchronisation.statut.succes' | transloco) },
+          { valeur: 'partiel', libelle: ('synchronisation.statut.partiel' | transloco) },
+          { valeur: 'erreur', libelle: ('synchronisation.statut.erreur' | transloco) },
+        ]"
+        [valeur]="statut() ?? ''"
+        [libelleToutes]="'synchronisation.filtres.tous_statuts' | transloco"
+        (choisie)="choisirStatut($event)"
+      />
+    </app-filtres-campagne-cooperative>
+  }
+</div>
+
+<p class="message-etat" role="note">{{ 'synchronisation.automatique' | transloco }}</p>
+
+@if (ressource.error()) {
+  <div class="message-etat" role="alert">
+    <p>{{ 'synchronisation.erreur' | transloco }}</p>
+    <button type="button" class="message-etat__action" (click)="recharger()">
+      {{ 'synchronisation.reessayer' | transloco }}
+    </button>
+  </div>
+}
+
+@if (donnees(); as d) {
+  @if (vue(); as v) {
+    <section class="grille-indicateurs" [attr.aria-label]="'synchronisation.indicateurs.titre' | transloco">
+      <app-carte-indicateur
+        [libelle]="'synchronisation.indicateurs.derniere.libelle' | transloco"
+        [valeur]="v.derniere"
+        [detail]="'synchronisation.indicateurs.derniere.detail' | transloco"
+      />
+      <app-carte-indicateur
+        [libelle]="'synchronisation.indicateurs.total.libelle' | transloco"
+        [valeur]="v.total"
+        [detail]="'synchronisation.indicateurs.total.detail' | transloco"
+      />
+      <app-carte-indicateur
+        [libelle]="'synchronisation.indicateurs.enregistrements.libelle' | transloco"
+        [valeur]="v.enregistrements"
+        [detail]="'synchronisation.indicateurs.enregistrements.detail' | transloco"
+      />
+      <app-carte-indicateur
+        [libelle]="'synchronisation.indicateurs.a_surveiller.libelle' | transloco"
+        [valeur]="v.aSurveiller"
+        [detail]="'synchronisation.indicateurs.a_surveiller.detail' | transloco: { erreurs: v.enErreur, partielles: v.partielles }"
+      />
+    </section>
+
+    <app-journal-synchronisation
+      [titre]="'synchronisation.journal.titre' | transloco"
+      [lignes]="v.lignes"
+      [libelles]="{
+        horodatage: ('synchronisation.journal.horodatage' | transloco),
+        origine: ('synchronisation.journal.origine' | transloco),
+        cooperative: ('synchronisation.journal.cooperative' | transloco),
+        enregistrements: ('synchronisation.journal.enregistrements' | transloco),
+        statut: ('synchronisation.journal.statut' | transloco),
+        vide: ('synchronisation.journal.vide' | transloco),
+        types: {
+          'lead-farmer': ('synchronisation.origine.lead-farmer' | transloco),
+          technicien: ('synchronisation.origine.technicien' | transloco),
+        },
+        statuts: {
+          succes: ('synchronisation.statut.succes' | transloco),
+          partiel: ('synchronisation.statut.partiel' | transloco),
+          erreur: ('synchronisation.statut.erreur' | transloco),
+        },
+      }"
+    />
+
+    <app-pagination
+      [page]="page()"
+      [nombrePages]="v.nombrePages"
+      [libelleResume]="'synchronisation.pagination.resume' | transloco: { page: page(), pages: v.nombrePages, total: v.totalEntrees }"
+      [libellePrecedent]="'synchronisation.pagination.precedent' | transloco"
+      [libelleSuivant]="'synchronisation.pagination.suivant' | transloco"
+      (pageChoisie)="choisirPage($event)"
+    />
+  }
+} @else if (ressource.isLoading()) {
+  <p class="message-etat" role="status">{{ 'synchronisation.chargement' | transloco }}</p>
+}

@@ -1,0 +1,32 @@
+<h2 class="carte__libelle">{{ titre() }}</h2>
+<form class="formulaire formulaire--colonne" [formGroup]="formulaire" (ngSubmit)="valider()">
+  <fieldset class="champ-groupe">
+    <legend>{{ libelles().type }}</legend>
+    <ul class="legende legende--colonne">
+      @for (option of types(); track option.valeur) {
+        <li>
+          <label class="legende__element">
+            <input type="radio" formControlName="type" [value]="option.valeur" />
+            {{ option.libelle }}
+          </label>
+          @if (formulaire.controls.type.value === option.valeur && libelles().noteType[option.valeur]; as note) {
+            <p class="carte__detail">{{ note }}</p>
+          }
+        </li>
+      }
+    </ul>
+  </fieldset>
+
+  <label class="champ-filtre">
+    <span>{{ libelles().instructions }}</span>
+    <textarea rows="4" formControlName="instructions" [attr.maxlength]="longueurMax()"></textarea>
+  </label>
+
+  <p class="carte__detail">{{ libelles().langue }} : {{ langue() }}</p>
+
+  <div class="formulaire__actions">
+    <button type="submit" class="bouton" [disabled]="enCours()">
+      {{ enCours() ? libelles().enCours : libelles().generer }}
+    </button>
+  </div>
+</form>

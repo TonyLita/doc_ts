@@ -1,0 +1,84 @@
+{
+  "titre": "Parcelles",
+  "importer": "Importer des parcelles",
+  "nouvelle": "Nouvelle parcelle",
+  "identite_reduite": "Pour votre profil, l'identité des producteurs est réduite (initiales) afin de protéger les données personnelles.",
+  "chargement": "Chargement des parcelles…",
+  "erreur": "Impossible de charger les parcelles.",
+  "reessayer": "Réessayer",
+  "erreurs": {
+    "interdit": "La gestion des parcelles est réservée au Super Administrateur.",
+    "introuvable": "Cette parcelle n'existe plus. Rechargez la page.",
+    "invalide": "Les informations saisies ne sont pas valides (latitude de -90 à 90, longitude de -180 à 180, nombre de pieds entier, producteur et coopérative existants).",
+    "trop_de_demandes": "Trop de demandes en peu de temps. Patientez un instant avant de réessayer.",
+    "indisponible": "Le service est indisponible pour le moment.",
+    "delai_depasse": "L'opération a pris trop de temps. Réessayez.",
+    "generique": "L'action n'a pas pu être effectuée. Réessayez."
+  },
+  "indicateurs": {
+    "titre": "Indicateurs des parcelles",
+    "parcelles": "Parcelles",
+    "part_vanille": "Part en culture de vanille",
+    "production": "Production estimée",
+    "unite_production": "kg",
+    "detail_production": "Estimation indicative"
+  },
+  "filtres": {
+    "recherche": "Rechercher un code ou un producteur",
+    "cooperative": "Coopérative",
+    "toutes_cooperatives": "Toutes les coopératives",
+    "zone": "Zone",
+    "toutes_zones": "Toutes les zones",
+    "statut": "Statut",
+    "actives": "Actives",
+    "archivees": "Archivées",
+    "toutes": "Toutes"
+  },
+  "liste": {
+    "titre": "Parcelles de culture de vanille",
+    "code": "Parcelle",
+    "producteur": "Producteur",
+    "cooperative": "Coopérative",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "pieds": "Pieds estimés",
+    "production": "Production estimée (kg)",
+    "zone": "Zone",
+    "vanille": "En vanille",
+    "oui": "Oui",
+    "non": "Non",
+    "archivee": "archivée",
+    "actions": "Actions",
+    "vide": "Aucune parcelle ne correspond à ces critères."
+  },
+  "actions": {
+    "modifier": "Modifier",
+    "archiver": "Archiver",
+    "restaurer": "Restaurer"
+  },
+  "formulaire": {
+    "titre_creation": "Nouvelle parcelle",
+    "titre_modification": "Modifier la parcelle {{code}}",
+    "producteur": "Producteur propriétaire",
+    "cooperative": "Coopérative",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "pieds": "Nombre de pieds estimé",
+    "vanille": "Parcelle cultivée en vanille",
+    "choisir": "Choisir…",
+    "enregistrer": "Enregistrer",
+    "annuler": "Annuler",
+    "champs_invalides": "Renseignez tous les champs : latitude de -90 à 90, longitude de -180 à 180, nombre de pieds entier positif ou nul."
+  },
+  "pagination": {
+    "resume": "Page {{page}} sur {{pages}} · {{total}} parcelles",
+    "precedent": "Précédent",
+    "suivant": "Suivant"
+  },
+  "confirmation": {
+    "titre": "Archiver la parcelle",
+    "message": "La parcelle {{code}} sera archivée : elle ne sera plus proposée à la saisie, mais ses saisies restent consultables. Vous pourrez la restaurer.",
+    "confirmer": "Archiver",
+    "annuler": "Annuler"
+  }
+}

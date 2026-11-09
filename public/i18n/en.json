@@ -1,0 +1,17 @@
+{
+  "commun": {
+    "theme": {
+      "mode_clair": "Light mode",
+      "mode_sombre": "Dark mode",
+      "nom_accessible": "Light theme"
+    },
+    "langue": {
+      "titre": "Language"
+    },
+    "import_export": {
+      "libelle": "Import and export",
+      "import": "Import",
+      "export": "Export"
+    }
+  }
+}

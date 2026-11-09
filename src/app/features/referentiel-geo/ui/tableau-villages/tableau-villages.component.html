@@ -1,0 +1,63 @@
+<div class="tableau__defilement">
+  <table class="tableau">
+    <caption class="carte__libelle">{{ titre() }}</caption>
+    <thead>
+      <tr>
+        @if (modifiable()) {
+          <th scope="col" class="tableau__case">
+            <input
+              type="checkbox"
+              [checked]="toutesChoisies()"
+              [attr.aria-label]="libelles().toutChoisir"
+              (change)="toutChoisi.emit(lireCoche($event))"
+            />
+          </th>
+        }
+        <th scope="col">{{ libelles().commune }}</th>
+        <th scope="col">{{ libelles().village }}</th>
+        <th scope="col">{{ libelles().zone }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (ligne of lignes(); track ligne.id) {
+        <tr [class.tableau__ligne--modifiee]="ligne.modifiee">
+          @if (modifiable()) {
+            <td class="tableau__case">
+              <input
+                type="checkbox"
+                [checked]="ligne.choisie"
+                [attr.aria-label]="libelles().choisir + ' ' + ligne.village"
+                (change)="ligneChoisie.emit({ village: ligne.id, choisie: lireCoche($event) })"
+              />
+            </td>
+          }
+          <td>{{ ligne.commune }}</td>
+          <th scope="row">{{ ligne.village }}</th>
+          <td>
+            @if (modifiable()) {
+              <select
+                class="tableau__selecteur"
+                [attr.aria-label]="libelles().zone + ' ' + ligne.village"
+                (change)="zoneChangee.emit({ village: ligne.id, zone: lireZone($event) })"
+              >
+                <option value="" [selected]="!ligne.zone">{{ libelles().nonDefini }}</option>
+                @for (zone of zones(); track zone.valeur) {
+                  <option [value]="zone.valeur" [selected]="zone.valeur === ligne.zone">{{ zone.libelle }}</option>
+                }
+              </select>
+              @if (ligne.modifiee) {
+                <span class="carte__detail">{{ libelles().modifiee }}</span>
+              }
+            } @else {
+              {{ ligne.zoneNom || libelles().nonDefini }}
+            }
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td class="tableau__vide" [attr.colspan]="nombreColonnes()">{{ libelles().vide }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

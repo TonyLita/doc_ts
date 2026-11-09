@@ -1,0 +1,57 @@
+{
+  "titre": "Synchronization",
+  "automatique": "Synchronization is automatic: it happens as soon as the mobile app regains a connection, with no manual action on the web side. Dashboards update after every successful synchronization.",
+  "chargement": "Loading the synchronization log…",
+  "erreur": "Unable to load the synchronization log.",
+  "reessayer": "Retry",
+  "filtres": {
+    "campagne": "Campaign",
+    "en_cours": "current",
+    "cooperative": "Cooperative",
+    "toutes_cooperatives": "All cooperatives",
+    "statut": "Status",
+    "tous_statuts": "All statuses"
+  },
+  "statut": {
+    "succes": "Success",
+    "partiel": "Partial",
+    "erreur": "Error"
+  },
+  "origine": {
+    "lead-farmer": "Lead Farmer",
+    "technicien": "Technician"
+  },
+  "indicateurs": {
+    "titre": "Synchronization indicators",
+    "derniere": {
+      "libelle": "Last synchronization",
+      "detail": "Date and time the data was received"
+    },
+    "total": {
+      "libelle": "Synchronizations",
+      "detail": "Exchanges received for the campaign"
+    },
+    "enregistrements": {
+      "libelle": "Records received",
+      "detail": "Entries sent by the mobile devices"
+    },
+    "a_surveiller": {
+      "libelle": "To watch",
+      "detail": "{{erreurs}} failed · {{partielles}} partial"
+    }
+  },
+  "journal": {
+    "titre": "Synchronization log",
+    "horodatage": "Timestamp",
+    "origine": "Origin",
+    "cooperative": "Cooperative",
+    "enregistrements": "Records",
+    "statut": "Status",
+    "vide": "No synchronization matches these criteria."
+  },
+  "pagination": {
+    "resume": "Page {{page}} of {{pages}} · {{total}} synchronizations",
+    "precedent": "Previous",
+    "suivant": "Next"
+  }
+}

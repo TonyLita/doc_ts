@@ -1,0 +1,181 @@
+<div class="page-entete">
+  <h1 class="page-titre">{{ 'referentiel_geo.titre' | transloco }}</h1>
+</div>
+
+@if (ressource.error()) {
+  <div class="message-etat" role="alert">
+    <p>{{ 'referentiel_geo.erreur' | transloco }}</p>
+    <button type="button" class="message-etat__action" (click)="recharger()">
+      {{ 'referentiel_geo.reessayer' | transloco }}
+    </button>
+  </div>
+}
+
+@if (cleErreur(); as cle) {
+  <p class="message-etat" role="alert">{{ 'referentiel_geo.erreurs.' + cle | transloco }}</p>
+}
+
+@if (donnees(); as d) {
+  @if (vue(); as v) {
+    @if (!d.sourceDisponible) {
+      <p class="message-etat" role="alert">
+        {{ 'referentiel_geo.source_indisponible' | transloco: { date: v.derniere } }}
+      </p>
+    }
+
+    <section class="grille-indicateurs" [attr.aria-label]="'referentiel_geo.indicateurs.titre' | transloco">
+      <app-carte-indicateur [libelle]="'referentiel_geo.indicateurs.communes' | transloco" [valeur]="v.communes" />
+      <app-carte-indicateur [libelle]="'referentiel_geo.indicateurs.total' | transloco" [valeur]="v.total" />
+      <app-carte-indicateur [libelle]="'referentiel_geo.indicateurs.parcelles' | transloco" [valeur]="v.parcelles" />
+      <app-carte-indicateur
+        [libelle]="'referentiel_geo.indicateurs.derniere.libelle' | transloco"
+        [valeur]="v.derniere"
+        [detail]="'referentiel_geo.indicateurs.derniere.detail' | transloco"
+      />
+    </section>
+
+    <app-repartition-zones
+      [titre]="'referentiel_geo.repartition.titre' | transloco"
+      [segments]="v.repartition"
+      [sansZone]="v.repartitionSansZone"
+      [libelles]="{
+        villages: ('referentiel_geo.repartition.villages' | transloco),
+        parcelles: ('referentiel_geo.repartition.parcelles' | transloco),
+        sansZone: ('referentiel_geo.repartition.sans_zone' | transloco),
+        sansZoneDetail: ('referentiel_geo.repartition.sans_zone_detail' | transloco),
+      }"
+    />
+
+    <app-onglets
+      identifiant="geo"
+      [libelle]="'referentiel_geo.onglets.libelle' | transloco"
+      [onglets]="[
+        { id: 'arbre', libelle: ('referentiel_geo.onglets.arbre' | transloco) },
+        { id: 'zones', libelle: ('referentiel_geo.onglets.zones' | transloco) },
+      ]"
+      [actif]="onglet()"
+      (choisi)="choisirOnglet($event)"
+    />
+
+    @if (onglet() === 'arbre') {
+      <div class="panneau-onglet" role="tabpanel" id="geo-panneau-arbre" aria-labelledby="geo-onglet-arbre">
+        @if (ressourceArbre.error()) {
+          <div class="message-etat" role="alert">
+            <p>{{ 'referentiel_geo.arbre.erreur' | transloco }}</p>
+            <button type="button" class="message-etat__action" (click)="rechargerArbre()">
+              {{ 'referentiel_geo.reessayer' | transloco }}
+            </button>
+          </div>
+        }
+        @if (vueArbre(); as communes) {
+          <app-arbre-geographique
+            [communes]="communes"
+            [libelles]="{
+              deplierTout: ('referentiel_geo.arbre.deplier_tout' | transloco),
+              replierTout: ('referentiel_geo.arbre.replier_tout' | transloco),
+              deplier: ('referentiel_geo.arbre.deplier' | transloco),
+              replier: ('referentiel_geo.arbre.replier' | transloco),
+              villages: ('referentiel_geo.repartition.villages' | transloco),
+              parcelles: ('referentiel_geo.repartition.parcelles' | transloco),
+              sansZone: ('referentiel_geo.repartition.sans_zone' | transloco),
+              vide: ('referentiel_geo.arbre.vide' | transloco),
+            }"
+          />
+        } @else if (ressourceArbre.isLoading()) {
+          <p class="message-etat" role="status">{{ 'referentiel_geo.arbre.chargement' | transloco }}</p>
+        }
+      </div>
+    } @else {
+      <div class="panneau-onglet" role="tabpanel" id="geo-panneau-zones" aria-labelledby="geo-onglet-zones">
+        <div class="barre-filtres">
+          <label class="champ-recherche">
+            <span>{{ 'referentiel_geo.filtres.recherche' | transloco }}</span>
+            <input type="search" (input)="rechercher($event)" />
+          </label>
+          <app-champ-liste
+            [libelle]="'referentiel_geo.filtres.commune' | transloco"
+            [options]="optionsCommunes()"
+            [valeur]="commune() ?? ''"
+            [libelleToutes]="'referentiel_geo.filtres.toutes_communes' | transloco"
+            (choisie)="choisirCommune($event)"
+          />
+          <app-champ-liste
+            [libelle]="'referentiel_geo.filtres.zone' | transloco"
+            [options]="optionsZones()"
+            [valeur]="zone() ?? ''"
+            [libelleToutes]="'referentiel_geo.filtres.toutes_zones' | transloco"
+            (choisie)="choisirZone($event)"
+          />
+          <label class="champ-case">
+            <input type="checkbox" [checked]="sansZone()" (change)="basculerSansZone($event)" />
+            <span>{{ 'referentiel_geo.filtres.sans_zone' | transloco }}</span>
+          </label>
+        </div>
+
+        @if (d.peutParametrer) {
+          <app-barre-affectation
+            [zones]="optionsZones()"
+            [nombreSelectionnes]="v.nombreSelectionnes"
+            [nombreModifications]="v.nombreModifications"
+            [enCours]="enCours()"
+            [libelles]="{
+              affecter: ('referentiel_geo.affectation.affecter' | transloco),
+              choisirZone: ('referentiel_geo.affectation.choisir_zone' | transloco),
+              appliquer: ('referentiel_geo.affectation.appliquer' | transloco),
+              selection: ('referentiel_geo.affectation.selection' | transloco: { nombre: v.nombreSelectionnes }),
+              enAttente: ('referentiel_geo.affectation.en_attente' | transloco: { nombre: v.nombreModifications }),
+              enregistrer: ('referentiel_geo.affectation.enregistrer' | transloco),
+              annuler: ('referentiel_geo.affectation.annuler' | transloco),
+            }"
+            (affecter)="affecter($event)"
+            (enregistrer)="demanderConfirmation()"
+            (annuler)="annulerModifications()"
+          />
+        }
+
+        <app-tableau-villages
+          [titre]="'referentiel_geo.tableau.titre' | transloco"
+          [lignes]="v.lignes"
+          [zones]="optionsZones()"
+          [modifiable]="d.peutParametrer"
+          [toutesChoisies]="v.toutesChoisies"
+          [libelles]="{
+            commune: ('referentiel_geo.tableau.commune' | transloco),
+            village: ('referentiel_geo.tableau.village' | transloco),
+            zone: ('referentiel_geo.tableau.zone' | transloco),
+            nonDefini: ('referentiel_geo.tableau.non_defini' | transloco),
+            modifiee: ('referentiel_geo.tableau.modifiee' | transloco),
+            choisir: ('referentiel_geo.tableau.choisir' | transloco),
+            toutChoisir: ('referentiel_geo.tableau.tout_choisir' | transloco),
+            vide: ('referentiel_geo.tableau.vide' | transloco),
+          }"
+          (zoneChangee)="changerZone($event)"
+          (ligneChoisie)="choisirLigne($event)"
+          (toutChoisi)="choisirToutes($event)"
+        />
+
+        <app-pagination
+          [page]="page()"
+          [nombrePages]="v.nombrePages"
+          [libelleResume]="'referentiel_geo.pagination.resume' | transloco: { page: page(), pages: v.nombrePages, total: v.totalVillages }"
+          [libellePrecedent]="'referentiel_geo.pagination.precedent' | transloco"
+          [libelleSuivant]="'referentiel_geo.pagination.suivant' | transloco"
+          (pageChoisie)="choisirPage($event)"
+        />
+      </div>
+    }
+
+    @if (confirmation()) {
+      <app-dialogue-confirmation
+        [titre]="'referentiel_geo.confirmation.titre' | transloco"
+        [message]="'referentiel_geo.confirmation.message' | transloco: { nombre: v.nombreModifications }"
+        [libelleConfirmer]="'referentiel_geo.confirmation.confirmer' | transloco"
+        [libelleAnnuler]="'referentiel_geo.confirmation.annuler' | transloco"
+        (confirmer)="confirmer()"
+        (annuler)="annulerConfirmation()"
+      />
+    }
+  }
+} @else if (ressource.isLoading()) {
+  <p class="message-etat" role="status">{{ 'referentiel_geo.chargement' | transloco }}</p>
+}

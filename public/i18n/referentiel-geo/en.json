@@ -1,0 +1,87 @@
+{
+  "titre": "Geographic reference data",
+  "lecture_seule": "Communes and villages: read-only, provided by the external API. Only the agro-ecological zone of each village is set here.",
+  "chargement": "Loading the geographic reference data…",
+  "erreur": "Unable to load the geographic reference data.",
+  "reessayer": "Retry",
+  "source_indisponible": "The external API is unavailable: the data shown is from the last update ({{date}}).",
+  "erreurs": {
+    "interdit": "Setting zones is reserved for the Super Administrator.",
+    "introuvable": "A village or a zone no longer exists in the reference data. Reload the page.",
+    "invalide": "The changes sent are not valid.",
+    "trop_de_demandes": "Too many requests in a short time. Please wait a moment before trying again.",
+    "indisponible": "The service is currently unavailable.",
+    "delai_depasse": "The operation took too long. Please try again.",
+    "generique": "The zones could not be saved. Please try again."
+  },
+  "indicateurs": {
+    "titre": "Geographic reference indicators",
+    "communes": "Communes",
+    "total": "Villages and fokontany",
+    "parcelles": "Plots",
+    "derniere": {
+      "libelle": "Last synchronization",
+      "detail": "Updated from the external API"
+    }
+  },
+  "repartition": {
+    "titre": "Breakdown by zone type",
+    "villages": "villages",
+    "parcelles": "plots",
+    "sans_zone": "No zone",
+    "sans_zone_detail": "to be assigned to an agro-ecological zone"
+  },
+  "onglets": {
+    "libelle": "Geographic reference data views",
+    "arbre": "Tree view",
+    "zones": "Villages and zones"
+  },
+  "arbre": {
+    "chargement": "Loading the tree…",
+    "erreur": "Unable to load the tree.",
+    "deplier_tout": "Expand all",
+    "replier_tout": "Collapse all",
+    "deplier": "Expand",
+    "replier": "Collapse",
+    "vide": "No commune in the reference data."
+  },
+  "filtres": {
+    "recherche": "Search a village",
+    "commune": "Commune",
+    "toutes_communes": "All communes",
+    "zone": "Zone",
+    "toutes_zones": "All zones",
+    "sans_zone": "Without a zone only"
+  },
+  "affectation": {
+    "affecter": "Assign the selection to",
+    "choisir_zone": "Choose a zone",
+    "appliquer": "Apply to selection",
+    "selection": "Villages selected: {{nombre}}",
+    "en_attente": "Pending changes: {{nombre}}",
+    "enregistrer": "Save",
+    "annuler": "Cancel changes"
+  },
+  "tableau": {
+    "titre": "Villages and fokontany",
+    "commune": "Commune",
+    "village": "Village / Fokontany",
+    "zone": "Zone",
+    "non_defini": "— not set —",
+    "modifiee": "changed, not saved",
+    "choisir": "Select",
+    "tout_choisir": "Select all villages on the page",
+    "vide": "No village matches these criteria."
+  },
+  "pagination": {
+    "resume": "Page {{page}} of {{pages}} · {{total}} villages",
+    "precedent": "Previous",
+    "suivant": "Next"
+  },
+  "confirmation": {
+    "titre": "Save the zones",
+    "message": "You are about to change the zone of {{nombre}} village(s). The farmers and plots attached to them inherit this zone: the analyses by zone may change.",
+    "confirmer": "Confirm",
+    "annuler": "Cancel"
+  }
+}

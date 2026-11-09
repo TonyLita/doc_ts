@@ -1,0 +1,17 @@
+<h2 class="carte__libelle">{{ libelle() }}</h2>
+<p class="carte__valeur">{{ valeur() }}</p>
+@if (progression() !== undefined) {
+  <div
+    class="barre-progression"
+    role="progressbar"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    [attr.aria-valuenow]="progression()"
+    [attr.aria-label]="libelle()"
+  >
+    <div class="barre-progression__remplie" [style.width.%]="progression()"></div>
+  </div>
+}
+@if (detail()) {
+  <p class="carte__detail">{{ detail() }}</p>
+}

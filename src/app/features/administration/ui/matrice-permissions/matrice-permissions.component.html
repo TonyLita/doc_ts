@@ -1,0 +1,41 @@
+<div class="tableau__defilement">
+  <table class="tableau">
+    <caption class="carte__libelle">{{ titre() }}</caption>
+    <thead>
+      <tr>
+        <th scope="col">{{ libelles().droit }}</th>
+        @for (colonne of colonnes(); track colonne.profil) {
+          <th scope="col">{{ colonne.libelle }}</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (ligne of lignes(); track ligne.droit) {
+        <tr>
+          <th scope="row">{{ libelles().droits[ligne.droit] }}</th>
+          @for (colonne of colonnes(); track colonne.profil) {
+            <td>
+              @if (ligne.profils.includes(colonne.profil)) {
+                <app-pastille
+                  class="statut-validation__pastille pastille-statut--complet"
+                  role="img"
+                  remplissage="plein"
+                  [attr.aria-label]="libelles().autorise"
+                  [attr.title]="libelles().autorise"
+                />
+              } @else {
+                <app-pastille
+                  class="statut-validation__pastille pastille-statut--en-attente"
+                  role="img"
+                  remplissage="vide"
+                  [attr.aria-label]="libelles().refuse"
+                  [attr.title]="libelles().refuse"
+                />
+              }
+            </td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

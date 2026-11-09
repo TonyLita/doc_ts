@@ -1,0 +1,52 @@
+{
+  "titre": "Observations de floraison",
+  "chargement": "Chargement des observations…",
+  "erreur": "Impossible de charger les observations.",
+  "reessayer": "Réessayer",
+  "en_attente": "{{nombre}} observations en attente de validation ne sont pas comptées dans ces chiffres.",
+  "filtres": {
+    "campagne": "Campagne",
+    "en_cours": "en cours",
+    "cooperative": "Coopérative",
+    "toutes_cooperatives": "Toutes les coopératives",
+    "zone": "Zone",
+    "toutes_zones": "Toutes les zones",
+    "statut": "Statut de validation",
+    "tous_statuts": "Tous les statuts"
+  },
+  "statut": {
+    "valide": "Validées",
+    "en_attente": "En attente"
+  },
+  "familles": {
+    "quantite": "Quantité de floraison",
+    "periode": "Période de floraison",
+    "calibrage": "Calibrage des fleurs"
+  },
+  "valeurs": {
+    "quantite": {
+      "faible": "Faible",
+      "normal": "Normal",
+      "beaucoup": "Beaucoup"
+    },
+    "periode": {
+      "precoce": "Précoce",
+      "normal": "Normal",
+      "retard": "Retard"
+    },
+    "calibrage": {
+      "court": "Court",
+      "normal": "Normal",
+      "long": "Long"
+    }
+  },
+  "tableau": {
+    "valeur": "Valeur",
+    "effectif": "Effectif",
+    "pourcentage": "Part"
+  },
+  "representativite": {
+    "oui": "Représentatif ({{total}} obs.)",
+    "non": "Échantillon insuffisant ({{total}} obs.)"
+  }
+}

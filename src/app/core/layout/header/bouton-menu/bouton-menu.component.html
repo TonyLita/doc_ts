@@ -1,0 +1,24 @@
+<button
+  type="button"
+  aria-controls="menu-principal"
+  [attr.aria-expanded]="!etatMenu.menuReduit()"
+  [attr.aria-label]="
+    (etatMenu.menuReduit() ? 'layout.bouton_menu.afficher' : 'layout.bouton_menu.reduire') | transloco
+  "
+  (click)="etatMenu.basculer()"
+  class="flex h-full w-10 items-center justify-center rounded-full border border-line bg-surface text-on-surface shadow-md focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-surface focus:outline-none"
+>
+  <svg
+    class="h-5 w-5"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    aria-hidden="true"
+  >
+    <line x1="4" y1="6" x2="20" y2="6" />
+    <line x1="4" y1="12" x2="20" y2="12" />
+    <line x1="4" y1="18" x2="20" y2="18" />
+  </svg>
+</button>

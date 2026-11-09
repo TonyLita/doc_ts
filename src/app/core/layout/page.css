@@ -1,0 +1,1711 @@
+/*
+ * Principes de répartition du CONTENU d'une page, communs à toutes les pages de la plateforme.
+ * Une page ne fournit que son contenu : elle utilise ces classes et ne fixe jamais de disposition en dur.
+ * Importé par src/styles.css, à côté de layout.css.
+ * Les seuils de largeur (--breakpoint-*) sont définis une seule fois dans src/styles.css : ici, les @media les lisent
+ * avec theme(--breakpoint-…), jamais avec une largeur en dur.
+ */
+
+:root {
+  /* Couleurs des séries d'un graphique (zones) : l'ordre est stable, une zone garde sa couleur. */
+  --couleur-zone-0: #156bb6;
+  --couleur-zone-1: #01adee;
+  --couleur-zone-2: #8bc541;
+  --couleur-zone-3: #d98e04;
+  --couleur-zone-4: #8b5cf6;
+  --couleur-statut-complet: #3f8f12;
+  --couleur-statut-partiel: #b97700;
+  --couleur-statut-attente: var(--line);
+}
+
+:root.dark {
+  --couleur-zone-0: #5aa9ec;
+  --couleur-zone-3: #f2b134;
+  --couleur-zone-4: #a98bf8;
+  --couleur-statut-complet: #8bc541;
+  --couleur-statut-partiel: #f2b134;
+}
+
+@layer components {
+  /* Colonne de contenu d'une page : largeur bornée, centrée, espacement vertical constant. */
+  .page-contenu {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+  }
+
+  /* Pendant un rechargement, les anciennes données restent visibles mais atténuées. */
+  .page-contenu--chargement {
+    cursor: progress;
+  }
+
+  .page-contenu--chargement > :not(.page-entete) {
+    opacity: 0.6;
+    transition: opacity 150ms;
+  }
+
+  .page-entete {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  /* Actions d'une page, à droite du titre : pastille d'information et boutons, centrés sur la même ligne. */
+  .page-entete__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .page-titre {
+    font-family: var(--font-display);
+    font-size: 1.875rem;
+    font-weight: 700;
+  }
+
+  /* Filtres d'une page : libellé au-dessus d'une liste déroulante native. */
+  .barre-filtres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .champ-filtre {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .champ-filtre select,
+  .champ-filtre input {
+    min-width: 11rem;
+    height: var(--hauteur-controle-entete);
+    padding: 0 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: 0.5rem;
+    background-color: var(--field);
+    color: var(--on-surface);
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .champ-filtre select:focus-visible,
+  .champ-filtre input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .message-etat {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--line);
+    border-radius: 0.75rem;
+    background-color: var(--surface);
+  }
+
+  .message-etat__action {
+    padding: 0.375rem 0.875rem;
+    border-radius: 9999px;
+    background-color: var(--primary);
+    color: var(--on-primary);
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .message-etat__action:hover {
+    background-color: var(--primary-hover);
+  }
+
+  /*
+   * Squelette : emplacements grisés affichés à la place du contenu d'une page qui charge, pour qu'elle prenne forme tout de
+   * suite (décoratif : le message « Chargement… » reste le texte annoncé). La pulsation s'arrête si l'utilisateur réduit
+   * les animations.
+   */
+  .squelette {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .squelette__bloc {
+    display: block;
+    height: 6rem;
+    border-radius: 1rem;
+    background-color: color-mix(in srgb, var(--line) 30%, transparent);
+    animation: squelette-pulsation 1.2s ease-in-out infinite;
+  }
+
+  .squelette__bloc--haut {
+    height: 3rem;
+  }
+
+  .squelette__bloc--table {
+    height: 12rem;
+  }
+
+  @keyframes squelette-pulsation {
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .squelette__bloc {
+      animation: none;
+    }
+  }
+
+  /* Grilles adaptatives : une seule règle pour toutes. Une grille déclare seulement ses colonnes par palier, avec
+     --grille (mobile), --grille-sm, --grille-lg, --grille-xl ; un palier non déclaré reprend celui du dessous. Les
+     paliers sont les seuils de src/styles.css. Pour ajouter une grille : l'ajouter à cette liste et déclarer ses
+     variables, sans écrire de @media. */
+  :is(
+    .grille-indicateurs,
+    .grille-graphiques,
+    .grille-familles,
+    .grille-zones,
+    .disposition-carte,
+    .grille-exports,
+    .grille-apercus,
+    .grille-depots,
+    .grille-etapes
+  ) {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: var(--grille, 1fr);
+  }
+
+  @media (width >= theme(--breakpoint-sm)) {
+    :is(
+      .grille-indicateurs,
+      .grille-graphiques,
+      .grille-familles,
+      .grille-zones,
+      .disposition-carte,
+      .grille-exports,
+      .grille-apercus,
+      .grille-depots,
+      .grille-etapes
+    ) {
+      grid-template-columns: var(--grille-sm, var(--grille, 1fr));
+    }
+  }
+
+  @media (width >= theme(--breakpoint-lg)) {
+    :is(
+      .grille-indicateurs,
+      .grille-graphiques,
+      .grille-familles,
+      .grille-zones,
+      .disposition-carte,
+      .grille-exports,
+      .grille-apercus,
+      .grille-depots,
+      .grille-etapes
+    ) {
+      grid-template-columns: var(--grille-lg, var(--grille-sm, var(--grille, 1fr)));
+    }
+  }
+
+  @media (width >= theme(--breakpoint-xl)) {
+    :is(
+      .grille-indicateurs,
+      .grille-graphiques,
+      .grille-familles,
+      .grille-zones,
+      .disposition-carte,
+      .grille-exports,
+      .grille-apercus,
+      .grille-depots,
+      .grille-etapes
+    ) {
+      grid-template-columns: var(--grille-xl, var(--grille-lg, var(--grille-sm, var(--grille, 1fr))));
+    }
+  }
+
+  /* Grille des indicateurs : 1 colonne sur mobile, 2 sur tablette, 4 sur grand écran. */
+  .grille-indicateurs {
+    --grille-sm: repeat(2, 1fr);
+    --grille-xl: repeat(4, 1fr);
+  }
+
+  /* Une carte large occupe deux colonnes (ou toute la ligne quand il n'y en a qu'une). */
+  .carte--large {
+    grid-column: 1 / -1;
+  }
+
+  @media (width >= theme(--breakpoint-xl)) {
+    .carte--large {
+      grid-column: span 2;
+    }
+  }
+
+  /* Graphiques : empilés sur petit écran, le premier plus large à côté du second sur grand écran. */
+  .grille-graphiques {
+    --grille-xl: 2fr 1fr;
+  }
+
+  /* Carte : bloc de contenu standard (indicateur, graphique, synthèse). */
+  .carte {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 0;
+    padding: 1.25rem;
+    border: 1px solid color-mix(in srgb, var(--line) 40%, transparent);
+    border-radius: 1rem;
+    background-color: var(--surface);
+    color: var(--on-surface);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
+  }
+
+  .carte__entete {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .carte__libelle {
+    font-size: 0.875rem;
+    font-weight: 600;
+    opacity: 0.85;
+  }
+
+  .carte__valeur {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .carte__detail {
+    font-size: 0.75rem;
+    opacity: 0.8;
+  }
+
+  .carte__texte {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  .barre-progression {
+    height: 0.5rem;
+    overflow: hidden;
+    border-radius: 9999px;
+    background-color: color-mix(in srgb, var(--line) 35%, transparent);
+  }
+
+  .barre-progression__remplie {
+    height: 100%;
+    border-radius: 9999px;
+    background-color: var(--accent);
+  }
+
+  /* Bascule entre deux vues d'un même graphique. */
+  .bascule {
+    display: inline-flex;
+    padding: 0.125rem;
+    border: 1px solid var(--line);
+    border-radius: 9999px;
+  }
+
+  .bascule__option {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .bascule__option--active {
+    background-color: var(--primary);
+    color: var(--on-primary);
+  }
+
+  .bascule__option:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* Graphiques SVG : la couleur d'une série vient de .couleur-zone-N (currentColor). */
+  .graphique {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .graphique__grille {
+    stroke: var(--line);
+    stroke-opacity: 0.35;
+    stroke-width: 1;
+  }
+
+  .graphique__texte {
+    fill: var(--on-surface);
+    font-size: 11px;
+    opacity: 0.8;
+  }
+
+  .graphique__courbe {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linejoin: round;
+  }
+
+  .couleur-zone-0 {
+    color: var(--couleur-zone-0);
+  }
+
+  .couleur-zone-1 {
+    color: var(--couleur-zone-1);
+  }
+
+  .couleur-zone-2 {
+    color: var(--couleur-zone-2);
+  }
+
+  .couleur-zone-3 {
+    color: var(--couleur-zone-3);
+  }
+
+  .couleur-zone-4 {
+    color: var(--couleur-zone-4);
+  }
+
+  .anneau {
+    position: relative;
+    align-self: center;
+    width: min(100%, 13rem);
+  }
+
+  .anneau__dessin {
+    display: block;
+    width: 100%;
+  }
+
+  .anneau__fond {
+    stroke: var(--line);
+    stroke-opacity: 0.25;
+  }
+
+  .anneau__total {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  /* Légende : pastilles de couleur suivies d'un texte. */
+  .legende {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1rem;
+    font-size: 0.75rem;
+  }
+
+  .legende__element {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+
+  .legende__pastille {
+    width: 0.75rem;
+    height: 0.75rem;
+    flex: none;
+    border-radius: 0.1875rem;
+    background-color: currentColor;
+  }
+
+  /* Statut des données par mois : une pastille par mois (forme + couleur). */
+  .statut-mois__liste {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+  }
+
+  .statut-mois__element {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .statut-mois__mois {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+
+  .pastille-statut {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex: none;
+  }
+
+  .legende__pastille.pastille-statut {
+    width: 1rem;
+    height: 1rem;
+    background-color: transparent;
+    border-radius: 0;
+  }
+
+  .pastille-statut--complet {
+    color: var(--couleur-statut-complet);
+  }
+
+  .pastille-statut--partiel {
+    color: var(--couleur-statut-partiel);
+  }
+
+  .pastille-statut--en-attente {
+    color: var(--couleur-statut-attente);
+  }
+
+  .pastille-statut--erreur {
+    color: var(--danger);
+  }
+
+  .champ-filtre__etiquette {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  /* Champ de recherche d'une liste. */
+  .champ-recherche {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    max-width: 24rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .champ-recherche input {
+    height: var(--hauteur-controle-entete);
+    padding: 0 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: 0.5rem;
+    background-color: var(--field);
+    color: var(--on-surface);
+    font-size: 0.875rem;
+  }
+
+  /* Barre de filtres dont le champ de recherche occupe la place laissée par les listes déroulantes. */
+  .barre-filtres--recherche {
+    align-items: flex-end;
+  }
+
+  .barre-filtres--recherche .champ-recherche {
+    flex: 1 1 16rem;
+  }
+
+  .champ-recherche input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* Tableau de données : défile horizontalement dans sa carte sur petit écran. */
+  .tableau__defilement {
+    overflow-x: auto;
+  }
+
+  .tableau {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    text-align: left;
+  }
+
+  .tableau caption {
+    padding-bottom: 0.75rem;
+    text-align: left;
+  }
+
+  .tableau th,
+  .tableau td {
+    padding: 0.625rem 0.75rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--line) 35%, transparent);
+    vertical-align: top;
+  }
+
+  .tableau thead th {
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+    opacity: 0.85;
+  }
+
+  .tableau tbody th {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .tableau__vide {
+    text-align: center;
+    opacity: 0.8;
+  }
+
+  .statut-validation {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .statut-validation__pastille {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+
+  /* Couverture par coopérative : nom, barre, taux, « suivis / ciblés ». */
+  .couverture {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .couverture__ligne {
+    display: grid;
+    grid-template-columns: 9rem 1fr 3rem 6rem;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .couverture__nom {
+    font-weight: 600;
+  }
+
+  .couverture__taux {
+    font-weight: 700;
+    text-align: right;
+  }
+
+  .couverture__effectifs {
+    text-align: right;
+    opacity: 0.8;
+  }
+
+  @media (width < theme(--breakpoint-sm)) {
+    .couverture__ligne {
+      grid-template-columns: 1fr 3rem;
+    }
+
+    .couverture__barre {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+  }
+
+  /* Pagination : précédent, résumé, suivant. */
+  .pagination {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    font-size: 0.875rem;
+  }
+
+  .pagination__bouton {
+    padding: 0.375rem 0.875rem;
+    border: 1px solid var(--line);
+    border-radius: 9999px;
+    font-weight: 600;
+  }
+
+  .pagination__bouton:hover:not(:disabled) {
+    background-color: var(--primary);
+    color: var(--on-primary);
+  }
+
+  .pagination__bouton:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+  }
+
+  .pagination__bouton:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* Avec les numéros de page : le résumé à gauche, puis précédent, numéros et suivant à droite. */
+  .pagination--numeros {
+    justify-content: flex-end;
+  }
+
+  .pagination--numeros .pagination__resume {
+    order: -1;
+    margin-right: auto;
+  }
+
+  .pagination__numeros {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.375rem;
+  }
+
+  .pagination__numero {
+    min-width: 2rem;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--line);
+    border-radius: 9999px;
+    font-weight: 600;
+  }
+
+  .pagination__numero:hover:not(.pagination__numero--active) {
+    background-color: color-mix(in srgb, var(--primary) 20%, transparent);
+  }
+
+  .pagination__numero--active {
+    border-color: var(--primary);
+    background-color: var(--primary);
+    color: var(--on-primary);
+  }
+
+  .pagination__numero:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* Observations : une carte par famille, 1 colonne sur mobile, 2 sur tablette, 3 sur grand écran. */
+  .grille-familles {
+    --grille-sm: repeat(2, 1fr);
+    --grille-xl: repeat(3, 1fr);
+  }
+
+  /* Carte placée dans une autre carte : garde son contenu, perd son cadre. À placer après .carte. */
+  .carte--sans-cadre {
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  .tableau--compact th,
+  .tableau--compact td {
+    padding: 0.375rem 0.5rem;
+  }
+
+  .tableau__nombre {
+    text-align: right;
+  }
+
+  .tableau__total {
+    font-weight: 700;
+  }
+
+  /* Icônes d'action d'une ligne : côte à côte, sans passer à la ligne (ce qui allongerait chaque ligne du tableau). */
+  .tableau__actions .actions-ligne {
+    flex-wrap: nowrap;
+  }
+
+  /* Indicateur de représentativité : icône + texte, la couleur renforce le sens. */
+  .badge-representativite {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    align-self: flex-start;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid var(--couleur-statut-complet);
+    border-radius: 9999px;
+    color: var(--couleur-statut-complet);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .badge-representativite--insuffisant {
+    border-color: var(--couleur-statut-partiel);
+    color: var(--couleur-statut-partiel);
+  }
+
+  /* Pastille commune (statuts, profils) : la couleur vient de la classe du parent. */
+  .pastille {
+    display: inline-block;
+    flex: none;
+    vertical-align: middle;
+  }
+
+  .pastille__dessin {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Analyse par zone : une colonne par zone, dont les rangées restent alignées d'une zone à l'autre. */
+  .grille-zones {
+    --grille-sm: repeat(2, 1fr);
+    --grille-xl: repeat(3, 1fr);
+  }
+
+  /* 5 rangées : en-tête, chiffres, graphique mensuel, graphique pluriannuel, synthèse. */
+  .colonne-zone {
+    display: grid;
+    grid-row: span 5;
+    grid-template-rows: subgrid;
+    min-width: 0;
+  }
+
+  .colonne-zone__entete {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .colonne-zone__chiffres {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  /* Mise en avant (ex. zone en retard de floraison : priorité aux équipes). */
+  .carte--alerte {
+    border-color: var(--danger);
+  }
+
+  /* Profil de période : pastille (forme) + libellé, la couleur renforce le sens. */
+  .profil-periode {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .profil-periode__pastille {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .profil-periode--precoce {
+    color: var(--accent);
+  }
+
+  .profil-periode--normal {
+    color: var(--couleur-statut-complet);
+  }
+
+  .profil-periode--retarde {
+    color: var(--danger);
+  }
+
+  .legende--colonne {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .legende input[type='checkbox'],
+  .legende input[type='radio'] {
+    accent-color: var(--accent);
+  }
+
+  /* Page carte : la carte à gauche, un panneau (fiche + légende) à droite sur grand écran. */
+  .disposition-carte {
+    --grille-lg: 1fr 17rem;
+  }
+
+  .disposition-carte__panneau {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 0;
+  }
+
+  /* z-index: 0 isole les panneaux de Leaflet (z-index jusqu'à 1000) pour qu'ils restent sous le header. */
+  .carte-leaflet {
+    position: relative;
+    z-index: 0;
+    height: 34rem;
+    border-radius: 0.75rem;
+  }
+
+  /*
+   * Bulle d'une parcelle (popup Leaflet) : c'est la fiche, avec le cadre d'une carte standard (.carte : fond, bordure,
+   * rayon, ombre), qui fait la bulle. La popup n'ajoute que la pointe, de la couleur du fond, et reprend la police et
+   * l'interligne de l'application (Leaflet impose les siens).
+   */
+  .bulle-parcelle .leaflet-popup-content-wrapper {
+    padding: 0;
+    border-radius: 1rem;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .bulle-parcelle .leaflet-popup-content {
+    margin: 0;
+    /* Largeur minimale : le nom du producteur et les libellés ne se découpent plus ligne à ligne. */
+    min-width: 12rem;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  /* Pas de pointe : la bulle est posée au-dessus du cercle, sans losange sous elle. */
+  .bulle-parcelle .leaflet-popup-tip-container {
+    display: none;
+  }
+
+  /* Le bouton de fermeture occupe le coin haut droit : le titre lui laisse la place. */
+  .bulle-parcelle .leaflet-popup-close-button {
+    color: var(--on-surface);
+  }
+
+  .bulle-parcelle .carte__valeur--titre {
+    padding-right: 1rem;
+  }
+
+  /* Repère d'un centre de coopérative : losange, distinct des cercles des parcelles. */
+  .repere-centre {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid #ffffff;
+    background-color: #161f48;
+    box-shadow: 0 1px 4px rgb(0 0 0 / 0.5);
+    transform: rotate(45deg);
+  }
+
+  .repere-centre--legende {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-color: var(--on-surface);
+  }
+
+  .carte__valeur--titre {
+    font-size: 1.25rem;
+  }
+
+  .fiche {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.25rem 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .fiche dt {
+    opacity: 0.8;
+  }
+
+  .fiche dd {
+    font-weight: 600;
+    text-align: right;
+  }
+
+  /* Boutons d'action : principal (plein) ou secondaire (contour), éventuellement réduits dans un tableau. */
+  .bouton {
+    padding: 0.5rem 1.125rem;
+    border: 1px solid var(--primary);
+    border-radius: 9999px;
+    background-color: var(--primary);
+    color: var(--on-primary);
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .bouton:hover:not(:disabled) {
+    background-color: var(--primary-hover);
+  }
+
+  .bouton:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+  }
+
+  .bouton:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .bouton--secondaire {
+    border-color: var(--line);
+    background-color: transparent;
+    color: var(--on-surface);
+  }
+
+  .bouton--secondaire:hover:not(:disabled) {
+    background-color: var(--primary);
+    color: var(--on-primary);
+  }
+
+  .bouton--petit {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .actions-ligne {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* Formulaire d'une carte : champs côte à côte, boutons en dessous. */
+  .formulaire {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 0.75rem;
+  }
+
+  .formulaire__actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  /* Confirmation d'une action sensible : dialogue natif centré, fond assombri. */
+  .dialogue {
+    width: min(28rem, calc(100vw - 2rem));
+    margin: auto;
+    padding: 1.5rem;
+    border: 1px solid var(--line);
+    border-radius: 0.75rem;
+    background-color: var(--surface);
+    color: var(--on-surface);
+  }
+
+  .dialogue::backdrop {
+    background-color: rgb(0 0 0 / 0.5);
+  }
+
+  .dialogue[open] {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .dialogue__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+
+  /* Formulaire en colonne (champs empilés) et groupe de choix (boutons radio) d'un formulaire. */
+  .formulaire--colonne {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .champ-groupe {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 0;
+    font-size: 0.875rem;
+  }
+
+  .champ-groupe legend {
+    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .champ-filtre input[type='file'] {
+    height: auto;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    cursor: pointer;
+  }
+
+  .champ-filtre textarea {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: 0.5rem;
+    background-color: var(--field);
+    color: var(--on-surface);
+    font-size: 0.875rem;
+    font-weight: 400;
+    resize: vertical;
+  }
+
+  .champ-filtre textarea:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* Rapport généré par IA : avertissement permanent, texte narratif, pied avec la mention de source et la copie. */
+  .avertissement {
+    padding: 0.625rem 0.875rem;
+    border: 1px solid var(--couleur-statut-partiel);
+    border-radius: 0.5rem;
+    color: var(--couleur-statut-partiel);
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  /* Texte d'un rapport d'IA, rendu depuis du Markdown : titres, paragraphes, listes, tableaux. */
+  .rapport {
+    display: block;
+    max-width: 70ch;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+
+  .rapport > :first-child {
+    margin-top: 0;
+  }
+
+  .rapport h1,
+  .rapport h2,
+  .rapport h3,
+  .rapport h4 {
+    margin-top: 1rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .rapport h1 {
+    font-size: 1.25rem;
+  }
+
+  .rapport h2 {
+    font-size: 1.125rem;
+  }
+
+  .rapport h3,
+  .rapport h4 {
+    font-size: 1rem;
+  }
+
+  .rapport p,
+  .rapport ul,
+  .rapport ol,
+  .rapport pre,
+  .rapport table,
+  .rapport blockquote {
+    margin-top: 0.5rem;
+  }
+
+  .rapport ul {
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+
+  .rapport ol {
+    padding-left: 1.25rem;
+    list-style: decimal;
+  }
+
+  .rapport li + li {
+    margin-top: 0.25rem;
+  }
+
+  .rapport strong {
+    font-weight: 700;
+  }
+
+  .rapport a {
+    text-decoration: underline;
+  }
+
+  .rapport code {
+    padding: 0.1rem 0.3rem;
+    border-radius: 0.25rem;
+    background-color: color-mix(in srgb, var(--on-surface) 10%, transparent);
+    font-size: 0.875em;
+  }
+
+  .rapport pre {
+    overflow-x: auto;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    background-color: color-mix(in srgb, var(--on-surface) 8%, transparent);
+  }
+
+  .rapport pre code {
+    padding: 0;
+    background: none;
+  }
+
+  .rapport blockquote {
+    padding-left: 0.75rem;
+    border-left: 3px solid color-mix(in srgb, var(--line) 60%, transparent);
+    opacity: 0.9;
+  }
+
+  .rapport table {
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+
+  .rapport th,
+  .rapport td {
+    padding: 0.375rem 0.625rem;
+    border: 1px solid color-mix(in srgb, var(--line) 40%, transparent);
+    text-align: left;
+  }
+
+  .rapport__pied {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  /* Centre d'exports : une carte par export, 1 colonne sur mobile, 2 dès la tablette, 4 sur très grand écran. Le bouton
+     de chaque carte se range en bas, les cartes étant de même hauteur ; un nom de fichier long passe à la ligne. */
+  .grille-exports {
+    --grille-sm: repeat(2, 1fr);
+    --grille-xl: repeat(4, 1fr);
+  }
+
+  .grille-exports .actions-ligne {
+    margin-top: auto;
+  }
+
+  .grille-exports .actions-ligne .bouton {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    text-align: left;
+  }
+
+  /* Aperçus des graphiques exportables : une carte par graphique, 3 sur très grand écran. */
+  .grille-apercus {
+    --grille-xl: repeat(3, 1fr);
+  }
+
+  /* Import : une zone de dépôt par type de référentiel (2 colonnes dès la tablette), puis l'aide en 3 étapes. */
+  .grille-depots {
+    --grille-sm: repeat(2, 1fr);
+  }
+
+  .grille-etapes {
+    --grille-lg: repeat(3, 1fr);
+  }
+
+  /* Zone de dépôt d'un fichier : cadre en pointillés, qui se met en évidence quand un fichier la survole. */
+  .zone-depot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.5rem 1rem;
+    border: 2px dashed color-mix(in srgb, var(--line) 60%, transparent);
+    border-radius: 1rem;
+    text-align: center;
+  }
+
+  .zone-depot--survol {
+    border-color: var(--primary);
+    background-color: color-mix(in srgb, var(--primary) 10%, transparent);
+  }
+
+  .zone-depot__fichier {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    font-size: 0.875rem;
+  }
+
+  /* Étape d'une aide : carte plus claire que celle qui la contient, avec son numéro. */
+  .etape-aide {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    background-color: color-mix(in srgb, var(--on-surface) 6%, transparent);
+  }
+
+  .etape-aide__titre {
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .numero-etape {
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 0.5rem;
+    background-color: var(--primary);
+    color: var(--on-primary);
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+
+  /* Note d'une page : encadré d'avertissement discret. */
+  .note-page {
+    padding: 0.75rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--couleur-statut-partiel) 50%, transparent);
+    border-radius: 0.75rem;
+    background-color: color-mix(in srgb, var(--couleur-statut-partiel) 12%, transparent);
+    font-size: 0.8125rem;
+  }
+
+  /* Titre de section suivi d'un filet qui occupe la largeur restante. */
+  .titre-section {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .titre-section::after {
+    content: '';
+    flex: 1;
+    border-top: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+  }
+
+  /* Bandeau d'introduction d'une page : une carte teintée aux couleurs de l'application. */
+  .carte--bandeau {
+    border-color: color-mix(in srgb, var(--primary) 40%, transparent);
+    background-color: color-mix(in srgb, var(--primary) 10%, var(--surface));
+  }
+
+  .bandeau-titre {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  /* Liste d'éléments avec une action chacun (ex. un graphique et son bouton de téléchargement). */
+  .liste-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .liste-actions__element {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  /* Case à cocher d'un filtre, alignée sur la hauteur des autres champs de filtre. */
+  .champ-case {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: var(--hauteur-controle-entete);
+    align-self: flex-end;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .champ-case input,
+  .tableau__case input {
+    accent-color: var(--accent);
+  }
+
+  /* Lien d'une cellule de tableau (ex. le nom d'un producteur, qui mène à sa fiche) : souligné, donc reconnaissable. */
+  .lien-tableau {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .lien-tableau:hover {
+    opacity: 0.8;
+  }
+
+  .lien-tableau:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* Colonne des cases à cocher d'un tableau. */
+  .tableau__case {
+    width: 2.5rem;
+    text-align: center;
+  }
+
+  /* Liste déroulante placée dans une cellule de tableau (ex. zone d'un village). */
+  .tableau__selecteur {
+    min-width: 11rem;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--line);
+    border-radius: 0.5rem;
+    background-color: var(--field);
+    color: var(--on-surface);
+    font-size: 0.875rem;
+  }
+
+  .tableau__selecteur:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* Ligne dont une valeur est modifiée mais pas encore enregistrée : repérée par un filet, le texte la nomme aussi. */
+  .tableau__ligne--modifiee {
+    box-shadow: inset 3px 0 0 var(--accent);
+  }
+
+  /* Ligne archivée (ex. une parcelle) : elle reste lisible mais estompée ; le texte « archivée » la nomme aussi. */
+  .tableau__ligne--archivee {
+    opacity: 0.65;
+  }
+
+  /* Onglets d'une page : l'onglet actif est souligné, les autres s'estompent. */
+  .onglets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    padding: 0 0.5rem;
+    border: 1px solid var(--line);
+    border-radius: 0.75rem;
+    background-color: var(--surface);
+  }
+
+  .onglets__onglet {
+    padding: 0.75rem 1rem;
+    border-bottom: 2px solid transparent;
+    font-size: 0.875rem;
+    font-weight: 600;
+    opacity: 0.75;
+  }
+
+  .onglets__onglet:hover,
+  .onglets__onglet[aria-selected='true'] {
+    opacity: 1;
+  }
+
+  .onglets__onglet[aria-selected='true'] {
+    border-bottom-color: var(--accent);
+  }
+
+  .onglets__onglet:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+    border-radius: 0.5rem;
+  }
+
+  /* Contenu d'un onglet : même espacement vertical que la page. */
+  .panneau-onglet {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /* Répartition par type de zone : barre proportionnelle, puis légende chiffrée (la couleur ne porte jamais seule le sens). */
+  .repartition__barre {
+    display: flex;
+    gap: 2px;
+    height: 0.875rem;
+    overflow: hidden;
+    border-radius: 9999px;
+  }
+
+  .repartition__segment {
+    flex-basis: 0;
+    min-width: 0.375rem;
+    background-color: currentColor;
+  }
+
+  .repartition__segment--aucune,
+  .repartition__pastille--aucune {
+    background: repeating-linear-gradient(45deg, var(--line) 0 3px, transparent 3px 6px);
+  }
+
+  .repartition__legende {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 0.75rem 1.5rem;
+  }
+
+  .repartition__element {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    align-content: start;
+    gap: 0.125rem 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .repartition__element > :nth-child(n + 3) {
+    grid-column: 2;
+  }
+
+  .repartition__pastille {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 0.1875rem;
+    background-color: currentColor;
+  }
+
+  .repartition__pastille--aucune {
+    border: 1px dashed var(--on-surface);
+  }
+
+  .repartition__nom {
+    font-weight: 700;
+  }
+
+  .repartition__valeur {
+    font-weight: 600;
+  }
+
+  /* Badge d'une zone : pastille de couleur (celle du graphique) + nom ; le texte garde la couleur du thème. */
+  .badge-zone,
+  .pastille-campagne {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.125rem 0.625rem;
+    border: 1px solid color-mix(in srgb, currentColor 45%, transparent);
+    border-radius: 9999px;
+    background-color: color-mix(in srgb, currentColor 12%, transparent);
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .badge-zone__pastille {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background-color: currentColor;
+  }
+
+  .badge-zone__nom {
+    color: var(--on-surface);
+  }
+
+  .badge-zone--aucune {
+    border-style: dashed;
+    border-color: var(--on-surface);
+    background-color: transparent;
+    color: var(--on-surface);
+  }
+
+  .badge-zone--aucune .badge-zone__pastille {
+    background-color: transparent;
+    box-shadow: inset 0 0 0 1px currentColor;
+  }
+
+  /* Arborescence pliable (communes › villages › parcelles) : repères verticaux d'indentation, parcelles en grille. */
+  .arbre__outils {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .arbre,
+  .arbre__groupe,
+  .arbre__parcelles {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .arbre {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .arbre__ligne {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.375rem 0.75rem;
+    padding: 0.375rem 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .arbre__ligne:hover {
+    background-color: color-mix(in srgb, var(--on-surface) 6%, transparent);
+  }
+
+  .arbre__ligne--commune {
+    background-color: color-mix(in srgb, var(--on-surface) 8%, transparent);
+  }
+
+  .arbre__bascule {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.375rem;
+  }
+
+  button.arbre__bascule:hover {
+    background-color: color-mix(in srgb, var(--on-surface) 12%, transparent);
+  }
+
+  button.arbre__bascule:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .arbre__chevron {
+    width: 1rem;
+    height: 1rem;
+    transition: transform 150ms;
+  }
+
+  .arbre__bascule[aria-expanded='true'] .arbre__chevron {
+    transform: rotate(90deg);
+  }
+
+  .arbre__nom {
+    font-weight: 700;
+  }
+
+  .arbre__nom--village {
+    font-weight: 600;
+  }
+
+  .arbre__compte {
+    margin-left: auto;
+    font-size: 0.75rem;
+    font-weight: 600;
+    opacity: 0.8;
+  }
+
+  .arbre__groupe {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    margin: 0.25rem 0 0.25rem 1.25rem;
+    padding-left: 0.75rem;
+    border-left: 1px solid var(--line);
+  }
+
+  .arbre__parcelles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+    gap: 0.375rem 0.5rem;
+    margin: 0.25rem 0 0.5rem 1.75rem;
+    padding-left: 0.75rem;
+    border-left: 1px solid var(--line);
+  }
+
+  .arbre__parcelle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.625rem;
+    border: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .arbre__repere {
+    flex: none;
+    width: 0.25rem;
+    height: 1rem;
+    border-radius: 9999px;
+    background-color: currentColor;
+  }
+
+  .arbre__repere--aucune {
+    background: transparent;
+    box-shadow: inset 0 0 0 1px var(--on-surface);
+  }
+
+  .arbre__code {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .arbre__zone {
+    margin-left: auto;
+    opacity: 0.8;
+    white-space: nowrap;
+  }
+
+  /* Icône au trait qui prend la couleur du texte, et bouton ou lien carré qui la porte (actions d'un tableau). */
+  .icone {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex: none;
+  }
+
+  .bouton-icone {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--line);
+    border-radius: 0.5rem;
+    color: var(--on-surface);
+  }
+
+  .bouton-icone:hover:not(:disabled) {
+    background-color: var(--primary);
+    color: var(--on-primary);
+  }
+
+  .bouton-icone:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* Fenêtre modale à contenu libre (formulaire et historique) : plus large, défile si elle dépasse l'écran. */
+  .dialogue--large {
+    width: min(42rem, calc(100vw - 2rem));
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+  }
+
+  /* Dans une modale, un champ ne dépasse jamais la largeur de la fenêtre (une liste aux options longues, sur mobile). */
+  .dialogue--large .champ-filtre {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .dialogue--large .champ-filtre select,
+  .dialogue--large .champ-filtre input {
+    max-width: 100%;
+  }
+
+  .dialogue__entete {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  /* Tableau dont la hauteur est bornée (ex. historique dans une modale) : il défile à l'intérieur. */
+  .tableau__defilement--borne {
+    max-height: 16rem;
+    overflow-y: auto;
+  }
+
+  /* Une carte par parcelle : grille responsive sous son titre. */
+  .section-cartes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .cartes-parcelles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}

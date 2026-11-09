@@ -1,0 +1,22 @@
+@if (avecOnglets()) {
+  <app-onglets
+    identifiant="import-export"
+    [libelle]="'commun.import_export.libelle' | transloco"
+    [onglets]="[
+      { id: 'import', libelle: ('commun.import_export.import' | transloco) },
+      { id: 'export', libelle: ('commun.import_export.export' | transloco) },
+    ]"
+    [actif]="actif()"
+    (choisi)="aller($event)"
+  />
+}
+
+<!-- Le panneau n'est relié aux onglets (tabpanel) que lorsque la barre est affichée : sinon il n'y aurait pas d'onglet à référencer. -->
+<div
+  class="panneau-onglet"
+  [attr.role]="avecOnglets() ? 'tabpanel' : null"
+  [attr.id]="avecOnglets() ? 'import-export-panneau-' + actif() : null"
+  [attr.aria-labelledby]="avecOnglets() ? 'import-export-onglet-' + actif() : null"
+>
+  <ng-content />
+</div>

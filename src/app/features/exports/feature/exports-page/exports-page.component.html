@@ -1,0 +1,223 @@
+<div class="page-entete">
+  <div>
+    <h1 class="page-titre">{{ 'exports.entete.titre' | transloco }}</h1>
+
+    @if (contexte(); as c) {
+      @if (c.peutExporter) {
+        <p class="carte__detail">
+          {{
+            (c.region ? 'exports.entete.campagne_region' : 'exports.entete.campagne')
+              | transloco: { campagne: campagneAffichee(), region: c.region }
+          }}
+        </p>
+      }
+    }
+  </div>
+
+  @if (contexte()?.peutExporter) {
+    <div class="page-entete__actions">
+      <span class="pastille-campagne">{{ campagneAffichee() }}</span>
+      @if (rapportIaAutorise()) {
+        <a class="bouton bouton--secondaire" routerLink="/rapports-ia">{{ 'exports.entete.rapport_ia' | transloco }}</a>
+      }
+    </div>
+  }
+</div>
+
+<app-onglets-import-export actif="export">
+  @if (ressource.error()) {
+    <div class="message-etat" role="alert">
+      <p>{{ 'exports.erreur' | transloco }}</p>
+      <button type="button" class="message-etat__action" (click)="recharger()">
+        {{ 'exports.reessayer' | transloco }}
+      </button>
+    </div>
+  }
+
+  @if (contexte(); as c) {
+    @if (c.peutExporter) {
+      <section class="carte carte--bandeau">
+        <h2 class="bandeau-titre">{{ 'exports.titre' | transloco }}</h2>
+        <p class="carte__texte">{{ 'exports.bandeau.description' | transloco }}</p>
+        <p class="carte__detail">{{ 'exports.langue' | transloco: { langue: nomLangue() } }}</p>
+      </section>
+
+      <app-filtres-campagne-cooperative
+        [campagnes]="c.campagnes"
+        [campagne]="campagne() ?? c.campagne"
+        [campagneEnCours]="c.campagne"
+        [cooperatives]="c.cooperatives"
+        [cooperative]="cooperative()"
+        [libelleCampagne]="'exports.filtres.campagne' | transloco"
+        [libelleEnCours]="'exports.filtres.en_cours' | transloco"
+        [libelleCooperative]="'exports.filtres.cooperative' | transloco"
+        [libelleToutes]="'exports.filtres.toutes_cooperatives' | transloco"
+        (campagneChoisie)="choisirCampagne($event)"
+        (cooperativeChoisie)="choisirCooperative($event)"
+      >
+        <app-champ-liste
+          [libelle]="'exports.filtres.zone' | transloco"
+          [options]="optionsZones()"
+          [valeur]="zone() ?? ''"
+          [libelleToutes]="'exports.filtres.toutes_zones' | transloco"
+          (choisie)="choisirZone($event)"
+        />
+      </app-filtres-campagne-cooperative>
+
+      <section class="grille-exports" [attr.aria-label]="'exports.titre' | transloco">
+        <app-carte-export
+          [titre]="'exports.tableur.titre' | transloco"
+          [description]="'exports.tableur.description' | transloco"
+          [erreur]="cleEchecDe(['producteurs']) ? ('exports.erreurs.' + cleEchecDe(['producteurs']) | transloco) : undefined"
+        >
+          <app-champ-liste
+            [libelle]="'exports.tableur.format' | transloco"
+            [options]="[
+              { valeur: 'xlsx', libelle: ('exports.tableur.formats.xlsx' | transloco) },
+              { valeur: 'csv', libelle: ('exports.tableur.formats.csv' | transloco) },
+            ]"
+            [valeur]="format()"
+            (choisie)="choisirFormat($event)"
+          />
+          <div class="actions-ligne">
+            <button type="button" class="bouton" [disabled]="enCours() !== undefined" (click)="exporterProducteurs()">
+              @if (enCours() === 'producteurs') {
+                {{ 'exports.en_cours' | transloco }}
+              } @else {
+                <span aria-hidden="true">↓</span> {{ nomFichierProducteurs() }}
+              }
+            </button>
+          </div>
+        </app-carte-export>
+
+        <app-carte-export
+          [titre]="'exports.images.titre' | transloco"
+          [description]="'exports.images.description' | transloco"
+          [erreur]="cleEchecDe(['graphiques']) ? ('exports.erreurs.' + cleEchecDe(['graphiques']) | transloco) : undefined"
+        >
+          <div class="actions-ligne">
+            <button type="button" class="bouton" [disabled]="enCours() !== undefined" (click)="exporterGraphiques()">
+              @if (enCours() === 'graphiques') {
+                {{ 'exports.en_cours' | transloco }}
+              } @else {
+                <span aria-hidden="true">↓</span> {{ 'exports.images.tous' | transloco: { nombre: graphiques.length } }}
+              }
+            </button>
+          </div>
+        </app-carte-export>
+
+        <app-carte-export
+          [titre]="'exports.pdf.titre' | transloco"
+          [description]="'exports.pdf.description' | transloco"
+          [erreur]="cleEchecDe(['rapport-pdf']) ? ('exports.erreurs.' + cleEchecDe(['rapport-pdf']) | transloco) : undefined"
+        >
+          <div class="actions-ligne">
+            <button type="button" class="bouton" [disabled]="enCours() !== undefined" (click)="exporterRapportPdf()">
+              @if (enCours() === 'rapport-pdf') {
+                {{ 'exports.en_cours' | transloco }}
+              } @else {
+                <span aria-hidden="true">↓</span> {{ nomFichierRapport() }}
+              }
+            </button>
+          </div>
+        </app-carte-export>
+
+        <app-carte-export
+          [titre]="'exports.resume.titre' | transloco"
+          [description]="'exports.resume.description' | transloco"
+          [erreur]="erreurResume() ? ('exports.resume.erreur' | transloco) : undefined"
+        >
+          @if (resume(); as r) {
+            <div class="actions-ligne">
+              <app-bouton-copier
+                [texte]="r.texte"
+                [libelleCopier]="'exports.resume.copier' | transloco"
+                [libelleCopie]="'exports.resume.copie' | transloco"
+              />
+            </div>
+          }
+        </app-carte-export>
+      </section>
+
+      <h2 class="titre-section">{{ 'exports.apercus.titre' | transloco }}</h2>
+
+      <section class="grille-apercus" [attr.aria-label]="'exports.apercus.titre' | transloco">
+        @for (graphique of graphiques; track graphique) {
+          @let titre = ('exports.images.graphiques.' + graphique) | transloco;
+          @let cleErreur = cleEchecDe([graphique]) ? 'exports.erreurs.' + cleEchecDe([graphique]) : erreurApercus() ? 'exports.apercus.erreur' : undefined;
+          <app-carte-export
+            [titre]="titre"
+            [description]="('exports.images.descriptions.' + graphique) | transloco"
+            [erreur]="cleErreur ? (cleErreur | transloco) : undefined"
+          >
+            <div class="actions-ligne">
+              <button
+                type="button"
+                class="bouton bouton--secondaire bouton--petit"
+                [disabled]="enCours() !== undefined"
+                [attr.aria-label]="'exports.images.telecharger_graphique' | transloco: { graphique: titre }"
+                (click)="exporterGraphique(graphique)"
+              >
+                @if (enCours() === graphique) {
+                  {{ 'exports.en_cours' | transloco }}
+                } @else {
+                  <span aria-hidden="true">↓</span> {{ 'exports.images.png' | transloco }}
+                }
+              </button>
+            </div>
+
+            @if (apercus(); as a) {
+              @switch (graphique) {
+                @case ('floraison-mensuelle') {
+                  <app-graphique-floraison
+                    class="carte--sans-cadre"
+                    [avecTitre]="false"
+                    [titre]="titre"
+                    [zones]="a.zones"
+                    [mois]="a.mensuel"
+                    [bascule]="false"
+                    [largeur]="360"
+                    [hauteur]="240"
+                  />
+                }
+                @case ('repartition-zones') {
+                  <app-graphique-zones
+                    class="carte--sans-cadre"
+                    [avecTitre]="false"
+                    [titre]="titre"
+                    [zones]="a.repartition"
+                    [libelleTotal]="a.total"
+                  />
+                }
+                @case ('comparaison-saisons') {
+                  <app-graphique-floraison
+                    class="carte--sans-cadre"
+                    [avecTitre]="false"
+                    [titre]="titre"
+                    [zones]="a.saisons"
+                    [mois]="a.moisSaisons"
+                    modeInitial="courbes"
+                    [bascule]="false"
+                    [largeur]="360"
+                    [hauteur]="240"
+                  />
+                }
+              }
+            } @else if (!erreurApercus()) {
+              <span class="squelette__bloc squelette__bloc--table" aria-hidden="true"></span>
+            }
+          </app-carte-export>
+        }
+      </section>
+    } @else {
+      <p class="message-etat" role="status">{{ 'exports.visiteur' | transloco }}</p>
+    }
+  } @else if (ressource.isLoading()) {
+    <p class="message-etat" role="status">{{ 'exports.chargement' | transloco }}</p>
+    <div class="squelette" aria-hidden="true">
+      <span class="squelette__bloc squelette__bloc--haut"></span>
+      <span class="squelette__bloc"></span>
+      <span class="squelette__bloc squelette__bloc--table"></span>
+    </div>
+  }
+</app-onglets-import-export>

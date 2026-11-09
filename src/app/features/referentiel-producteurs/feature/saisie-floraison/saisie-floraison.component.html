@@ -1,0 +1,50 @@
+<app-modale
+  [titre]="'referentiel_producteurs.floraison.titre' | transloco"
+  [libelleFermer]="'referentiel_producteurs.floraison.fermer' | transloco"
+  (fermer)="fermer.emit()"
+>
+  @if (erreurProducteurs() || erreurFloraison()) {
+    <p class="message-etat" role="alert">{{ 'referentiel_producteurs.floraison.erreur_chargement' | transloco }}</p>
+  }
+
+  <app-formulaire-floraison
+    [producteurs]="optionsProducteurs()"
+    [producteur]="idChoisi()"
+    [producteurVerrouille]="!!producteur()"
+    [parcelles]="optionsParcelles()"
+    [enCours]="enCours()"
+    [versionSaisie]="versionSaisie()"
+    [libelles]="{
+      date: ('referentiel_producteurs.floraison.date' | transloco),
+      producteur: ('referentiel_producteurs.floraison.producteur' | transloco),
+      parcelle: ('referentiel_producteurs.floraison.parcelle' | transloco),
+      fleurs: ('referentiel_producteurs.floraison.fleurs' | transloco),
+      choisir: ('referentiel_producteurs.floraison.choisir' | transloco),
+      enregistrer: ('referentiel_producteurs.floraison.enregistrer' | transloco),
+      champObligatoire: ('referentiel_producteurs.floraison.champ_obligatoire' | transloco),
+      fleursInvalides: ('referentiel_producteurs.floraison.fleurs_invalides' | transloco),
+    }"
+    (producteurChoisi)="choisirProducteur($event)"
+    (enregistrer)="enregistrer($event)"
+  />
+
+  @if (cleErreur(); as cle) {
+    <p class="message-etat" role="alert">{{ 'referentiel_producteurs.floraison.erreurs.' + cle | transloco }}</p>
+  }
+
+  @if (succes()) {
+    <p class="message-etat" role="status">{{ 'referentiel_producteurs.floraison.enregistre' | transloco }}</p>
+  }
+
+  @if (idChoisi()) {
+    <app-historique-floraison
+      [titre]="'referentiel_producteurs.floraison.historique.titre' | transloco"
+      [lignes]="historique()"
+      [libelles]="{
+        date: ('referentiel_producteurs.floraison.historique.date' | transloco),
+        fleurs: ('referentiel_producteurs.floraison.historique.fleurs' | transloco),
+        vide: ('referentiel_producteurs.floraison.historique.vide' | transloco),
+      }"
+    />
+  }
+</app-modale>

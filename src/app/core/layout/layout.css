@@ -1,0 +1,149 @@
+/*
+ * Principes de répartition de page : toute la coquille applicative (header, sidebar, contenu) vit dans core/layout.
+ * Ce fichier porte la règle d'uniformisation du header ; il est importé par src/styles.css.
+ */
+
+:root {
+  /* Hauteur commune de tous les éléments d'un header (voir .bande-entete). */
+  --hauteur-controle-entete: 2.5rem;
+}
+
+/*
+ * Bande d'en-tête : RÈGLE pour tous les headers, présents et futurs.
+ * Tout élément placé directement dans une .bande-entete reçoit automatiquement la même hauteur et le même
+ * axe vertical (--hauteur-controle-entete). Ne jamais fixer à la main la hauteur d'un élément de header :
+ * le composant remplit son conteneur (h-full). Contrôlé par e2e/entete.spec.ts.
+ */
+@layer components {
+  .bande-entete {
+    /* Repère de la liste du menu utilisateur : elle se cale sur le header, pas sur son bouton (voir .menu-utilisateur). */
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .bande-entete > * {
+    display: flex;
+    align-items: center;
+    height: var(--hauteur-controle-entete);
+  }
+
+  /*
+   * Langue et thème à droite : la langue absorbe l'espace libre de sa ligne et rejette son contenu au bord droit.
+   * (Pas de margin-left: auto ici : il entrerait en concurrence avec celui du menu utilisateur ci-dessous.)
+   */
+  .bande-entete > app-selecteur-langue {
+    flex-grow: 1;
+    justify-content: flex-end;
+  }
+
+  /* Sur petit écran le menu utilisateur passe à la ligne : il reste au bord droit de sa propre ligne. */
+  .bande-entete > app-menu-utilisateur {
+    margin-left: auto;
+  }
+
+  /*
+   * Header toujours visible : reste collé en haut de la fenêtre pendant le défilement de la page.
+   * Fond opaque pour que le contenu qui passe dessous ne transparaisse pas.
+   */
+  .entete-collante {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background-color: var(--surface);
+    border-bottom: 1px solid color-mix(in srgb, var(--line) 40%, transparent);
+  }
+
+  /* Style « pastille » commun aux contrôles du header (bordure, fond, ombre, bords arrondis). */
+  .pastille-entete {
+    border: 1px solid var(--line);
+    border-radius: 9999px;
+    background-color: var(--surface);
+    color: var(--on-surface);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  }
+
+  .pastille-entete:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /*
+   * Menu de l'utilisateur connecté (icône + liste déroulante). Toute la disposition vit ici :
+   * le composant ne porte aucun style en dur.
+   * Sur petit écran le header passe à la ligne et le bouton peut tomber à gauche : la liste n'est donc pas ancrée à
+   * son bouton (position: static) mais au bord droit du header (.bande-entete), où qu'il soit : toujours dans la fenêtre.
+   */
+  .menu-utilisateur {
+    position: static;
+    height: 100%;
+  }
+
+  .menu-utilisateur__declencheur {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 100%;
+    min-width: var(--hauteur-controle-entete);
+    padding: 0 0.75rem;
+  }
+
+  /* Identifiant affiché à côté de l'icône ; tronqué s'il est trop long. */
+  .menu-utilisateur__nom {
+    max-width: 10rem;
+    overflow: hidden;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .menu-utilisateur__icone {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .menu-utilisateur__liste {
+    position: absolute;
+    /* 100 % = hauteur du header (une ou deux lignes) ; -0.5rem = son padding bas (p-4) moins l'écart de 0.5rem. */
+    top: calc(100% - 0.5rem);
+    right: 1rem; /* padding latéral du header (p-4) : bord droit aligné sur le dernier bouton du header */
+    z-index: 20;
+    min-width: 12rem;
+    padding: 0.5rem;
+    border: 1px solid var(--line);
+    border-radius: 0.75rem;
+    background-color: var(--surface);
+    color: var(--on-surface);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.25), 0 4px 6px -4px rgb(0 0 0 / 0.25);
+  }
+
+  .menu-utilisateur__identifiant {
+    padding: 0.25rem 0.75rem 0.5rem;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.875rem;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+  }
+
+  .menu-utilisateur__action {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-align: left;
+  }
+
+  .menu-utilisateur__action:hover,
+  .menu-utilisateur__action:focus-visible {
+    background-color: var(--primary);
+    color: var(--on-primary);
+    outline: none;
+  }
+}

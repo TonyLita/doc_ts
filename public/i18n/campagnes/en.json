@@ -1,0 +1,73 @@
+{
+  "titre": "Campaigns",
+  "chargement": "Loading the campaigns…",
+  "erreur": "Unable to load the campaigns.",
+  "reessayer": "Retry",
+  "erreurs": {
+    "interdit": "This action is reserved for the Super Administrator.",
+    "invalide": "The campaign dates are not valid.",
+    "generique": "The action could not be completed. Please try again."
+  },
+  "active": {
+    "libelle": "Active campaign",
+    "aucune": "No campaign is active."
+  },
+  "affichee": {
+    "libelle": "Selected campaign"
+  },
+  "selecteur": {
+    "libelle": "Campaign to display"
+  },
+  "statut": {
+    "en-cours": "Ongoing",
+    "cloturee": "Closed"
+  },
+  "liste": {
+    "titre": "Campaign list",
+    "campagne": "Campaign",
+    "debut": "Start",
+    "fin": "End",
+    "statut": "Status",
+    "active": "Active",
+    "active_oui": "Active",
+    "actions": "Actions",
+    "vide": "No campaign."
+  },
+  "actions": {
+    "modifier": "Edit",
+    "cloturer": "Close",
+    "definir_active": "Set as active"
+  },
+  "formulaire": {
+    "titre_modification": "Edit the campaign",
+    "campagne": "Campaign",
+    "debut": "Start date",
+    "fin": "End date",
+    "enregistrer": "Save",
+    "annuler": "Cancel",
+    "champ_obligatoire": "All fields are required.",
+    "periode_invalide": "The end date cannot be before the start date."
+  },
+  "confirmation": {
+    "activer": {
+      "titre": "Change the active campaign",
+      "message": "Campaign {{campagne}} will become the active campaign. It will feed every user's dashboard by default."
+    },
+    "cloturer": {
+      "titre": "Close the campaign",
+      "message": "Close campaign {{campagne}}? Entries on this campaign will no longer be accepted."
+    },
+    "confirmer": "Confirm",
+    "annuler": "Cancel"
+  },
+  "comparaison": {
+    "titre": "Multi-year comparison",
+    "graphique": "Flowers observed per month",
+    "tableau": "Indicators per campaign",
+    "total_fleurs": "Total flowers",
+    "producteurs": "Farmers followed",
+    "mois_pic": "Peak month",
+    "production": "Estimated production (kg)",
+    "vide": "Tick at least one campaign to compare."
+  }
+}

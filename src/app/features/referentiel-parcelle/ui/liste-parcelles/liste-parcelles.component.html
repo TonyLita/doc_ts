@@ -1,0 +1,78 @@
+<div class="tableau__defilement">
+  <table class="tableau">
+    <caption class="carte__libelle">{{ titre() }}</caption>
+    <thead>
+      <tr>
+        <th scope="col">{{ libelles().code }}</th>
+        <th scope="col">{{ libelles().producteur }}</th>
+        <th scope="col">{{ libelles().cooperative }}</th>
+        <th scope="col" class="tableau__nombre">{{ libelles().latitude }}</th>
+        <th scope="col" class="tableau__nombre">{{ libelles().longitude }}</th>
+        <th scope="col" class="tableau__nombre">{{ libelles().pieds }}</th>
+        <th scope="col" class="tableau__nombre">{{ libelles().production }}</th>
+        <th scope="col">{{ libelles().zone }}</th>
+        <th scope="col">{{ libelles().vanille }}</th>
+        @if (peutAdministrer()) {
+          <th scope="col">{{ libelles().actions }}</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (ligne of lignes(); track ligne.id) {
+        <tr [class.tableau__ligne--archivee]="ligne.archivee">
+          <th scope="row">
+            {{ ligne.code }}
+            @if (ligne.archivee) {
+              <span class="carte__detail">({{ libelles().archivee }})</span>
+            }
+          </th>
+          <td>{{ ligne.producteur }}</td>
+          <td>{{ ligne.cooperative }}</td>
+          <td class="tableau__nombre">{{ ligne.latitude }}</td>
+          <td class="tableau__nombre">{{ ligne.longitude }}</td>
+          <td class="tableau__nombre">{{ ligne.pieds }}</td>
+          <td class="tableau__nombre">{{ ligne.production }}</td>
+          <td>{{ ligne.zone }}</td>
+          <td>{{ ligne.vanille ? libelles().oui : libelles().non }}</td>
+          @if (peutAdministrer()) {
+            <td>
+              <div class="actions-ligne">
+                <button
+                  type="button"
+                  class="bouton bouton--petit bouton--secondaire"
+                  [attr.aria-label]="libelles().modifier + ' ' + ligne.code"
+                  (click)="modifier.emit(ligne.id)"
+                >
+                  {{ libelles().modifier }}
+                </button>
+                @if (ligne.archivee) {
+                  <button
+                    type="button"
+                    class="bouton bouton--petit bouton--secondaire"
+                    [attr.aria-label]="libelles().restaurer + ' ' + ligne.code"
+                    (click)="restaurer.emit(ligne.id)"
+                  >
+                    {{ libelles().restaurer }}
+                  </button>
+                } @else {
+                  <button
+                    type="button"
+                    class="bouton bouton--petit bouton--secondaire"
+                    [attr.aria-label]="libelles().archiver + ' ' + ligne.code"
+                    (click)="archiver.emit(ligne.id)"
+                  >
+                    {{ libelles().archiver }}
+                  </button>
+                }
+              </div>
+            </td>
+          }
+        </tr>
+      } @empty {
+        <tr>
+          <td class="tableau__vide" [attr.colspan]="peutAdministrer() ? 10 : 9">{{ libelles().vide }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

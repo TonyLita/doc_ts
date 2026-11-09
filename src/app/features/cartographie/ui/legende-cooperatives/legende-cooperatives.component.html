@@ -1,0 +1,16 @@
+<h2 class="carte__libelle">{{ titre() }}</h2>
+<ul class="legende legende--colonne">
+  @for (element of elements(); track element.id) {
+    <li>
+      <label class="legende__element">
+        <input type="checkbox" [checked]="element.visible" (change)="basculer.emit(element.id)" />
+        <span class="legende__pastille couleur-zone-{{ element.couleur }}"></span>
+        {{ element.nom }}
+      </label>
+    </li>
+  }
+  <li class="legende__element">
+    <span class="repere-centre repere-centre--legende"></span>
+    {{ libelleCentre() }}
+  </li>
+</ul>

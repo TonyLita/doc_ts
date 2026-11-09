@@ -1,0 +1,34 @@
+<div class="tableau__defilement">
+  <table class="tableau">
+    <caption class="carte__libelle">{{ titre() }}</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="tableau__nombre">{{ libelles().ligne }}</th>
+        @for (colonne of colonnes(); track colonne.cle) {
+          <th scope="col" [class.tableau__nombre]="colonne.nombre">{{ libelles().colonnes[colonne.cle] }}</th>
+        }
+        <th scope="col">{{ libelles().controle }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (ligne of lignes(); track ligne.numero) {
+        <tr>
+          <th scope="row" class="tableau__nombre">{{ ligne.numero }}</th>
+          @for (colonne of colonnes(); track colonne.cle) {
+            <td [class.tableau__nombre]="colonne.nombre">{{ ligne.valeurs[colonne.cle] }}</td>
+          }
+          <td>
+            <span class="statut-validation {{ classes[ligne.controle] }}">
+              <app-pastille class="statut-validation__pastille" [remplissage]="remplissages[ligne.controle]" />
+              {{ libelles().controles[ligne.controle] }}@if (ligne.motif) { · {{ libelles().motifs[ligne.motif] }} }
+            </span>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td class="tableau__vide" [attr.colspan]="colonnes().length + 2">{{ libelles().vide }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

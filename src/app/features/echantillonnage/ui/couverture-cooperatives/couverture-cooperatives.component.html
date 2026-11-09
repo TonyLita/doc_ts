@@ -1,0 +1,20 @@
+<h2 class="carte__libelle">{{ titre() }} <span class="carte__detail">({{ legende() }})</span></h2>
+<ul class="couverture">
+  @for (ligne of lignes(); track ligne.id) {
+    <li class="couverture__ligne">
+      <span class="couverture__nom">{{ ligne.nom }}</span>
+      <div
+        class="barre-progression couverture__barre"
+        role="progressbar"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        [attr.aria-valuenow]="ligne.taux"
+        [attr.aria-label]="ligne.nom"
+      >
+        <div class="barre-progression__remplie" [style.width.%]="ligne.taux"></div>
+      </div>
+      <span class="couverture__taux">{{ ligne.taux }} %</span>
+      <span class="couverture__effectifs">{{ ligne.suivis }} / {{ ligne.cibles }}</span>
+    </li>
+  }
+</ul>

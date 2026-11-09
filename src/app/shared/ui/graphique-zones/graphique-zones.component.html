@@ -1,0 +1,32 @@
+@if (avecTitre()) {
+  <h2 class="carte__libelle">{{ titre() }}</h2>
+}
+<div class="anneau">
+  <svg class="anneau__dessin" viewBox="0 0 36 36" role="img" [attr.aria-label]="titre()">
+    <circle class="anneau__fond" cx="18" cy="18" r="15.9155" fill="none" stroke-width="5" />
+    @for (segment of segments(); track segment.nom) {
+      <circle
+        class="couleur-zone-{{ segment.couleur }}"
+        cx="18"
+        cy="18"
+        r="15.9155"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="5"
+        [attr.stroke-dasharray]="segment.trait"
+        [attr.stroke-dashoffset]="segment.decalage"
+      >
+        <title>{{ segment.nom }} : {{ segment.pourcentage }} %</title>
+      </circle>
+    }
+  </svg>
+  <p class="anneau__total">{{ libelleTotal() }}</p>
+</div>
+<ul class="legende">
+  @for (segment of segments(); track segment.nom) {
+    <li class="legende__element">
+      <span class="legende__pastille couleur-zone-{{ segment.couleur }}"></span>
+      {{ segment.nom }} · {{ segment.pourcentage }} %
+    </li>
+  }
+</ul>

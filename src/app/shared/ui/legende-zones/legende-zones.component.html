@@ -1,0 +1,8 @@
+<ul class="legende">
+  @for (zone of zones(); track zone; let indice = $index) {
+    <li class="legende__element">
+      <span class="legende__pastille couleur-zone-{{ indice % 5 }}"></span>
+      {{ zone }}
+    </li>
+  }
+</ul>

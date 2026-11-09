@@ -1,0 +1,14 @@
+<app-champ-liste
+  [libelle]="libelleCampagne()"
+  [options]="optionsCampagnes()"
+  [valeur]="campagne()"
+  (choisie)="campagneChoisie.emit($event)"
+/>
+<app-champ-liste
+  [libelle]="libelleCooperative()"
+  [options]="optionsCooperatives()"
+  [valeur]="cooperative() ?? ''"
+  [libelleToutes]="libelleToutes()"
+  (choisie)="cooperativeChoisie.emit($event || undefined)"
+/>
+<ng-content />

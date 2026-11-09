@@ -1,0 +1,36 @@
+<div class="tableau__defilement">
+  <table class="tableau">
+    <caption class="carte__libelle">{{ titre() }}</caption>
+    <thead>
+      <tr>
+        <th scope="col">{{ libelles().date }}</th>
+        <th scope="col">{{ libelles().campagne }}</th>
+        <th scope="col">{{ libelles().quantite }}</th>
+        <th scope="col">{{ libelles().periode }}</th>
+        <th scope="col">{{ libelles().calibrage }}</th>
+        <th scope="col">{{ libelles().validation }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (ligne of lignes(); track ligne.id) {
+        <tr>
+          <th scope="row">{{ ligne.date }}</th>
+          <td>{{ ligne.campagne }}</td>
+          <td>{{ libelles().quantites[ligne.quantite] }}</td>
+          <td>{{ libelles().periodes[ligne.periode] }}</td>
+          <td>{{ ligne.calibrage ? libelles().calibrages[ligne.calibrage] : '–' }}</td>
+          <td>
+            <span class="statut-validation {{ classesStatut[ligne.statutValidation] }}">
+              <app-pastille class="statut-validation__pastille" [remplissage]="remplissages[ligne.statutValidation]" />
+              {{ libelles().statuts[ligne.statutValidation] }}
+            </span>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td class="tableau__vide" colspan="6">{{ libelles().vide }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

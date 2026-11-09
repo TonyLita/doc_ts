@@ -1,0 +1,133 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* La couche « vendor » (Leaflet) est déclarée en tête : une couche prend sa priorité à sa première déclaration. Ses styles
+   par défaut cèdent ainsi aux styles de l'application. */
+@layer vendor;
+@import 'leaflet/dist/leaflet.css' layer(vendor);
+@import './font/font.css';
+@import 'tailwindcss';
+/* Coquille applicative : header, sidebar, règle de la bande d'en-tête. */
+@import './app/core/layout/layout.css';
+/* Répartition du contenu d'une page : cartes, grilles, filtres, graphiques. */
+@import './app/core/layout/page.css';
+
+/* Le mode sombre s'active avec la classe "dark" posée sur <html> (voir ThemeService). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Couleurs de marque, extraites du logo SoaTech. */
+@theme {
+  --color-brand-navy: #161f48;
+  --color-brand-blue: #156bb6;
+  --color-brand-cyan: #01adee;
+  --color-brand-green: #8bc541;
+
+  --font-sans: 'Archivo', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Clash Display', 'Archivo', ui-sans-serif, system-ui, sans-serif;
+
+  /* Seuils de largeur : définis ici une seule fois. Les classes Tailwind (sm:, lg:, xl:) et les @media de
+     core/layout/page.css les lisent ; ne jamais écrire de largeur en dur dans un @media. */
+  --breakpoint-sm: 640px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+}
+
+/* Rôles sémantiques : les pages utilisent ces noms, jamais les valeurs en dur. */
+@theme inline {
+  --color-surface: var(--surface);
+  --color-on-surface: var(--on-surface);
+  --color-field: var(--field);
+  --color-line: var(--line);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-on-primary: var(--on-primary);
+  --color-accent: var(--accent);
+  --color-danger: var(--danger);
+}
+
+/* Mode clair. */
+:root {
+  color-scheme: light;
+  --page-gradient: linear-gradient(135deg, #156bb6, #01adee, #8bc541);
+  --surface: #ffffff;
+  --on-surface: #161f48;
+  --field: #ffffff;
+  --line: #7c8aa0;
+  --primary: #156bb6;
+  --primary-hover: #0f5a9c;
+  --on-primary: #ffffff;
+  --accent: #156bb6;
+  --danger: #b42318;
+}
+
+/* Mode sombre (par défaut, la classe est posée dans index.html). */
+:root.dark {
+  color-scheme: dark;
+  --page-gradient: linear-gradient(135deg, #0b1129, #161f48, #123a66);
+  --surface: #1c2757;
+  --on-surface: #eef4ff;
+  --field: #131b3f;
+  --line: #5c6fb8;
+  --primary: #01adee;
+  --primary-hover: #33c0f5;
+  --on-primary: #0b1129;
+  --accent: #01adee;
+  --danger: #ff8a80;
+}
+
+@utility bg-page {
+  background-image: var(--page-gradient);
+}
+
+/*
+ * Logo SoaTech : PRINCIPE DE BLOCAGE, valable pour toute la plateforme.
+ * L'icône et le texte forment UN SEUL bloc (.logo-soatech), côte à côte, dimensionnés ensemble à partir
+ * d'une seule valeur (--taille-logo). Ils ne se placent, ne se redimensionnent et ne se déplacent jamais
+ * séparément : toujours utiliser <app-logo>, jamais les deux images posées à la main dans une page.
+ * Clair : plaque blanche sous le bloc (le texte bleu serait invisible sur le dégradé bleu du fond).
+ */
+:root {
+  --taille-logo: var(--hauteur-controle-entete, 2.5rem);
+}
+
+@layer components {
+  .logo-soatech {
+    display: inline-flex;
+    align-items: center;
+    gap: calc(var(--taille-logo) * 0.2);
+    height: var(--taille-logo);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.75rem;
+  }
+
+  .logo-soatech > img {
+    display: block;
+    height: 100%;
+    width: auto;
+  }
+}
+
+:root:not(.dark) .logo-soatech {
+  background-color: #ffffff;
+}
+
+/* Curseur : tout élément cliquable affiche la main, sans classe à ajouter dans les pages. */
+@layer base {
+  button:not(:disabled),
+  a[href],
+  summary,
+  select:not(:disabled),
+  input:is([type='submit'], [type='button'], [type='checkbox'], [type='radio']):not(:disabled),
+  [role='button']:not([aria-disabled='true']),
+  [role='switch']:not([aria-disabled='true']),
+  [role='link']:not([aria-disabled='true']),
+  [role='tab']:not([aria-disabled='true']) {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  input:disabled,
+  select:disabled,
+  [aria-disabled='true'] {
+    cursor: not-allowed;
+  }
+}

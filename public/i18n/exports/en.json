@@ -1,0 +1,79 @@
+{
+  "titre": "Export center",
+  "langue": "Export language: {{langue}}",
+  "chargement": "Loading the export center…",
+  "erreur": "Unable to load the export center.",
+  "reessayer": "Retry",
+  "visiteur": "Your profile does not allow exporting data.",
+  "en_cours": "Generating…",
+  "filtres": {
+    "campagne": "Campaign",
+    "en_cours": "current",
+    "cooperative": "Cooperative",
+    "toutes_cooperatives": "All cooperatives",
+    "zone": "Zone",
+    "toutes_zones": "All zones"
+  },
+  "tableur": {
+    "titre": "Excel export",
+    "description": "Complete list of farmers with flowering data",
+    "format": "Format",
+    "formats": {
+      "xlsx": "Excel (.xlsx)",
+      "csv": "CSV"
+    },
+    "telecharger": "Download"
+  },
+  "pdf": {
+    "titre": "PDF report",
+    "description": "Complete report with charts and analyses",
+    "generer": "Generate the PDF"
+  },
+  "images": {
+    "titre": "Charts export",
+    "description": "Download the charts as PNG",
+    "telecharger": "Download",
+    "graphiques": {
+      "floraison-mensuelle": "Monthly trend",
+      "repartition-zones": "Zone distribution",
+      "analyse-zones": "Zone analysis",
+      "comparaison-saisons": "3-season comparison"
+    },
+    "tous": "{{nombre}} PNG files",
+    "png": "PNG",
+    "telecharger_graphique": "Download the chart \"{{graphique}}\" as PNG",
+    "descriptions": {
+      "floraison-mensuelle": "Flowers observed each month, by zone",
+      "repartition-zones": "Share of each zone in the campaign flowering",
+      "comparaison-saisons": "Monthly flowering of the last three seasons",
+      "analyse-zones": "Monthly flowering of each zone"
+    }
+  },
+  "resume": {
+    "titre": "Clipboard summary",
+    "description": "Copy a summary of the key figures to paste into an email, WhatsApp or a document",
+    "copier": "Copy the summary",
+    "copie": "Copied",
+    "erreur": "Unable to load the summary."
+  },
+  "erreurs": {
+    "interdit": "Your profile does not allow exporting data.",
+    "trop_de_demandes": "Too many requests in a short time. Please wait a moment before trying again.",
+    "indisponible": "The export service is currently unavailable.",
+    "delai_depasse": "The export took too long. Please try again.",
+    "generique": "The export could not be generated. Please try again."
+  },
+  "entete": {
+    "titre": "Exports",
+    "campagne": "Campaign {{campagne}}",
+    "campagne_region": "Campaign {{campagne}} · {{region}} region",
+    "rapport_ia": "AI report"
+  },
+  "bandeau": {
+    "description": "Farmer data · Charts · PDF reports"
+  },
+  "apercus": {
+    "titre": "Exportable charts preview",
+    "erreur": "Unable to load the chart previews."
+  }
+}

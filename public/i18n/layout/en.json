@@ -1,0 +1,35 @@
+{
+  "navigation_principale": "Main navigation",
+  "bouton_menu": {
+    "reduire": "Collapse menu",
+    "afficher": "Show menu"
+  },
+  "menu_utilisateur": {
+    "compte": "Account of {{identifiant}}",
+    "se_deconnecter": "Log out"
+  },
+  "groupe": {
+    "operations_terrain": "Field operations",
+    "analyses_rapports": "Analysis & reports",
+    "referentiels": "Reference data",
+    "gestion_donnees": "Data management",
+    "systeme": "System"
+  },
+  "menu": {
+    "tableau_de_bord": "Dashboard",
+    "cartographie": "Mapping",
+    "analyse_zones": "Area Analysis",
+    "echantillonnage": "Sampling",
+    "observations": "Observations",
+    "qualite_donnees": "Data Quality",
+    "campagnes": "Campaigns",
+    "rapports": "AI Reports",
+    "synchronisation": "Synchronization",
+    "import_export": "Import / Export",
+    "administration": "Administration",
+    "referentiel_geographique": "Geographic zones",
+    "referentiel_cooperatives": "Cooperatives",
+    "referentiel_producteurs": "Producers",
+    "referentiel_parcelles": "Parcels"
+  }
+}

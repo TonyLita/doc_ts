@@ -1,0 +1,33 @@
+<h2 class="carte__libelle">{{ titre() }}</h2>
+
+<div class="repartition__barre" aria-hidden="true">
+  @for (segment of segments(); track segment.id) {
+    @if (segment.part > 0) {
+      <span class="repartition__segment couleur-zone-{{ segment.rang }}" [style.flex-grow]="segment.part"></span>
+    }
+  }
+  @if (sansZone(); as aucune) {
+    @if (aucune.part > 0) {
+      <span class="repartition__segment repartition__segment--aucune" [style.flex-grow]="aucune.part"></span>
+    }
+  }
+</div>
+
+<ul class="repartition__legende">
+  @for (segment of segments(); track segment.id) {
+    <li class="repartition__element">
+      <span class="repartition__pastille couleur-zone-{{ segment.rang }}"></span>
+      <span class="repartition__nom">{{ segment.nom }}</span>
+      <span class="repartition__valeur">{{ segment.villages }} {{ libelles().villages }} · {{ segment.pourcentage }}</span>
+      <span class="carte__detail">{{ segment.parcelles }} {{ libelles().parcelles }}</span>
+    </li>
+  }
+  @if (sansZone(); as aucune) {
+    <li class="repartition__element">
+      <span class="repartition__pastille repartition__pastille--aucune"></span>
+      <span class="repartition__nom">{{ libelles().sansZone }}</span>
+      <span class="repartition__valeur">{{ aucune.villages }} {{ libelles().villages }} · {{ aucune.pourcentage }}</span>
+      <span class="carte__detail">{{ aucune.parcelles }} {{ libelles().parcelles }} · {{ libelles().sansZoneDetail }}</span>
+    </li>
+  }
+</ul>

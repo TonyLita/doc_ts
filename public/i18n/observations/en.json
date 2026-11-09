@@ -1,0 +1,52 @@
+{
+  "titre": "Flowering observations",
+  "chargement": "Loading the observations…",
+  "erreur": "Unable to load the observations.",
+  "reessayer": "Retry",
+  "en_attente": "{{nombre}} observations awaiting validation are not counted in these figures.",
+  "filtres": {
+    "campagne": "Campaign",
+    "en_cours": "current",
+    "cooperative": "Cooperative",
+    "toutes_cooperatives": "All cooperatives",
+    "zone": "Zone",
+    "toutes_zones": "All zones",
+    "statut": "Validation status",
+    "tous_statuts": "All statuses"
+  },
+  "statut": {
+    "valide": "Validated",
+    "en_attente": "Pending"
+  },
+  "familles": {
+    "quantite": "Flowering quantity",
+    "periode": "Flowering period",
+    "calibrage": "Flower size grading"
+  },
+  "valeurs": {
+    "quantite": {
+      "faible": "Low",
+      "normal": "Normal",
+      "beaucoup": "High"
+    },
+    "periode": {
+      "precoce": "Early",
+      "normal": "Normal",
+      "retard": "Late"
+    },
+    "calibrage": {
+      "court": "Short",
+      "normal": "Normal",
+      "long": "Long"
+    }
+  },
+  "tableau": {
+    "valeur": "Value",
+    "effectif": "Count",
+    "pourcentage": "Share"
+  },
+  "representativite": {
+    "oui": "Representative ({{total}} obs.)",
+    "non": "Insufficient sample ({{total}} obs.)"
+  }
+}

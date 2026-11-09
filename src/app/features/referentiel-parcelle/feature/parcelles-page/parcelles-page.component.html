@@ -1,0 +1,156 @@
+<div class="page-entete">
+  <h1 class="page-titre">{{ 'referentiel_parcelle.titre' | transloco }}</h1>
+
+  @if (donnees()?.peutAdministrer) {
+    <div class="actions-ligne">
+      @if (peutImporter()) {
+        <a class="bouton bouton--secondaire" routerLink="/imports">{{ 'referentiel_parcelle.importer' | transloco }}</a>
+      }
+      @if (!formulaire()) {
+        <button type="button" class="bouton" (click)="ouvrirCreation()">{{ 'referentiel_parcelle.nouvelle' | transloco }}</button>
+      }
+    </div>
+  }
+</div>
+
+@if (ressource.error()) {
+  <div class="message-etat" role="alert">
+    <p>{{ 'referentiel_parcelle.erreur' | transloco }}</p>
+    <button type="button" class="message-etat__action" (click)="recharger()">
+      {{ 'referentiel_parcelle.reessayer' | transloco }}
+    </button>
+  </div>
+}
+
+@if (cleErreur(); as cle) {
+  <p class="message-etat" role="alert">{{ 'referentiel_parcelle.erreurs.' + cle | transloco }}</p>
+}
+
+@if (donnees(); as d) {
+  @if (vue(); as v) {
+    @if (!d.identiteComplete) {
+      <p class="message-etat" role="note">{{ 'referentiel_parcelle.identite_reduite' | transloco }}</p>
+    }
+
+    @if (formulaire(); as ouvert) {
+      <app-formulaire-parcelle
+        [titre]="
+          (ouvert.parcelle ? 'referentiel_parcelle.formulaire.titre_modification' : 'referentiel_parcelle.formulaire.titre_creation')
+            | transloco: { code: ouvert.parcelle?.code }
+        "
+        [parcelle]="parcelleOuverte()"
+        [producteurs]="v.producteurs"
+        [cooperatives]="v.cooperatives"
+        [enCours]="enCours()"
+        [libelles]="{
+          producteur: ('referentiel_parcelle.formulaire.producteur' | transloco),
+          cooperative: ('referentiel_parcelle.formulaire.cooperative' | transloco),
+          latitude: ('referentiel_parcelle.formulaire.latitude' | transloco),
+          longitude: ('referentiel_parcelle.formulaire.longitude' | transloco),
+          pieds: ('referentiel_parcelle.formulaire.pieds' | transloco),
+          vanille: ('referentiel_parcelle.formulaire.vanille' | transloco),
+          choisir: ('referentiel_parcelle.formulaire.choisir' | transloco),
+          enregistrer: ('referentiel_parcelle.formulaire.enregistrer' | transloco),
+          annuler: ('referentiel_parcelle.formulaire.annuler' | transloco),
+          champsInvalides: ('referentiel_parcelle.formulaire.champs_invalides' | transloco),
+        }"
+        (enregistrer)="enregistrer($event)"
+        (annuler)="fermerFormulaire()"
+      />
+    }
+
+    <section class="grille-indicateurs" [attr.aria-label]="'referentiel_parcelle.indicateurs.titre' | transloco">
+      <app-carte-indicateur [libelle]="'referentiel_parcelle.indicateurs.parcelles' | transloco" [valeur]="v.synthese.parcelles" />
+      <app-carte-indicateur
+        [libelle]="'referentiel_parcelle.indicateurs.part_vanille' | transloco"
+        [valeur]="v.synthese.partVanille + ' %'"
+      />
+      <app-carte-indicateur
+        [libelle]="'referentiel_parcelle.indicateurs.production' | transloco"
+        [valeur]="v.synthese.production + ' ' + ('referentiel_parcelle.indicateurs.unite_production' | transloco)"
+        [detail]="'referentiel_parcelle.indicateurs.detail_production' | transloco"
+      />
+    </section>
+
+    <div class="barre-filtres">
+      <label class="champ-recherche">
+        <span>{{ 'referentiel_parcelle.filtres.recherche' | transloco }}</span>
+        <input type="search" (input)="rechercher($event)" />
+      </label>
+      <app-champ-liste
+        [libelle]="'referentiel_parcelle.filtres.cooperative' | transloco"
+        [options]="v.cooperatives"
+        [valeur]="cooperative.valeur() ?? ''"
+        [libelleToutes]="'referentiel_parcelle.filtres.toutes_cooperatives' | transloco"
+        (choisie)="cooperative.choisir($event)"
+      />
+      <app-champ-liste
+        [libelle]="'referentiel_parcelle.filtres.zone' | transloco"
+        [options]="v.zones"
+        [valeur]="zone.valeur() ?? ''"
+        [libelleToutes]="'referentiel_parcelle.filtres.toutes_zones' | transloco"
+        (choisie)="zone.choisir($event)"
+      />
+      <app-champ-liste
+        [libelle]="'referentiel_parcelle.filtres.statut' | transloco"
+        [options]="[
+          { valeur: 'active', libelle: ('referentiel_parcelle.filtres.actives' | transloco) },
+          { valeur: 'archivee', libelle: ('referentiel_parcelle.filtres.archivees' | transloco) },
+        ]"
+        [valeur]="statut.valeur() ?? ''"
+        [libelleToutes]="'referentiel_parcelle.filtres.toutes' | transloco"
+        (choisie)="statut.choisir($event)"
+      />
+    </div>
+
+    <app-liste-parcelles
+      [titre]="'referentiel_parcelle.liste.titre' | transloco"
+      [lignes]="v.lignes"
+      [peutAdministrer]="d.peutAdministrer"
+      [libelles]="{
+        code: ('referentiel_parcelle.liste.code' | transloco),
+        producteur: ('referentiel_parcelle.liste.producteur' | transloco),
+        cooperative: ('referentiel_parcelle.liste.cooperative' | transloco),
+        latitude: ('referentiel_parcelle.liste.latitude' | transloco),
+        longitude: ('referentiel_parcelle.liste.longitude' | transloco),
+        pieds: ('referentiel_parcelle.liste.pieds' | transloco),
+        production: ('referentiel_parcelle.liste.production' | transloco),
+        zone: ('referentiel_parcelle.liste.zone' | transloco),
+        vanille: ('referentiel_parcelle.liste.vanille' | transloco),
+        oui: ('referentiel_parcelle.liste.oui' | transloco),
+        non: ('referentiel_parcelle.liste.non' | transloco),
+        archivee: ('referentiel_parcelle.liste.archivee' | transloco),
+        actions: ('referentiel_parcelle.liste.actions' | transloco),
+        modifier: ('referentiel_parcelle.actions.modifier' | transloco),
+        archiver: ('referentiel_parcelle.actions.archiver' | transloco),
+        restaurer: ('referentiel_parcelle.actions.restaurer' | transloco),
+        vide: ('referentiel_parcelle.liste.vide' | transloco),
+      }"
+      (modifier)="ouvrirModification($event)"
+      (archiver)="demanderArchivage($event)"
+      (restaurer)="restaurer($event)"
+    />
+
+    <app-pagination
+      [page]="pagination.page()"
+      [nombrePages]="v.nombrePages"
+      [libelleResume]="'referentiel_parcelle.pagination.resume' | transloco: { page: pagination.page(), pages: v.nombrePages, total: v.total }"
+      [libellePrecedent]="'referentiel_parcelle.pagination.precedent' | transloco"
+      [libelleSuivant]="'referentiel_parcelle.pagination.suivant' | transloco"
+      (pageChoisie)="pagination.choisir($event)"
+    />
+
+    @if (confirmation(); as demande) {
+      <app-dialogue-confirmation
+        [titre]="'referentiel_parcelle.confirmation.titre' | transloco"
+        [message]="'referentiel_parcelle.confirmation.message' | transloco: { code: demande.code }"
+        [libelleConfirmer]="'referentiel_parcelle.confirmation.confirmer' | transloco"
+        [libelleAnnuler]="'referentiel_parcelle.confirmation.annuler' | transloco"
+        (confirmer)="confirmerArchivage()"
+        (annuler)="annulerConfirmation()"
+      />
+    }
+  }
+} @else if (ressource.isLoading()) {
+  <p class="message-etat" role="status">{{ 'referentiel_parcelle.chargement' | transloco }}</p>
+}

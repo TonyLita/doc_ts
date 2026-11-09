@@ -1,0 +1,46 @@
+<h2 class="carte__libelle">{{ titre() }}</h2>
+<form class="formulaire" [formGroup]="formulaire" (ngSubmit)="valider()" novalidate>
+  <label class="champ-filtre">
+    <span>{{ libelles().producteur }}</span>
+    <select formControlName="producteur" required>
+      <option value="">{{ libelles().choisir }}</option>
+      @for (producteur of producteurs(); track producteur.valeur) {
+        <option [value]="producteur.valeur">{{ producteur.libelle }}</option>
+      }
+    </select>
+  </label>
+  <label class="champ-filtre">
+    <span>{{ libelles().cooperative }}</span>
+    <select formControlName="cooperative" required>
+      <option value="">{{ libelles().choisir }}</option>
+      @for (cooperative of cooperatives(); track cooperative.valeur) {
+        <option [value]="cooperative.valeur">{{ cooperative.libelle }}</option>
+      }
+    </select>
+  </label>
+  <label class="champ-filtre">
+    <span>{{ libelles().latitude }}</span>
+    <input type="number" inputmode="decimal" step="any" min="-90" max="90" formControlName="latitude" required />
+  </label>
+  <label class="champ-filtre">
+    <span>{{ libelles().longitude }}</span>
+    <input type="number" inputmode="decimal" step="any" min="-180" max="180" formControlName="longitude" required />
+  </label>
+  <label class="champ-filtre">
+    <span>{{ libelles().pieds }}</span>
+    <input type="number" inputmode="numeric" step="1" min="0" formControlName="pieds" required />
+  </label>
+  <label class="legende__element">
+    <input type="checkbox" formControlName="vanille" />
+    {{ libelles().vanille }}
+  </label>
+
+  <div class="formulaire__actions">
+    <button type="submit" class="bouton" [disabled]="enCours()">{{ libelles().enregistrer }}</button>
+    <button type="button" class="bouton bouton--secondaire" (click)="annuler.emit()">{{ libelles().annuler }}</button>
+  </div>
+</form>
+
+@if (formulaire.touched && formulaire.invalid) {
+  <p class="carte__detail" role="alert">{{ libelles().champsInvalides }}</p>
+}

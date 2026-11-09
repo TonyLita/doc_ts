@@ -1,0 +1,32 @@
+{
+  "titre": "Analyse par zone",
+  "chargement": "Chargement de l'analyse…",
+  "erreur": "Impossible de charger l'analyse par zone.",
+  "reessayer": "Réessayer",
+  "filtres": {
+    "campagne": "Campagne",
+    "en_cours": "en cours",
+    "cooperative": "Coopérative",
+    "toutes_cooperatives": "Toutes les coopératives"
+  },
+  "profil": {
+    "precoce": "Précoce",
+    "normal": "Normal",
+    "retarde": "Retardé"
+  },
+  "indicateurs": {
+    "producteurs": "Producteurs",
+    "fleurs": "Fleurs observées",
+    "part": "Part du total de la campagne"
+  },
+  "graphiques": {
+    "mensuel": "Évolution mensuelle des fleurs observées",
+    "comparaison": "Comparaison pluriannuelle"
+  },
+  "synthese": {
+    "titre": "Synthèse",
+    "precoce": "Floraison précoce en zone {{zone}} : {{fleurs}} fleurs observées ({{part}} % du total). La collecte peut démarrer plus tôt que la moyenne régionale.",
+    "normal": "Floraison conforme à la moyenne régionale en zone {{zone}} : {{fleurs}} fleurs observées ({{part}} % du total). Aucune action particulière.",
+    "retarde": "Floraison retardée en zone {{zone}} : {{fleurs}} fleurs observées ({{part}} % du total). Priorité aux équipes de pollinisation sur cette zone."
+  }
+}

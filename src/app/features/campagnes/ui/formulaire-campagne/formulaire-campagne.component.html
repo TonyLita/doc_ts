@@ -1,0 +1,26 @@
+<h2 class="carte__libelle">{{ titre() }}</h2>
+<form class="formulaire" [formGroup]="formulaire" (ngSubmit)="valider()" novalidate>
+  <label class="champ-filtre">
+    <span>{{ libelles().campagne }}</span>
+    <input type="text" formControlName="id" required />
+  </label>
+  <label class="champ-filtre">
+    <span>{{ libelles().debut }}</span>
+    <input type="date" formControlName="debut" required />
+  </label>
+  <label class="champ-filtre">
+    <span>{{ libelles().fin }}</span>
+    <input type="date" formControlName="fin" required />
+  </label>
+
+  <div class="formulaire__actions">
+    <button type="submit" class="bouton" [disabled]="enCours()">{{ libelles().enregistrer }}</button>
+    <button type="button" class="bouton bouton--secondaire" (click)="annuler.emit()">{{ libelles().annuler }}</button>
+  </div>
+</form>
+
+@if (formulaire.touched && formulaire.invalid) {
+  <p class="carte__detail" role="alert">
+    {{ formulaire.hasError('periode') ? libelles().periodeInvalide : libelles().champObligatoire }}
+  </p>
+}

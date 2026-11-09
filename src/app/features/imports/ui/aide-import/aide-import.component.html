@@ -1,0 +1,13 @@
+<h2 class="carte__libelle">{{ titre() }}</h2>
+<ol class="grille-etapes">
+  @for (etape of etapes(); track $index) {
+    <li class="etape-aide">
+      <span class="numero-etape" aria-hidden="true">{{ $index + 1 }}</span>
+      <h3 class="etape-aide__titre">{{ etape.titre }}</h3>
+      <p class="carte__detail">{{ etape.texte }}</p>
+    </li>
+  }
+</ol>
+<p class="note-page" role="note">
+  <strong>{{ libelleNote() }} :</strong> {{ note() }}
+</p>

@@ -1,0 +1,22 @@
+<app-graphique-zones class="carte--sans-cadre" [titre]="titre()" [zones]="parts()" [libelleTotal]="total()" />
+
+<table class="tableau tableau--compact">
+  <thead>
+    <tr>
+      <th scope="col">{{ enTetes().valeur }}</th>
+      <th scope="col" class="tableau__nombre">{{ enTetes().effectif }}</th>
+      <th scope="col" class="tableau__nombre">{{ enTetes().pourcentage }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (ligne of lignesLibellees(); track ligne.code) {
+      <tr>
+        <th scope="row">{{ ligne.libelle }}</th>
+        <td class="tableau__nombre">{{ ligne.effectif }}</td>
+        <td class="tableau__nombre">{{ ligne.pourcentage }} %</td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<app-badge-representativite [representatif]="representatif()" [libelle]="libelleRepresentativite()" />

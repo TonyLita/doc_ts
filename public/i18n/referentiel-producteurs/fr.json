@@ -1,0 +1,165 @@
+{
+  "titre": "Référentiel producteurs",
+  "identite_reduite": "Pour votre profil, l'identité des producteurs est réduite (initiales, sans genre) afin de protéger les données personnelles.",
+  "chargement": "Chargement des producteurs…",
+  "erreur": "Impossible de charger les producteurs.",
+  "reessayer": "Réessayer",
+  "erreurs": {
+    "interdit": "La modification des données du programme est réservée au Super Administrateur.",
+    "introuvable": "Ce producteur ou cette coopérative n'existe plus. Rechargez la page.",
+    "invalide": "Les valeurs saisies ne sont pas valides (pieds : nombre entier ; âge moyen : de 0 à 100 ans).",
+    "trop_de_demandes": "Trop de demandes en peu de temps. Patientez un instant avant de réessayer.",
+    "indisponible": "Le service est indisponible pour le moment.",
+    "delai_depasse": "L'opération a pris trop de temps. Réessayez.",
+    "generique": "Les données n'ont pas pu être enregistrées. Réessayez."
+  },
+  "filtres": {
+    "recherche": "Rechercher par nom et prénom(s)",
+    "zone": "Zone",
+    "toutes_zones": "Toutes les zones"
+  },
+  "statut": {
+    "suivi_actif": "Suivi actif",
+    "recense": "Recensé uniquement",
+    "a_completer": "À compléter"
+  },
+  "liste": {
+    "titre": "Producteurs",
+    "producteur": "Nom & Prénom(s)",
+    "village": "Fokontany",
+    "fleurs": "Nombre de fleurs",
+    "derniere_saisie": "Date de dernière saisie",
+    "action": "Action",
+    "details": "Détails de",
+    "saisir": "Saisir données floraison de",
+    "vide": "Aucun producteur ne correspond à cette recherche.",
+    "numero": "N°",
+    "zone": "Zone",
+    "sans_zone": "Sans zone",
+    "pieds": "Pieds",
+    "age": "Âge",
+    "unite_age": "a",
+    "total": "Total"
+  },
+  "pagination": {
+    "resume": "Page {{page}} sur {{pages}} · {{total}} producteurs",
+    "precedent": "Précédent",
+    "suivant": "Suivant"
+  },
+  "floraison": {
+    "bouton": "Saisir les données de floraison",
+    "saisir": "Saisir données floraison",
+    "titre": "Saisie des données de floraison",
+    "fermer": "Fermer",
+    "date": "Date de saisie",
+    "producteur": "Producteur",
+    "parcelle": "Parcelle",
+    "fleurs": "Nombre de fleurs pollinisées",
+    "choisir": "Choisir…",
+    "enregistrer": "Enregistrer",
+    "champ_obligatoire": "Renseignez la date, le producteur, la parcelle et le nombre de fleurs pollinisées.",
+    "fleurs_invalides": "Le nombre de fleurs pollinisées doit être un nombre entier supérieur à 0.",
+    "enregistre": "La saisie a été enregistrée.",
+    "erreur_chargement": "Impossible de charger les données de la saisie.",
+    "erreurs": {
+      "interdit": "La saisie des données de floraison est réservée au Super Administrateur.",
+      "introuvable": "Ce producteur ou cette parcelle n'existe plus. Fermez la fenêtre et rechargez la page.",
+      "invalide": "Les valeurs saisies ne sont pas valides (date correcte, parcelle du producteur, nombre entier supérieur à 0).",
+      "trop_de_demandes": "Trop de demandes en peu de temps. Patientez un instant avant de réessayer.",
+      "indisponible": "Le service est indisponible pour le moment.",
+      "delai_depasse": "L'opération a pris trop de temps. Réessayez.",
+      "generique": "La saisie n'a pas pu être enregistrée. Réessayez."
+    },
+    "historique": {
+      "titre": "Historique des saisies",
+      "date": "Date de saisie",
+      "fleurs": "Nombre de fleurs",
+      "vide": "Aucune saisie pour ce producteur."
+    }
+  },
+  "fiche": {
+    "titre": "Fiche producteur",
+    "retour": "Retour à la liste",
+    "chargement": "Chargement de la fiche…",
+    "erreur": "Impossible de charger la fiche de ce producteur.",
+    "introuvable": "Ce producteur n'existe pas dans le référentiel.",
+    "enregistre": "Les données du programme ont été enregistrées."
+  },
+  "genre": {
+    "homme": "Homme",
+    "femme": "Femme"
+  },
+  "identite": {
+    "titre": "Identité et localisation",
+    "source": "Source : API externe, en lecture seule",
+    "nom": "Nom",
+    "prenom": "Prénom",
+    "genre": "Genre",
+    "village": "Village / Fokontany",
+    "commune": "Commune",
+    "code": "Code producteur"
+  },
+  "programme": {
+    "titre": "Données du programme",
+    "titre_modifiable": "Données du programme (modifiables par le Super Administrateur)",
+    "cooperative": "Coopérative",
+    "zone": "Zone agro-écologique (héritée du village)",
+    "pieds": "Nombre de pieds de vanille",
+    "age_moyen": "Âge moyen des pieds (ans)",
+    "statut": "Statut d'échantillonnage",
+    "choisir": "Choisir…",
+    "lien_zone": "Corriger la zone dans le référentiel géographique",
+    "enregistrer": "Enregistrer",
+    "champs_invalides": "Renseignez la coopérative, le nombre de pieds (entier), l'âge moyen (0 à 100 ans) et le statut."
+  },
+  "parcelles": {
+    "titre": "Parcelles",
+    "zone": "Type de zone",
+    "fleurs": "Fleurs pollinisées",
+    "derniere_saisie": "Dernière saisie",
+    "sans_zone": "Sans zone",
+    "vide": "Aucune parcelle n'est rattachée à ce producteur."
+  },
+  "historique": {
+    "titre": "Historique des observations de floraison",
+    "date": "Date",
+    "campagne": "Campagne",
+    "quantite": "Quantité",
+    "periode": "Période",
+    "calibrage": "Calibrage",
+    "validation": "Validation",
+    "vide": "Aucune observation de floraison pour ce producteur.",
+    "statut": {
+      "valide": "Validée",
+      "en_attente": "En attente"
+    },
+    "valeurs": {
+      "quantite": {
+        "faible": "Faible",
+        "normal": "Normal",
+        "beaucoup": "Beaucoup"
+      },
+      "periode": {
+        "precoce": "Précoce",
+        "normal": "Normal",
+        "retard": "Retard"
+      },
+      "calibrage": {
+        "court": "Court",
+        "normal": "Normal",
+        "long": "Long"
+      }
+    }
+  },
+  "export": {
+    "excel": "Excel",
+    "pdf": "PDF",
+    "erreurs": {
+      "interdit": "L'export de la liste est réservé à votre profil habilité.",
+      "trop_de_demandes": "Trop de demandes en peu de temps. Patientez un instant avant de réessayer.",
+      "indisponible": "Le service d'export est indisponible pour le moment.",
+      "delai_depasse": "L'export a pris trop de temps. Réessayez.",
+      "generique": "L'export n'a pas pu être généré. Réessayez."
+    }
+  }
+}

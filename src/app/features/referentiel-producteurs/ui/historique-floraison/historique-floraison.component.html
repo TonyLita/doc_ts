@@ -1,0 +1,23 @@
+<div class="tableau__defilement tableau__defilement--borne">
+  <table class="tableau">
+    <caption class="carte__libelle">{{ titre() }}</caption>
+    <thead>
+      <tr>
+        <th scope="col">{{ libelles().date }}</th>
+        <th scope="col" class="tableau__nombre">{{ libelles().fleurs }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (ligne of lignes(); track ligne.id) {
+        <tr>
+          <th scope="row">{{ ligne.date }}</th>
+          <td class="tableau__nombre">{{ ligne.fleurs }}</td>
+        </tr>
+      } @empty {
+        <tr>
+          <td class="tableau__vide" colspan="2">{{ libelles().vide }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

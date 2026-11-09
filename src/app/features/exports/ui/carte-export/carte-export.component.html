@@ -1,0 +1,6 @@
+<h2 class="carte__libelle">{{ titre() }}</h2>
+<p class="carte__detail">{{ description() }}</p>
+<ng-content />
+@if (erreur()) {
+  <p class="carte__detail" role="alert">{{ erreur() }}</p>
+}

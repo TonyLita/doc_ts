@@ -1,0 +1,113 @@
+<div class="page-entete">
+  <h1 class="page-titre">{{ 'qualite_donnees.titre' | transloco }}</h1>
+
+  @if (donnees(); as d) {
+    <app-filtres-campagne-cooperative
+      [campagnes]="d.campagnes"
+      [campagne]="d.campagne"
+      [campagneEnCours]="d.campagneEnCours"
+      [cooperatives]="d.cooperatives"
+      [cooperative]="cooperative()"
+      [libelleCampagne]="'qualite_donnees.filtres.campagne' | transloco"
+      [libelleEnCours]="'qualite_donnees.filtres.en_cours' | transloco"
+      [libelleCooperative]="'qualite_donnees.filtres.cooperative' | transloco"
+      [libelleToutes]="'qualite_donnees.filtres.toutes_cooperatives' | transloco"
+      (campagneChoisie)="choisirCampagne($event)"
+      (cooperativeChoisie)="choisirCooperative($event)"
+    >
+      <app-champ-liste
+        [libelle]="'qualite_donnees.filtres.zone' | transloco"
+        [options]="optionsZones()"
+        [valeur]="zone() ?? ''"
+        [libelleToutes]="'qualite_donnees.filtres.toutes_zones' | transloco"
+        (choisie)="choisirZone($event)"
+      />
+    </app-filtres-campagne-cooperative>
+  }
+</div>
+
+@if (ressource.error()) {
+  <div class="message-etat" role="alert">
+    <p>{{ 'qualite_donnees.erreur' | transloco }}</p>
+    <button type="button" class="message-etat__action" (click)="recharger()">
+      {{ 'qualite_donnees.reessayer' | transloco }}
+    </button>
+  </div>
+}
+
+@if (donnees(); as d) {
+  @if (vue(); as v) {
+    <section class="grille-indicateurs" [attr.aria-label]="'qualite_donnees.indicateurs.titre' | transloco">
+      <app-carte-indicateur
+        [libelle]="'qualite_donnees.indicateurs.score.libelle' | transloco"
+        [valeur]="v.score + ' %'"
+        [progression]="d.scoreQualite"
+        [detail]="'qualite_donnees.indicateurs.score.detail' | transloco"
+      />
+      <app-carte-indicateur
+        [libelle]="'qualite_donnees.indicateurs.completude.libelle' | transloco"
+        [valeur]="v.completude + ' %'"
+        [progression]="d.completudeMensuelle"
+        [detail]="'qualite_donnees.indicateurs.completude.detail' | transloco"
+      />
+      <app-carte-indicateur
+        [libelle]="'qualite_donnees.indicateurs.validation.libelle' | transloco"
+        [valeur]="v.validation + ' %'"
+        [progression]="d.tauxValidation"
+        [detail]="'qualite_donnees.indicateurs.validation.detail' | transloco: { validees: v.validees, total: v.totalSaisies }"
+      />
+      <app-carte-indicateur
+        [libelle]="'qualite_donnees.indicateurs.en_attente.libelle' | transloco"
+        [valeur]="v.enAttente"
+        [detail]="'qualite_donnees.indicateurs.en_attente.detail' | transloco: { part: v.partEnAttente }"
+      />
+      <app-statut-mois
+        [libelle]="'qualite_donnees.indicateurs.statuts.libelle' | transloco"
+        [elements]="v.statuts"
+        [libellesStatut]="{
+          complet: ('qualite_donnees.statut.complet' | transloco),
+          partiel: ('qualite_donnees.statut.partiel' | transloco),
+          'en-attente': ('qualite_donnees.statut.en_attente' | transloco),
+        }"
+      />
+    </section>
+
+    <section class="grille-indicateurs" [attr.aria-label]="'qualite_donnees.anomalies.titre' | transloco">
+      @for (compteur of v.compteurs; track compteur.type) {
+        <app-carte-indicateur
+          [libelle]="('qualite_donnees.anomalies.types.' + compteur.type) | transloco"
+          [valeur]="compteur.nombre"
+        />
+      }
+    </section>
+
+    <app-tableau-anomalies
+      [titre]="'qualite_donnees.anomalies.titre' | transloco"
+      [lignes]="v.anomalies"
+      [libelles]="{
+        type: ('qualite_donnees.anomalies.colonnes.type' | transloco),
+        producteur: ('qualite_donnees.anomalies.colonnes.producteur' | transloco),
+        cooperative: ('qualite_donnees.anomalies.colonnes.cooperative' | transloco),
+        zone: ('qualite_donnees.anomalies.colonnes.zone' | transloco),
+        mois: ('qualite_donnees.anomalies.colonnes.mois' | transloco),
+        vide: ('qualite_donnees.anomalies.vide' | transloco),
+        types: {
+          'valeur-aberrante': ('qualite_donnees.anomalies.types.valeur-aberrante' | transloco),
+          doublon: ('qualite_donnees.anomalies.types.doublon' | transloco),
+          'champ-manquant': ('qualite_donnees.anomalies.types.champ-manquant' | transloco),
+        },
+      }"
+    />
+
+    <app-pagination
+      [page]="page()"
+      [nombrePages]="v.nombrePages"
+      [libelleResume]="'qualite_donnees.pagination.resume' | transloco: { page: page(), pages: v.nombrePages, total: v.totalAnomalies }"
+      [libellePrecedent]="'qualite_donnees.pagination.precedent' | transloco"
+      [libelleSuivant]="'qualite_donnees.pagination.suivant' | transloco"
+      (pageChoisie)="choisirPage($event)"
+    />
+  }
+} @else if (ressource.isLoading()) {
+  <p class="message-etat" role="status">{{ 'qualite_donnees.chargement' | transloco }}</p>
+}

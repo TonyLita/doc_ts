@@ -1,0 +1,87 @@
+{
+  "titre": "Référentiel géographique",
+  "lecture_seule": "Communes et villages : lecture seule, fournis par l'API externe. Seule la zone agro-écologique de chaque village se paramètre ici.",
+  "chargement": "Chargement du référentiel géographique…",
+  "erreur": "Impossible de charger le référentiel géographique.",
+  "reessayer": "Réessayer",
+  "source_indisponible": "L'API externe est indisponible : les données affichées sont celles de la dernière mise à jour ({{date}}).",
+  "erreurs": {
+    "interdit": "Le paramétrage des zones est réservé au Super Administrateur.",
+    "introuvable": "Un village ou une zone n'existe plus dans le référentiel. Rechargez la page.",
+    "invalide": "Les modifications envoyées ne sont pas valides.",
+    "trop_de_demandes": "Trop de demandes en peu de temps. Patientez un instant avant de réessayer.",
+    "indisponible": "Le service est indisponible pour le moment.",
+    "delai_depasse": "L'opération a pris trop de temps. Réessayez.",
+    "generique": "Les zones n'ont pas pu être enregistrées. Réessayez."
+  },
+  "indicateurs": {
+    "titre": "Indicateurs du référentiel géographique",
+    "communes": "Communes",
+    "total": "Villages et fokontany",
+    "parcelles": "Parcelles",
+    "derniere": {
+      "libelle": "Dernière synchronisation",
+      "detail": "Mise à jour depuis l'API externe"
+    }
+  },
+  "repartition": {
+    "titre": "Répartition par type de zone",
+    "villages": "villages",
+    "parcelles": "parcelles",
+    "sans_zone": "Sans zone",
+    "sans_zone_detail": "à rattacher à une zone agro-écologique"
+  },
+  "onglets": {
+    "libelle": "Vues du référentiel géographique",
+    "arbre": "Arborescence",
+    "zones": "Villages et zones"
+  },
+  "arbre": {
+    "chargement": "Chargement de l'arborescence…",
+    "erreur": "Impossible de charger l'arborescence.",
+    "deplier_tout": "Tout déplier",
+    "replier_tout": "Tout replier",
+    "deplier": "Déplier",
+    "replier": "Replier",
+    "vide": "Aucune commune dans le référentiel."
+  },
+  "filtres": {
+    "recherche": "Rechercher un village",
+    "commune": "Commune",
+    "toutes_communes": "Toutes les communes",
+    "zone": "Zone",
+    "toutes_zones": "Toutes les zones",
+    "sans_zone": "Sans zone uniquement"
+  },
+  "affectation": {
+    "affecter": "Affecter la sélection à",
+    "choisir_zone": "Choisir une zone",
+    "appliquer": "Appliquer à la sélection",
+    "selection": "Villages sélectionnés : {{nombre}}",
+    "en_attente": "Modifications en attente : {{nombre}}",
+    "enregistrer": "Enregistrer",
+    "annuler": "Annuler les modifications"
+  },
+  "tableau": {
+    "titre": "Villages et fokontany",
+    "commune": "Commune",
+    "village": "Village / Fokontany",
+    "zone": "Zone",
+    "non_defini": "— non défini —",
+    "modifiee": "modifiée, non enregistrée",
+    "choisir": "Sélectionner",
+    "tout_choisir": "Sélectionner tous les villages de la page",
+    "vide": "Aucun village ne correspond à ces critères."
+  },
+  "pagination": {
+    "resume": "Page {{page}} sur {{pages}} · {{total}} villages",
+    "precedent": "Précédent",
+    "suivant": "Suivant"
+  },
+  "confirmation": {
+    "titre": "Enregistrer les zones",
+    "message": "Vous allez changer la zone de {{nombre}} village(s). Les producteurs et les parcelles rattachés héritent de cette zone : les analyses par zone peuvent en être modifiées.",
+    "confirmer": "Confirmer",
+    "annuler": "Annuler"
+  }
+}

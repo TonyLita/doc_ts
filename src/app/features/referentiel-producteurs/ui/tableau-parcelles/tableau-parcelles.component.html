@@ -1,0 +1,25 @@
+<div class="tableau__defilement">
+  <table class="tableau">
+    <caption class="carte__libelle">{{ titre() }}</caption>
+    <thead>
+      <tr>
+        <th scope="col">{{ libelles().libelle }}</th>
+        <th scope="col">{{ libelles().coordonnees }}</th>
+        <th scope="col" class="tableau__nombre">{{ libelles().pieds }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (ligne of lignes(); track ligne.id) {
+        <tr>
+          <th scope="row">{{ ligne.libelle }}</th>
+          <td>{{ ligne.coordonnees }}</td>
+          <td class="tableau__nombre">{{ ligne.pieds }}</td>
+        </tr>
+      } @empty {
+        <tr>
+          <td class="tableau__vide" colspan="3">{{ libelles().vide }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

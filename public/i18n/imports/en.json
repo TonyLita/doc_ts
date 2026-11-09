@@ -1,0 +1,117 @@
+{
+  "titre": "Reference data import",
+  "chargement": "Loading…",
+  "erreur": "Unable to load the import page.",
+  "reessayer": "Retry",
+  "interdit": "Importing reference data is reserved for the Super Administrator.",
+  "types": {
+    "parcelles": "Plots",
+    "cooperatives": "Cooperatives"
+  },
+  "choisir": {
+    "titre": "1. Choose the file",
+    "type": "Reference type",
+    "fichier": "Source file",
+    "formats": "Accepted formats",
+    "taille_max": "maximum size: {{taille}} MB",
+    "modele": "Download the template",
+    "analyser": "Analyze the file",
+    "en_cours": "Analyzing…",
+    "choisir": "Choose the file",
+    "deposer": "Drag and drop or click to select",
+    "aucun_fichier": "No file chosen"
+  },
+  "apercu": {
+    "fichier": "File: {{fichier}} · {{type}}",
+    "titre": "2. Preview before validation",
+    "lues": "Rows read",
+    "valides": "Valid",
+    "a_verifier": "To check",
+    "rejetees": "Rejected",
+    "ligne": "Row",
+    "controle": "Check",
+    "vide": "No row to display.",
+    "annuler": "Cancel",
+    "confirmer": "Confirm the import",
+    "en_cours": "Importing…"
+  },
+  "controle": {
+    "valide": "Valid",
+    "a_verifier": "To check",
+    "rejetee": "Rejected"
+  },
+  "colonnes": {
+    "producteur": "Farmer",
+    "cooperative": "Cooperative",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "pieds": "Vines",
+    "nom": "Name",
+    "village": "Hub village",
+    "commune": "Commune"
+  },
+  "motifs": {
+    "producteur-inconnu": "unknown farmer",
+    "cooperative-inconnue": "unknown cooperative",
+    "coordonnees-invalides": "invalid coordinates",
+    "doublon": "duplicate",
+    "champ-manquant": "required field missing"
+  },
+  "pagination": {
+    "resume": "Page {{page}} of {{pages}} · {{total}} rows",
+    "precedent": "Previous",
+    "suivant": "Next"
+  },
+  "resultat": {
+    "titre": "3. Result",
+    "creees": "Created",
+    "mises_a_jour": "Updated",
+    "rejetees": "Rejected",
+    "rapport": "Download the error report",
+    "nouveau": "New import"
+  },
+  "historique": {
+    "titre": "Import history",
+    "date": "Date",
+    "utilisateur": "User",
+    "fichier": "File",
+    "type": "Type",
+    "creees": "Created",
+    "mises_a_jour": "Updated",
+    "rejetees": "Rejected",
+    "vide": "No import yet."
+  },
+  "erreurs": {
+    "trop_gros": "The file exceeds the maximum allowed size.",
+    "format_refuse": "This file format is not accepted for this reference type.",
+    "fichier_illisible": "The file is unreadable or does not follow the template.",
+    "interdit": "Importing reference data is reserved for the Super Administrator.",
+    "trop_de_demandes": "Too many requests in a short time. Please wait a moment before trying again.",
+    "indisponible": "The import service is currently unavailable.",
+    "delai_depasse": "The operation took too long. Please try again.",
+    "generique": "The operation could not be completed. Please try again."
+  },
+  "bandeau": {
+    "titre": "Data import",
+    "description": "Update the plots and the cooperatives from your files"
+  },
+  "aide": {
+    "titre": "How to import your data",
+    "libelle_note": "Note",
+    "note": "Nothing is written before you confirm. Every import is logged and no plot is deleted: it is archived.",
+    "etapes": {
+      "preparer": {
+        "titre": "Prepare the file",
+        "texte": "Download the template of the wanted zone and fill it in. Keep the same columns as the template."
+      },
+      "deposer": {
+        "titre": "Drag and drop",
+        "texte": "Drop the file in the matching zone or click to browse your folders (maximum size: {{taille}} MB)."
+      },
+      "verifier": {
+        "titre": "Check and confirm",
+        "texte": "A preview is shown before anything is written. Click \"Confirm the import\" to update the reference data."
+      }
+    }
+  }
+}

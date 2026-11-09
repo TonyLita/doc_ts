@@ -1,0 +1,32 @@
+{
+  "titre": "Zone analysis",
+  "chargement": "Loading the analysis…",
+  "erreur": "Unable to load the zone analysis.",
+  "reessayer": "Retry",
+  "filtres": {
+    "campagne": "Campaign",
+    "en_cours": "current",
+    "cooperative": "Cooperative",
+    "toutes_cooperatives": "All cooperatives"
+  },
+  "profil": {
+    "precoce": "Early",
+    "normal": "Normal",
+    "retarde": "Late"
+  },
+  "indicateurs": {
+    "producteurs": "Farmers",
+    "fleurs": "Flowers observed",
+    "part": "Share of the campaign total"
+  },
+  "graphiques": {
+    "mensuel": "Monthly trend of flowers observed",
+    "comparaison": "Multi-year comparison"
+  },
+  "synthese": {
+    "titre": "Summary",
+    "precoce": "Early flowering in the {{zone}} zone: {{fleurs}} flowers observed ({{part}}% of the total). Harvest can start earlier than the regional average.",
+    "normal": "Flowering in line with the regional average in the {{zone}} zone: {{fleurs}} flowers observed ({{part}}% of the total). No particular action needed.",
+    "retarde": "Late flowering in the {{zone}} zone: {{fleurs}} flowers observed ({{part}}% of the total). Pollination teams should be prioritised on this zone."
+  }
+}

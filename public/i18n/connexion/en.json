@@ -1,0 +1,15 @@
+{
+  "titre": "Login",
+  "identifiant": "Username",
+  "mot_de_passe": "Password",
+  "bouton": "Sign in",
+  "erreur_obligatoire": "This field is required.",
+  "erreur_identifiants": "Incorrect username or password.",
+  "erreur_reseau": "Unable to sign in: check your network connection and try again.",
+  "erreur_inconnue": "An error occurred. Please try again.",
+  "titre_plateforme": {
+    "ligne_1": "Platform for monitoring",
+    "ligne_2": "the flowering of",
+    "ligne_3": "vanilla"
+  }
+}

@@ -1,0 +1,130 @@
+<div class="page-entete">
+  <h1 class="page-titre">{{ 'administration.titre' | transloco }}</h1>
+
+  @if (donnees()?.peutGererUtilisateurs && !formulaire()) {
+    <button type="button" class="bouton" (click)="ouvrirCreation()">{{ 'administration.utilisateurs.nouveau' | transloco }}</button>
+  }
+</div>
+
+@if (ressource.error()) {
+  <div class="message-etat" role="alert">
+    <p>{{ 'administration.erreur' | transloco }}</p>
+    <button type="button" class="message-etat__action" (click)="recharger()">
+      {{ 'administration.reessayer' | transloco }}
+    </button>
+  </div>
+}
+
+@if (cleErreur(); as cle) {
+  <p class="message-etat" role="alert">{{ 'administration.erreurs.' + cle | transloco }}</p>
+}
+
+@if (donnees(); as d) {
+  @if (vue(); as v) {
+    <section class="grille-indicateurs" [attr.aria-label]="'administration.campagne.libelle' | transloco">
+      <app-carte-indicateur
+        class="carte--large"
+        [libelle]="'administration.campagne.libelle' | transloco"
+        [valeur]="v.campagneActive"
+        [detail]="'administration.campagne.detail' | transloco"
+      />
+    </section>
+    <div class="actions-ligne">
+      <a routerLink="/campagnes" class="bouton bouton--secondaire">{{ 'administration.campagne.gerer' | transloco }}</a>
+    </div>
+
+    <app-matrice-permissions
+      [titre]="'administration.permissions.titre' | transloco"
+      [colonnes]="[
+        { profil: 'super-administrateur', libelle: ('administration.profils.super-administrateur' | transloco) },
+        { profil: 'utilisateur', libelle: ('administration.profils.utilisateur' | transloco) },
+        { profil: 'visiteur', libelle: ('administration.profils.visiteur' | transloco) },
+      ]"
+      [lignes]="d.permissions"
+      [libelles]="{
+        droit: ('administration.permissions.droit' | transloco),
+        autorise: ('administration.permissions.autorise' | transloco),
+        refuse: ('administration.permissions.refuse' | transloco),
+        droits: {
+          consultation: ('administration.droits.consultation' | transloco),
+          rapports: ('administration.droits.rapports' | transloco),
+          exports: ('administration.droits.exports' | transloco),
+          campagnes: ('administration.droits.campagnes' | transloco),
+          imports: ('administration.droits.imports' | transloco),
+          referentiels: ('administration.droits.referentiels' | transloco),
+          utilisateurs: ('administration.droits.utilisateurs' | transloco),
+          producteurs: ('administration.droits.producteurs' | transloco),
+        },
+      }"
+    />
+
+    @if (d.peutGererUtilisateurs) {
+      @if (formulaire(); as ouvert) {
+        <app-formulaire-utilisateur
+          [titre]="(ouvert.utilisateur ? 'administration.formulaire.titre_role' : 'administration.formulaire.titre_creation') | transloco"
+          [utilisateur]="ouvert.utilisateur"
+          [enCours]="enCours()"
+          [profils]="[
+            { valeur: 'super-administrateur', libelle: ('administration.profils.super-administrateur' | transloco) },
+            { valeur: 'utilisateur', libelle: ('administration.profils.utilisateur' | transloco) },
+            { valeur: 'visiteur', libelle: ('administration.profils.visiteur' | transloco) },
+          ]"
+          [langues]="optionsLangues"
+          [libelles]="{
+            identifiant: ('administration.formulaire.identifiant' | transloco),
+            motDePasse: ('administration.formulaire.mot_de_passe' | transloco),
+            role: ('administration.formulaire.role' | transloco),
+            langue: ('administration.formulaire.langue' | transloco),
+            enregistrer: ('administration.formulaire.enregistrer' | transloco),
+            annuler: ('administration.formulaire.annuler' | transloco),
+            champsInvalides: ('administration.formulaire.champs_invalides' | transloco),
+          }"
+          (enregistrer)="enregistrer($event)"
+          (annuler)="fermerFormulaire()"
+        />
+      }
+
+      <app-tableau-utilisateurs
+        [titre]="'administration.utilisateurs.titre' | transloco"
+        [lignes]="v.utilisateurs"
+        [libelles]="{
+          identifiant: ('administration.utilisateurs.identifiant' | transloco),
+          role: ('administration.utilisateurs.role' | transloco),
+          langue: ('administration.utilisateurs.langue' | transloco),
+          statut: ('administration.utilisateurs.statut' | transloco),
+          actions: ('administration.utilisateurs.actions' | transloco),
+          vide: ('administration.utilisateurs.vide' | transloco),
+          moi: ('administration.utilisateurs.moi' | transloco),
+          changerRole: ('administration.utilisateurs.changer_role' | transloco),
+          desactiver: ('administration.utilisateurs.desactiver' | transloco),
+          reactiver: ('administration.utilisateurs.reactiver' | transloco),
+          actif: ('administration.utilisateurs.actif' | transloco),
+          desactive: ('administration.utilisateurs.desactive' | transloco),
+          profils: {
+            'super-administrateur': ('administration.profils.super-administrateur' | transloco),
+            utilisateur: ('administration.profils.utilisateur' | transloco),
+            visiteur: ('administration.profils.visiteur' | transloco),
+          },
+        }"
+        (changerRole)="ouvrirChangementRole($event)"
+        (desactiver)="demanderConfirmation('desactiver', $event)"
+        (reactiver)="demanderConfirmation('reactiver', $event)"
+      />
+    } @else {
+      <p class="message-etat" role="status">{{ 'administration.utilisateurs.reserve' | transloco }}</p>
+    }
+
+    @if (confirmation(); as demande) {
+      <app-dialogue-confirmation
+        [titre]="('administration.confirmation.' + demande.action + '.titre') | transloco"
+        [message]="('administration.confirmation.' + demande.action + '.message') | transloco: { identifiant: demande.identifiant }"
+        [libelleConfirmer]="'administration.confirmation.confirmer' | transloco"
+        [libelleAnnuler]="'administration.confirmation.annuler' | transloco"
+        (confirmer)="confirmer()"
+        (annuler)="annulerConfirmation()"
+      />
+    }
+  }
+} @else if (ressource.isLoading()) {
+  <p class="message-etat" role="status">{{ 'administration.chargement' | transloco }}</p>
+}

@@ -1,0 +1,39 @@
+<div
+  class="zone-depot"
+  [class.zone-depot--survol]="survol()"
+  (dragover)="survoler($event)"
+  (dragleave)="survol.set(false)"
+  (drop)="deposer($event)"
+>
+  <h2 class="carte__libelle">{{ titre() }}</h2>
+  <p class="zone-depot__fichier">{{ fichier()?.name ?? libelles().aucunFichier }}</p>
+  <p class="carte__detail">{{ libelles().deposer }}</p>
+  <p class="carte__detail">{{ libelles().formats }} : {{ formatsAcceptes().join(', ') }} · {{ libelles().tailleMax }}</p>
+  <input
+    #champ
+    type="file"
+    hidden
+    [attr.accept]="accept()"
+    [attr.aria-label]="libelles().fichier + ' – ' + titre()"
+    (change)="choisirFichier($event)"
+  />
+  <button type="button" class="bouton bouton--secondaire" [disabled]="enCours()" (click)="champ.click()">
+    {{ libelles().choisir }}
+  </button>
+</div>
+
+@if (formatRefuse()) {
+  <p class="carte__detail" role="alert">{{ libelles().formatRefuse }}</p>
+}
+@if (tropGros()) {
+  <p class="carte__detail" role="alert">{{ libelles().tropGros }}</p>
+}
+
+<div class="actions-ligne">
+  <button type="button" class="bouton" [disabled]="!peutAnalyser()" (click)="valider()">
+    {{ analyseEnCours() ? libelles().enCours : libelles().analyser }}
+  </button>
+  <button type="button" class="bouton bouton--secondaire" [disabled]="enCours()" (click)="modele.emit(type())">
+    {{ libelles().modele }}
+  </button>
+</div>

@@ -1,0 +1,11 @@
+<label class="champ-filtre__etiquette">
+  <span>{{ libelle() }}</span>
+  <select (change)="choisie.emit(lire($event))">
+    @if (libelleToutes(); as toutes) {
+      <option value="" [selected]="!valeur()">{{ toutes }}</option>
+    }
+    @for (option of options(); track option.valeur) {
+      <option [value]="option.valeur" [selected]="option.valeur === valeur()">{{ option.libelle }}</option>
+    }
+  </select>
+</label>

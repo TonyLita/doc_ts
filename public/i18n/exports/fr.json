@@ -1,0 +1,79 @@
+{
+  "titre": "Centre d'exports",
+  "langue": "Langue de l'export : {{langue}}",
+  "chargement": "Chargement du centre d'exports…",
+  "erreur": "Impossible de charger le centre d'exports.",
+  "reessayer": "Réessayer",
+  "visiteur": "Votre profil ne permet pas d'exporter des données.",
+  "en_cours": "Génération…",
+  "filtres": {
+    "campagne": "Campagne",
+    "en_cours": "en cours",
+    "cooperative": "Coopérative",
+    "toutes_cooperatives": "Toutes les coopératives",
+    "zone": "Zone",
+    "toutes_zones": "Toutes les zones"
+  },
+  "tableur": {
+    "titre": "Export Excel",
+    "description": "Liste complète des producteurs avec données de floraison",
+    "format": "Format",
+    "formats": {
+      "xlsx": "Excel (.xlsx)",
+      "csv": "CSV"
+    },
+    "telecharger": "Télécharger"
+  },
+  "pdf": {
+    "titre": "Rapport PDF",
+    "description": "Rapport complet avec graphiques et analyses",
+    "generer": "Générer le PDF"
+  },
+  "images": {
+    "titre": "Export Graphiques",
+    "description": "Télécharger les graphiques en PNG",
+    "telecharger": "Télécharger",
+    "graphiques": {
+      "floraison-mensuelle": "Évolution mensuelle",
+      "repartition-zones": "Répartition zones",
+      "analyse-zones": "Analyse par zone",
+      "comparaison-saisons": "Comparaison 3 saisons"
+    },
+    "tous": "{{nombre}} fichiers PNG",
+    "png": "PNG",
+    "telecharger_graphique": "Télécharger le graphique « {{graphique}} » en PNG",
+    "descriptions": {
+      "floraison-mensuelle": "Fleurs observées chaque mois, par zone",
+      "repartition-zones": "Part de chaque zone dans la floraison de la campagne",
+      "comparaison-saisons": "Floraison mensuelle des trois dernières saisons",
+      "analyse-zones": "Floraison mensuelle de chaque zone"
+    }
+  },
+  "resume": {
+    "titre": "Résumé presse-papiers",
+    "description": "Copier un résumé des chiffres clés pour coller dans un email, WhatsApp ou document",
+    "copier": "Copier le résumé",
+    "copie": "Copié",
+    "erreur": "Impossible de charger le résumé."
+  },
+  "erreurs": {
+    "interdit": "Votre profil ne permet pas d'exporter des données.",
+    "trop_de_demandes": "Trop de demandes en peu de temps. Patientez un instant avant de réessayer.",
+    "indisponible": "Le service d'export est indisponible pour le moment.",
+    "delai_depasse": "L'export a pris trop de temps. Réessayez.",
+    "generique": "L'export n'a pas pu être généré. Réessayez."
+  },
+  "entete": {
+    "titre": "Exports",
+    "campagne": "Campagne {{campagne}}",
+    "campagne_region": "Campagne {{campagne}} · Région {{region}}",
+    "rapport_ia": "Rapport IA"
+  },
+  "bandeau": {
+    "description": "Données producteurs · Graphiques · Rapports PDF"
+  },
+  "apercus": {
+    "titre": "Aperçu graphiques exportables",
+    "erreur": "Impossible de charger les aperçus des graphiques."
+  }
+}

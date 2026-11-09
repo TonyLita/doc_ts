@@ -1,0 +1,91 @@
+<div class="arbre__outils">
+  <button type="button" class="bouton bouton--petit bouton--secondaire" (click)="toutDeplier()">
+    {{ libelles().deplierTout }}
+  </button>
+  <button type="button" class="bouton bouton--petit bouton--secondaire" (click)="toutReplier()">
+    {{ libelles().replierTout }}
+  </button>
+</div>
+
+<ul class="arbre">
+  @for (commune of communes(); track commune.id) {
+    <li>
+      <div class="arbre__ligne arbre__ligne--commune">
+        <button
+          type="button"
+          class="arbre__bascule"
+          [attr.aria-expanded]="communesOuvertes().has(commune.id)"
+          [attr.aria-controls]="'arbre-commune-' + commune.id"
+          [attr.aria-label]="(communesOuvertes().has(commune.id) ? libelles().replier : libelles().deplier) + ' ' + commune.nom"
+          (click)="basculerCommune(commune.id)"
+        >
+          <svg class="arbre__chevron" viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M6 3.5 10.5 8 6 12.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <span class="arbre__nom">{{ commune.nom }}</span>
+        <span class="arbre__compte">
+          {{ commune.nombreVillages }} {{ libelles().villages }} · {{ commune.nombreParcelles }} {{ libelles().parcelles }}
+        </span>
+      </div>
+
+      @if (communesOuvertes().has(commune.id)) {
+        <ul class="arbre__groupe" [id]="'arbre-commune-' + commune.id">
+          @for (village of commune.villages; track village.id) {
+            <li>
+              <div class="arbre__ligne">
+                @if (village.parcelles.length) {
+                  <button
+                    type="button"
+                    class="arbre__bascule"
+                    [attr.aria-expanded]="villagesOuverts().has(village.id)"
+                    [attr.aria-controls]="'arbre-village-' + village.id"
+                    [attr.aria-label]="(villagesOuverts().has(village.id) ? libelles().replier : libelles().deplier) + ' ' + village.nom"
+                    (click)="basculerVillage(village.id)"
+                  >
+                    <svg class="arbre__chevron" viewBox="0 0 16 16" aria-hidden="true">
+                      <path d="M6 3.5 10.5 8 6 12.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </button>
+                } @else {
+                  <span class="arbre__bascule arbre__bascule--vide"></span>
+                }
+                <span class="arbre__nom arbre__nom--village">{{ village.nom }}</span>
+                @if (village.rang !== null) {
+                  <span class="badge-zone couleur-zone-{{ village.rang }}">
+                    <span class="badge-zone__pastille"></span>
+                    <span class="badge-zone__nom">{{ village.zoneNom }}</span>
+                  </span>
+                } @else {
+                  <span class="badge-zone badge-zone--aucune">
+                    <span class="badge-zone__pastille"></span>
+                    <span class="badge-zone__nom">{{ libelles().sansZone }}</span>
+                  </span>
+                }
+                <span class="arbre__compte">{{ village.nombreParcelles }} {{ libelles().parcelles }}</span>
+              </div>
+
+              @if (villagesOuverts().has(village.id)) {
+                <ul class="arbre__parcelles" [id]="'arbre-village-' + village.id">
+                  @for (parcelle of village.parcelles; track parcelle.id) {
+                    <li class="arbre__parcelle">
+                      @if (village.rang !== null) {
+                        <span class="arbre__repere couleur-zone-{{ village.rang }}"></span>
+                      } @else {
+                        <span class="arbre__repere arbre__repere--aucune"></span>
+                      }
+                      <span class="arbre__code">{{ parcelle.code }}</span>
+                      <span class="arbre__zone">{{ village.rang !== null ? village.zoneNom : libelles().sansZone }}</span>
+                    </li>
+                  }
+                </ul>
+              }
+            </li>
+          }
+        </ul>
+      }
+    </li>
+  } @empty {
+    <li class="message-etat" role="status">{{ libelles().vide }}</li>
+  }
+</ul>

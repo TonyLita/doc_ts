@@ -1,0 +1,117 @@
+{
+  "titre": "Import des référentiels",
+  "chargement": "Chargement…",
+  "erreur": "Impossible de charger la page d'import.",
+  "reessayer": "Réessayer",
+  "interdit": "L'import des référentiels est réservé au Super Administrateur.",
+  "types": {
+    "parcelles": "Parcelles",
+    "cooperatives": "Coopératives"
+  },
+  "choisir": {
+    "titre": "1. Choisir le fichier",
+    "type": "Type de référentiel",
+    "fichier": "Fichier source",
+    "formats": "Formats acceptés",
+    "taille_max": "taille maximale : {{taille}} Mo",
+    "modele": "Télécharger le modèle",
+    "analyser": "Analyser le fichier",
+    "en_cours": "Analyse…",
+    "choisir": "Choisir le fichier",
+    "deposer": "Glissez-déposez ou cliquez pour sélectionner",
+    "aucun_fichier": "Aucun fichier choisi"
+  },
+  "apercu": {
+    "fichier": "Fichier : {{fichier}} · {{type}}",
+    "titre": "2. Aperçu avant validation",
+    "lues": "Lignes lues",
+    "valides": "Valides",
+    "a_verifier": "À vérifier",
+    "rejetees": "Rejetées",
+    "ligne": "Ligne",
+    "controle": "Contrôle",
+    "vide": "Aucune ligne à afficher.",
+    "annuler": "Annuler",
+    "confirmer": "Confirmer l'import",
+    "en_cours": "Import…"
+  },
+  "controle": {
+    "valide": "Valide",
+    "a_verifier": "À vérifier",
+    "rejetee": "Rejetée"
+  },
+  "colonnes": {
+    "producteur": "Producteur",
+    "cooperative": "Coopérative",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "pieds": "Pieds",
+    "nom": "Nom",
+    "village": "Village pivot",
+    "commune": "Commune"
+  },
+  "motifs": {
+    "producteur-inconnu": "producteur inconnu",
+    "cooperative-inconnue": "coopérative inconnue",
+    "coordonnees-invalides": "coordonnées invalides",
+    "doublon": "doublon",
+    "champ-manquant": "champ obligatoire manquant"
+  },
+  "pagination": {
+    "resume": "Page {{page}} sur {{pages}} · {{total}} lignes",
+    "precedent": "Précédent",
+    "suivant": "Suivant"
+  },
+  "resultat": {
+    "titre": "3. Résultat",
+    "creees": "Créées",
+    "mises_a_jour": "Mises à jour",
+    "rejetees": "Rejetées",
+    "rapport": "Télécharger le rapport d'erreurs",
+    "nouveau": "Nouvel import"
+  },
+  "historique": {
+    "titre": "Historique des imports",
+    "date": "Date",
+    "utilisateur": "Utilisateur",
+    "fichier": "Fichier",
+    "type": "Type",
+    "creees": "Créées",
+    "mises_a_jour": "Mises à jour",
+    "rejetees": "Rejetées",
+    "vide": "Aucun import pour le moment."
+  },
+  "erreurs": {
+    "trop_gros": "Le fichier dépasse la taille maximale autorisée.",
+    "format_refuse": "Ce format de fichier n'est pas accepté pour ce type de référentiel.",
+    "fichier_illisible": "Le fichier est illisible ou ne respecte pas le modèle.",
+    "interdit": "L'import des référentiels est réservé au Super Administrateur.",
+    "trop_de_demandes": "Trop de demandes en peu de temps. Patientez un instant avant de réessayer.",
+    "indisponible": "Le service d'import est indisponible pour le moment.",
+    "delai_depasse": "L'opération a pris trop de temps. Réessayez.",
+    "generique": "L'opération n'a pas pu être effectuée. Réessayez."
+  },
+  "bandeau": {
+    "titre": "Import de données",
+    "description": "Mettez à jour les parcelles et les coopératives depuis vos fichiers"
+  },
+  "aide": {
+    "titre": "Comment importer vos données",
+    "libelle_note": "Note",
+    "note": "Rien n'est écrit avant votre confirmation. Chaque import est journalisé et aucune parcelle n'est supprimée : elle est archivée.",
+    "etapes": {
+      "preparer": {
+        "titre": "Préparez le fichier",
+        "texte": "Téléchargez le modèle de la zone voulue et remplissez-le. Gardez les mêmes colonnes que le modèle."
+      },
+      "deposer": {
+        "titre": "Glissez-déposez",
+        "texte": "Déposez le fichier dans la zone correspondante ou cliquez pour parcourir vos dossiers (taille maximale : {{taille}} Mo)."
+      },
+      "verifier": {
+        "titre": "Vérifiez et validez",
+        "texte": "Un aperçu s'affiche avant toute écriture. Cliquez sur « Confirmer l'import » pour mettre à jour les référentiels."
+      }
+    }
+  }
+}

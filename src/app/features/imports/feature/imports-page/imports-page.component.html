@@ -1,0 +1,197 @@
+<div class="page-entete">
+  <h1 class="page-titre">{{ 'imports.titre' | transloco }}</h1>
+</div>
+
+<app-onglets-import-export actif="import">
+  @if (ressource.error()) {
+    <div class="message-etat" role="alert">
+      <p>{{ 'imports.erreur' | transloco }}</p>
+      <button type="button" class="message-etat__action" (click)="recharger()">
+        {{ 'imports.reessayer' | transloco }}
+      </button>
+    </div>
+  }
+
+  @if (cleErreur(); as cle) {
+    <p class="message-etat" role="alert">{{ 'imports.erreurs.' + cle | transloco }}</p>
+  }
+
+  @if (contexte(); as c) {
+    @if (c.peutImporter) {
+      <section class="carte carte--bandeau">
+        <h2 class="bandeau-titre">{{ 'imports.bandeau.titre' | transloco }}</h2>
+        <p class="carte__texte">{{ 'imports.bandeau.description' | transloco }}</p>
+      </section>
+
+      @if (etape() === 'choisir') {
+        <section class="grille-depots" [attr.aria-label]="'imports.choisir.titre' | transloco">
+          @for (type of types; track type) {
+            <app-formulaire-import
+              [type]="type"
+              [titre]="'imports.types.' + type | transloco"
+              [tailleMaxMo]="tailleMaxMo"
+              [enCours]="enCours()"
+              [analyseEnCours]="enCours() && typeAnalyse() === type"
+              [libelles]="{
+                fichier: ('imports.choisir.fichier' | transloco),
+                formats: ('imports.choisir.formats' | transloco),
+                tailleMax: ('imports.choisir.taille_max' | transloco: { taille: tailleMaxMo }),
+                formatRefuse: ('imports.erreurs.format_refuse' | transloco),
+                tropGros: ('imports.erreurs.trop_gros' | transloco),
+                deposer: ('imports.choisir.deposer' | transloco),
+                aucunFichier: ('imports.choisir.aucun_fichier' | transloco),
+                choisir: ('imports.choisir.choisir' | transloco),
+                modele: ('imports.choisir.modele' | transloco),
+                analyser: ('imports.choisir.analyser' | transloco),
+                enCours: ('imports.choisir.en_cours' | transloco),
+              }"
+              (analyser)="analyser($event)"
+              (modele)="telechargerModele($event)"
+            />
+          }
+        </section>
+
+        <app-aide-import
+          [titre]="'imports.aide.titre' | transloco"
+          [etapes]="[
+            {
+              titre: ('imports.aide.etapes.preparer.titre' | transloco),
+              texte: ('imports.aide.etapes.preparer.texte' | transloco),
+            },
+            {
+              titre: ('imports.aide.etapes.deposer.titre' | transloco),
+              texte: ('imports.aide.etapes.deposer.texte' | transloco: { taille: tailleMaxMo }),
+            },
+            {
+              titre: ('imports.aide.etapes.verifier.titre' | transloco),
+              texte: ('imports.aide.etapes.verifier.texte' | transloco),
+            },
+          ]"
+          [libelleNote]="'imports.aide.libelle_note' | transloco"
+          [note]="'imports.aide.note' | transloco"
+        />
+      }
+
+      @if (etape() === 'apercu' || etape() === 'resultat') {
+        @if (vue().apercu; as a) {
+          <p class="carte__detail">
+            {{ 'imports.apercu.fichier' | transloco: { fichier: a.fichier, type: ('imports.types.' + a.type | transloco) } }}
+          </p>
+        }
+      }
+
+      @if (etape() === 'apercu') {
+        @if (vue().apercu; as a) {
+          <section class="grille-indicateurs" [attr.aria-label]="'imports.apercu.titre' | transloco">
+            <app-carte-indicateur [libelle]="'imports.apercu.lues' | transloco" [valeur]="a.lignesLues" />
+            <app-carte-indicateur [libelle]="'imports.apercu.valides' | transloco" [valeur]="a.valides" />
+            <app-carte-indicateur [libelle]="'imports.apercu.a_verifier' | transloco" [valeur]="a.aVerifier" />
+            <app-carte-indicateur [libelle]="'imports.apercu.rejetees' | transloco" [valeur]="a.rejetees" />
+          </section>
+
+          @if (lignes.hasValue()) {
+            <app-tableau-apercu
+              [titre]="'imports.apercu.titre' | transloco"
+              [colonnes]="a.colonnes"
+              [lignes]="vue().lignes"
+              [libelles]="{
+                ligne: ('imports.apercu.ligne' | transloco),
+                controle: ('imports.apercu.controle' | transloco),
+                vide: ('imports.apercu.vide' | transloco),
+                controles: {
+                  valide: ('imports.controle.valide' | transloco),
+                  'a-verifier': ('imports.controle.a_verifier' | transloco),
+                  rejetee: ('imports.controle.rejetee' | transloco),
+                },
+                colonnes: {
+                  producteur: ('imports.colonnes.producteur' | transloco),
+                  cooperative: ('imports.colonnes.cooperative' | transloco),
+                  latitude: ('imports.colonnes.latitude' | transloco),
+                  longitude: ('imports.colonnes.longitude' | transloco),
+                  pieds: ('imports.colonnes.pieds' | transloco),
+                  nom: ('imports.colonnes.nom' | transloco),
+                  village: ('imports.colonnes.village' | transloco),
+                  commune: ('imports.colonnes.commune' | transloco),
+                },
+                motifs: {
+                  'producteur-inconnu': ('imports.motifs.producteur-inconnu' | transloco),
+                  'cooperative-inconnue': ('imports.motifs.cooperative-inconnue' | transloco),
+                  'coordonnees-invalides': ('imports.motifs.coordonnees-invalides' | transloco),
+                  doublon: ('imports.motifs.doublon' | transloco),
+                  'champ-manquant': ('imports.motifs.champ-manquant' | transloco),
+                },
+              }"
+            />
+            <app-pagination
+              [page]="page()"
+              [nombrePages]="vue().nombrePages"
+              [libelleResume]="'imports.pagination.resume' | transloco: { page: page(), pages: vue().nombrePages, total: vue().total }"
+              [libellePrecedent]="'imports.pagination.precedent' | transloco"
+              [libelleSuivant]="'imports.pagination.suivant' | transloco"
+              (pageChoisie)="choisirPage($event)"
+            />
+          } @else if (lignes.isLoading()) {
+            <p class="message-etat" role="status">{{ 'imports.chargement' | transloco }}</p>
+          }
+
+          <div class="actions-ligne">
+            <button type="button" class="bouton bouton--secondaire" [disabled]="enCours()" (click)="annuler()">
+              {{ 'imports.apercu.annuler' | transloco }}
+            </button>
+            <button type="button" class="bouton" [disabled]="enCours()" (click)="confirmer()">
+              {{ (enCours() ? 'imports.apercu.en_cours' : 'imports.apercu.confirmer') | transloco }}
+            </button>
+          </div>
+        }
+      }
+
+      @if (etape() === 'resultat') {
+        @if (vue().resultat; as r) {
+          <section class="grille-indicateurs" [attr.aria-label]="'imports.resultat.titre' | transloco">
+            <app-carte-indicateur [libelle]="'imports.resultat.creees' | transloco" [valeur]="r.creees" />
+            <app-carte-indicateur [libelle]="'imports.resultat.mises_a_jour' | transloco" [valeur]="r.miseAJour" />
+            <app-carte-indicateur [libelle]="'imports.resultat.rejetees' | transloco" [valeur]="r.rejetees" />
+          </section>
+          <div class="actions-ligne">
+            @if (r.aDesRejets) {
+              <button type="button" class="bouton bouton--secondaire" (click)="telechargerRapport()">
+                {{ 'imports.resultat.rapport' | transloco }}
+              </button>
+            }
+            <button type="button" class="bouton" (click)="nouvelImport()">
+              {{ 'imports.resultat.nouveau' | transloco }}
+            </button>
+          </div>
+        }
+      }
+
+      <app-historique-imports
+        [titre]="'imports.historique.titre' | transloco"
+        [lignes]="vue().historique"
+        [libelles]="{
+          date: ('imports.historique.date' | transloco),
+          utilisateur: ('imports.historique.utilisateur' | transloco),
+          fichier: ('imports.historique.fichier' | transloco),
+          type: ('imports.historique.type' | transloco),
+          creees: ('imports.historique.creees' | transloco),
+          miseAJour: ('imports.historique.mises_a_jour' | transloco),
+          rejetees: ('imports.historique.rejetees' | transloco),
+          vide: ('imports.historique.vide' | transloco),
+          types: {
+            parcelles: ('imports.types.parcelles' | transloco),
+            cooperatives: ('imports.types.cooperatives' | transloco),
+          },
+        }"
+      />
+    } @else {
+      <p class="message-etat" role="status">{{ 'imports.interdit' | transloco }}</p>
+    }
+  } @else if (ressource.isLoading()) {
+    <p class="message-etat" role="status">{{ 'imports.chargement' | transloco }}</p>
+    <div class="squelette" aria-hidden="true">
+      <span class="squelette__bloc squelette__bloc--haut"></span>
+      <span class="squelette__bloc"></span>
+      <span class="squelette__bloc squelette__bloc--table"></span>
+    </div>
+  }
+</app-onglets-import-export>

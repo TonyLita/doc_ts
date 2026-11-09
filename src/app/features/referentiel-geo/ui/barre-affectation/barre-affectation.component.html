@@ -1,0 +1,34 @@
+<div class="formulaire">
+  <app-champ-liste
+    [libelle]="libelles().affecter"
+    [options]="zones()"
+    [valeur]="zoneDuLot()"
+    [libelleToutes]="libelles().choisirZone"
+    (choisie)="zoneDuLot.set($event)"
+  />
+  <button
+    type="button"
+    class="bouton bouton--secondaire"
+    [disabled]="!nombreSelectionnes() || !zoneDuLot() || enCours()"
+    (click)="appliquer()"
+  >
+    {{ libelles().appliquer }}
+  </button>
+  <p class="carte__detail" aria-live="polite">{{ libelles().selection }}</p>
+</div>
+<div class="formulaire">
+  <p class="carte__detail" aria-live="polite">{{ libelles().enAttente }}</p>
+  <div class="formulaire__actions">
+    <button type="button" class="bouton" [disabled]="!nombreModifications() || enCours()" (click)="enregistrer.emit()">
+      {{ libelles().enregistrer }}
+    </button>
+    <button
+      type="button"
+      class="bouton bouton--secondaire"
+      [disabled]="!nombreModifications() || enCours()"
+      (click)="annuler.emit()"
+    >
+      {{ libelles().annuler }}
+    </button>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+{
+  "titre": "Synchronisation",
+  "automatique": "La synchronisation est automatique : elle s'effectue dès que l'application mobile retrouve une connexion, sans action manuelle côté web. Les tableaux de bord se mettent à jour après chaque synchronisation réussie.",
+  "chargement": "Chargement du journal de synchronisation…",
+  "erreur": "Impossible de charger le journal de synchronisation.",
+  "reessayer": "Réessayer",
+  "filtres": {
+    "campagne": "Campagne",
+    "en_cours": "en cours",
+    "cooperative": "Coopérative",
+    "toutes_cooperatives": "Toutes les coopératives",
+    "statut": "Statut",
+    "tous_statuts": "Tous les statuts"
+  },
+  "statut": {
+    "succes": "Succès",
+    "partiel": "Partiel",
+    "erreur": "Erreur"
+  },
+  "origine": {
+    "lead-farmer": "Lead Farmer",
+    "technicien": "Technicien"
+  },
+  "indicateurs": {
+    "titre": "Indicateurs de synchronisation",
+    "derniere": {
+      "libelle": "Dernière synchronisation",
+      "detail": "Date et heure de réception des données"
+    },
+    "total": {
+      "libelle": "Synchronisations",
+      "detail": "Échanges reçus sur la campagne"
+    },
+    "enregistrements": {
+      "libelle": "Fiches reçues",
+      "detail": "Enregistrements transmis par les mobiles"
+    },
+    "a_surveiller": {
+      "libelle": "À surveiller",
+      "detail": "{{erreurs}} en erreur · {{partielles}} partielles"
+    }
+  },
+  "journal": {
+    "titre": "Journal de synchronisation",
+    "horodatage": "Horodatage",
+    "origine": "Origine",
+    "cooperative": "Coopérative",
+    "enregistrements": "Enregistrements",
+    "statut": "Statut",
+    "vide": "Aucune synchronisation ne correspond à ces critères."
+  },
+  "pagination": {
+    "resume": "Page {{page}} sur {{pages}} · {{total}} synchronisations",
+    "precedent": "Précédent",
+    "suivant": "Suivant"
+  }
+}

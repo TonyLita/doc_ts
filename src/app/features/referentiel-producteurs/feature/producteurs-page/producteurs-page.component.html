@@ -1,0 +1,95 @@
+<div class="page-entete">
+  <h1 class="page-titre">{{ 'referentiel_producteurs.titre' | transloco }}</h1>
+
+  @if (donnees()?.peutSaisir) {
+    <button type="button" class="bouton" (click)="ouvrirSaisie()">
+      {{ 'referentiel_producteurs.floraison.bouton' | transloco }}
+    </button>
+  }
+</div>
+
+@if (ressource.error()) {
+  <div class="message-etat" role="alert">
+    <p>{{ 'referentiel_producteurs.erreur' | transloco }}</p>
+    <button type="button" class="message-etat__action" (click)="recharger()">
+      {{ 'referentiel_producteurs.reessayer' | transloco }}
+    </button>
+  </div>
+}
+
+@if (donnees(); as d) {
+  @if (vue(); as v) {
+    @if (!d.identiteComplete) {
+      <p class="message-etat" role="note">{{ 'referentiel_producteurs.identite_reduite' | transloco }}</p>
+    }
+
+    @if (d.peutExporter) {
+      <div class="actions-ligne">
+        <button type="button" class="bouton bouton--secondaire" [disabled]="exportation.enCours()" (click)="exporter('xlsx')">
+          {{ 'referentiel_producteurs.export.excel' | transloco }}
+        </button>
+        <button type="button" class="bouton bouton--secondaire" [disabled]="exportation.enCours()" (click)="exporter('pdf')">
+          {{ 'referentiel_producteurs.export.pdf' | transloco }}
+        </button>
+      </div>
+      @if (exportation.cleErreur(); as cle) {
+        <p class="message-etat" role="alert">{{ 'referentiel_producteurs.export.erreurs.' + cle | transloco }}</p>
+      }
+    }
+
+    <app-liste-producteurs
+      [titre]="'referentiel_producteurs.liste.titre' | transloco"
+      [lignes]="v.lignes"
+      [mois]="v.mois"
+      [peutSaisir]="d.peutSaisir"
+      [libelles]="{
+        numero: ('referentiel_producteurs.liste.numero' | transloco),
+        producteur: ('referentiel_producteurs.liste.producteur' | transloco),
+        village: ('referentiel_producteurs.liste.village' | transloco),
+        zone: ('referentiel_producteurs.liste.zone' | transloco),
+        sansZone: ('referentiel_producteurs.liste.sans_zone' | transloco),
+        pieds: ('referentiel_producteurs.liste.pieds' | transloco),
+        age: ('referentiel_producteurs.liste.age' | transloco),
+        uniteAge: ('referentiel_producteurs.liste.unite_age' | transloco),
+        absent: '–',
+        total: ('referentiel_producteurs.liste.total' | transloco),
+        action: ('referentiel_producteurs.liste.action' | transloco),
+        details: ('referentiel_producteurs.liste.details' | transloco),
+        saisir: ('referentiel_producteurs.liste.saisir' | transloco),
+        vide: ('referentiel_producteurs.liste.vide' | transloco),
+      }"
+      (saisir)="ouvrirSaisie($event)"
+    >
+      <div haut class="barre-filtres barre-filtres--recherche">
+        <label class="champ-recherche">
+          <span>{{ 'referentiel_producteurs.filtres.recherche' | transloco }}</span>
+          <input type="search" (input)="rechercher($event)" />
+        </label>
+        <app-champ-liste
+          [libelle]="'referentiel_producteurs.filtres.zone' | transloco"
+          [options]="optionsZones()"
+          [valeur]="zone.valeur() ?? ''"
+          [libelleToutes]="'referentiel_producteurs.filtres.toutes_zones' | transloco"
+          (choisie)="zone.choisir($event)"
+        />
+      </div>
+
+      <app-pagination
+        bas
+        [page]="page()"
+        [nombrePages]="v.nombrePages"
+        [numeros]="true"
+        [libelleResume]="'referentiel_producteurs.pagination.resume' | transloco: { page: page(), pages: v.nombrePages, total: v.totalProducteurs }"
+        [libellePrecedent]="'referentiel_producteurs.pagination.precedent' | transloco"
+        [libelleSuivant]="'referentiel_producteurs.pagination.suivant' | transloco"
+        (pageChoisie)="choisirPage($event)"
+      />
+    </app-liste-producteurs>
+
+    @if (saisie(); as ouverte) {
+      <app-saisie-floraison [producteur]="ouverte.producteur" (fermer)="fermerSaisie()" (enregistre)="apresSaisie()" />
+    }
+  }
+} @else if (ressource.isLoading()) {
+  <p class="message-etat" role="status">{{ 'referentiel_producteurs.chargement' | transloco }}</p>
+}

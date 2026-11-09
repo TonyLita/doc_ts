@@ -1,0 +1,51 @@
+<!-- Une entrée sans page est affichée désactivée (aria-disabled). Les entrées sont rangées en groupes repliables ; le groupe « bas » (Système) est ancré en bas de la colonne. -->
+<nav
+  id="menu-principal"
+  [attr.aria-label]="'layout.navigation_principale' | transloco"
+  class="flex h-full flex-col gap-3 border-b border-line/40 bg-surface px-3 py-4 lg:border-r lg:border-b-0 lg:pt-6"
+>
+  @for (section of sections(); track section.groupe?.id ?? 'haut') {
+    <div [class]="section.groupe?.ancre === 'bas' ? 'mt-auto border-t border-line/40 pt-3' : ''">
+      @if (section.groupe; as groupe) {
+        <button
+          type="button"
+          class="flex w-full items-center justify-between rounded-md px-3 py-2 text-xs font-bold tracking-wide uppercase opacity-80 hover:opacity-100"
+          [attr.aria-expanded]="!estReplie(section)"
+          [attr.aria-controls]="'menu-groupe-' + groupe.id"
+          (click)="etatMenu.basculerGroupe(groupe.id)"
+        >
+          {{ groupe.cle | transloco }}
+          <app-icone nom="chevron" class="inline-flex transition-transform" [class.rotate-90]="!estReplie(section)" />
+        </button>
+      }
+      <ul
+        class="flex flex-col gap-1"
+        [class.pl-2]="section.groupe"
+        [attr.id]="section.groupe ? 'menu-groupe-' + section.groupe.id : null"
+        [hidden]="estReplie(section)"
+      >
+        @for (entree of section.entrees; track entree.element.cle) {
+          <li>
+            @if (entree.cible) {
+              @let actif = estActif(entree.element);
+              <a
+                [routerLink]="entree.cible"
+                [class.bg-primary]="actif"
+                [class.text-on-primary]="actif"
+                [attr.aria-current]="actif ? 'page' : null"
+                (click)="refermerSiEmpile()"
+                class="block rounded-md px-3 py-2 text-sm font-semibold hover:opacity-80"
+              >
+                {{ entree.element.cle | transloco }}
+              </a>
+            } @else {
+              <span aria-disabled="true" class="block rounded-md px-3 py-2 text-sm font-semibold opacity-70">
+                {{ entree.element.cle | transloco }}
+              </span>
+            }
+          </li>
+        }
+      </ul>
+    </div>
+  }
+</nav>

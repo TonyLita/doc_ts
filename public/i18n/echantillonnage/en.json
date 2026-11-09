@@ -1,0 +1,48 @@
+{
+  "titre": "Sampling",
+  "chargement": "Loading the sample…",
+  "erreur": "Unable to load the sampling data.",
+  "reessayer": "Retry",
+  "filtres": {
+    "campagne": "Campaign",
+    "en_cours": "current",
+    "cooperative": "Cooperative",
+    "toutes_cooperatives": "All cooperatives",
+    "zone": "Zone",
+    "toutes_zones": "All zones",
+    "statut": "Validation status",
+    "tous_statuts": "All statuses"
+  },
+  "indicateurs": {
+    "titre": "Sample indicators",
+    "couverture": "Coverage rate",
+    "echantillon": "Farmers sampled",
+    "population": "Target population"
+  },
+  "couverture": {
+    "titre": "Coverage by cooperative",
+    "legende": "followed / targeted"
+  },
+  "recherche": {
+    "libelle": "Search a farmer or a village"
+  },
+  "tableau": {
+    "titre": "Sampled farmers",
+    "producteur": "Farmer",
+    "village": "Village, commune",
+    "cooperative": "Cooperative",
+    "zone": "Zone",
+    "lead_farmers": "Lead Farmer(s) in charge",
+    "statut": "Validation status",
+    "vide": "No farmer matches these criteria."
+  },
+  "statut": {
+    "valide": "Validated",
+    "en_attente": "Pending"
+  },
+  "pagination": {
+    "resume": "Page {{page}} of {{pages}} · {{total}} farmers",
+    "precedent": "Previous",
+    "suivant": "Next"
+  }
+}

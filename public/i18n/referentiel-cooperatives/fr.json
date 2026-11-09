@@ -1,0 +1,66 @@
+{
+  "titre": "Référentiel coopératives",
+  "nouvelle": "Nouvelle coopérative",
+  "calcules": "Les nombres de producteurs et de parcelles sont calculés d'après les producteurs et les parcelles rattachés à chaque coopérative : ils ne se saisissent pas ici.",
+  "chargement": "Chargement des coopératives…",
+  "erreur": "Impossible de charger les coopératives.",
+  "reessayer": "Réessayer",
+  "erreurs": {
+    "interdit": "La gestion des coopératives est réservée au Super Administrateur.",
+    "introuvable": "Cette coopérative n'existe plus. Rechargez la page.",
+    "doublon": "Une coopérative porte déjà ce nom.",
+    "rattachee": "Des producteurs ou des parcelles sont rattachés à cette coopérative : elle ne peut pas être supprimée.",
+    "invalide": "Les informations saisies ne sont pas valides (le village doit appartenir à la commune).",
+    "trop_de_demandes": "Trop de demandes en peu de temps. Patientez un instant avant de réessayer.",
+    "indisponible": "Le service est indisponible pour le moment.",
+    "delai_depasse": "L'opération a pris trop de temps. Réessayez.",
+    "generique": "L'action n'a pas pu être effectuée. Réessayez."
+  },
+  "indicateurs": {
+    "titre": "Indicateurs des coopératives",
+    "cooperatives": "Coopératives",
+    "producteurs": "Producteurs membres",
+    "parcelles": "Parcelles géolocalisées"
+  },
+  "recherche": {
+    "libelle": "Rechercher une coopérative, un village ou une commune"
+  },
+  "tri": {
+    "libelle": "Trier par",
+    "nom": "Nom",
+    "commune": "Commune",
+    "producteurs": "Producteurs (du plus grand au plus petit)",
+    "parcelles": "Parcelles (du plus grand au plus petit)"
+  },
+  "liste": {
+    "titre": "Coopératives / Organisations de Producteurs",
+    "nom": "Nom de la coopérative",
+    "village": "Village pivot",
+    "commune": "Commune de rattachement",
+    "producteurs": "Producteurs membres",
+    "parcelles": "Parcelles géolocalisées",
+    "actions": "Actions",
+    "vide": "Aucune coopérative ne correspond à ces critères."
+  },
+  "actions": {
+    "modifier": "Modifier",
+    "supprimer": "Supprimer"
+  },
+  "formulaire": {
+    "titre_creation": "Nouvelle coopérative",
+    "titre_modification": "Modifier la coopérative",
+    "nom": "Nom de la coopérative",
+    "commune": "Commune de rattachement",
+    "village": "Village pivot",
+    "choisir": "Choisir…",
+    "enregistrer": "Enregistrer",
+    "annuler": "Annuler",
+    "champ_obligatoire": "Renseignez le nom, la commune et le village pivot."
+  },
+  "confirmation": {
+    "titre": "Supprimer la coopérative",
+    "message": "La coopérative {{nom}} sera supprimée définitivement. La suppression est refusée si des producteurs ou des parcelles y sont rattachés.",
+    "confirmer": "Supprimer",
+    "annuler": "Annuler"
+  }
+}

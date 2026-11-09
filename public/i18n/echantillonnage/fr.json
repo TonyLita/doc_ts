@@ -1,0 +1,48 @@
+{
+  "titre": "Échantillonnage",
+  "chargement": "Chargement de l'échantillon…",
+  "erreur": "Impossible de charger l'échantillonnage.",
+  "reessayer": "Réessayer",
+  "filtres": {
+    "campagne": "Campagne",
+    "en_cours": "en cours",
+    "cooperative": "Coopérative",
+    "toutes_cooperatives": "Toutes les coopératives",
+    "zone": "Zone",
+    "toutes_zones": "Toutes les zones",
+    "statut": "Statut de validation",
+    "tous_statuts": "Tous les statuts"
+  },
+  "indicateurs": {
+    "titre": "Indicateurs de l'échantillon",
+    "couverture": "Taux de couverture",
+    "echantillon": "Producteurs échantillonnés",
+    "population": "Population ciblée"
+  },
+  "couverture": {
+    "titre": "Couverture par coopérative",
+    "legende": "suivis / ciblés"
+  },
+  "recherche": {
+    "libelle": "Rechercher un producteur ou un village"
+  },
+  "tableau": {
+    "titre": "Producteurs échantillonnés",
+    "producteur": "Producteur",
+    "village": "Village, commune",
+    "cooperative": "Coopérative",
+    "zone": "Zone",
+    "lead_farmers": "Lead Farmer(s) référent(s)",
+    "statut": "Statut de validation",
+    "vide": "Aucun producteur ne correspond à ces critères."
+  },
+  "statut": {
+    "valide": "Validé",
+    "en_attente": "En attente"
+  },
+  "pagination": {
+    "resume": "Page {{page}} sur {{pages}} · {{total}} producteurs",
+    "precedent": "Précédent",
+    "suivant": "Suivant"
+  }
+}

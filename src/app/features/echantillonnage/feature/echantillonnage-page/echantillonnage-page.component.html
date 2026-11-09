@@ -1,0 +1,106 @@
+<div class="page-entete">
+  <h1 class="page-titre">{{ 'echantillonnage.titre' | transloco }}</h1>
+
+  @if (donnees(); as d) {
+    <app-filtres-campagne-cooperative
+      [campagnes]="d.campagnes"
+      [campagne]="d.campagne"
+      [campagneEnCours]="d.campagneEnCours"
+      [cooperatives]="d.cooperatives"
+      [cooperative]="cooperative()"
+      [libelleCampagne]="'echantillonnage.filtres.campagne' | transloco"
+      [libelleEnCours]="'echantillonnage.filtres.en_cours' | transloco"
+      [libelleCooperative]="'echantillonnage.filtres.cooperative' | transloco"
+      [libelleToutes]="'echantillonnage.filtres.toutes_cooperatives' | transloco"
+      (campagneChoisie)="choisirCampagne($event)"
+      (cooperativeChoisie)="choisirCooperative($event)"
+    >
+      <app-champ-liste
+        [libelle]="'echantillonnage.filtres.zone' | transloco"
+        [options]="optionsZones()"
+        [valeur]="zone() ?? ''"
+        [libelleToutes]="'echantillonnage.filtres.toutes_zones' | transloco"
+        (choisie)="choisirZone($event)"
+      />
+      <app-champ-liste
+        [libelle]="'echantillonnage.filtres.statut' | transloco"
+        [options]="[
+          { valeur: 'valide', libelle: ('echantillonnage.statut.valide' | transloco) },
+          { valeur: 'en-attente', libelle: ('echantillonnage.statut.en_attente' | transloco) },
+        ]"
+        [valeur]="statut() ?? ''"
+        [libelleToutes]="'echantillonnage.filtres.tous_statuts' | transloco"
+        (choisie)="choisirStatut($event)"
+      />
+    </app-filtres-campagne-cooperative>
+  }
+</div>
+
+@if (ressource.error()) {
+  <div class="message-etat" role="alert">
+    <p>{{ 'echantillonnage.erreur' | transloco }}</p>
+    <button type="button" class="message-etat__action" (click)="recharger()">
+      {{ 'echantillonnage.reessayer' | transloco }}
+    </button>
+  </div>
+}
+
+@if (donnees(); as d) {
+  @if (vue(); as v) {
+    <section class="grille-indicateurs" [attr.aria-label]="'echantillonnage.indicateurs.titre' | transloco">
+      <app-carte-indicateur
+        [libelle]="'echantillonnage.indicateurs.couverture' | transloco"
+        [valeur]="v.taux + ' %'"
+        [progression]="v.taux"
+      />
+      <app-carte-indicateur
+        [libelle]="'echantillonnage.indicateurs.echantillon' | transloco"
+        [valeur]="v.echantillon"
+      />
+      <app-carte-indicateur
+        [libelle]="'echantillonnage.indicateurs.population' | transloco"
+        [valeur]="v.population"
+      />
+    </section>
+
+    <app-couverture-cooperatives
+      [titre]="'echantillonnage.couverture.titre' | transloco"
+      [legende]="'echantillonnage.couverture.legende' | transloco"
+      [lignes]="v.parCooperative"
+    />
+
+    <label class="champ-recherche">
+      <span>{{ 'echantillonnage.recherche.libelle' | transloco }}</span>
+      <input type="search" (input)="rechercher($event)" />
+    </label>
+
+    <app-tableau-producteurs
+      [titre]="'echantillonnage.tableau.titre' | transloco"
+      [lignes]="d.producteurs.lignes"
+      [libelles]="{
+        producteur: ('echantillonnage.tableau.producteur' | transloco),
+        village: ('echantillonnage.tableau.village' | transloco),
+        cooperative: ('echantillonnage.tableau.cooperative' | transloco),
+        zone: ('echantillonnage.tableau.zone' | transloco),
+        leadFarmers: ('echantillonnage.tableau.lead_farmers' | transloco),
+        statut: ('echantillonnage.tableau.statut' | transloco),
+        vide: ('echantillonnage.tableau.vide' | transloco),
+        statuts: {
+          valide: ('echantillonnage.statut.valide' | transloco),
+          'en-attente': ('echantillonnage.statut.en_attente' | transloco),
+        },
+      }"
+    />
+
+    <app-pagination
+      [page]="page()"
+      [nombrePages]="v.nombrePages"
+      [libelleResume]="'echantillonnage.pagination.resume' | transloco: { page: page(), pages: v.nombrePages, total: d.producteurs.total }"
+      [libellePrecedent]="'echantillonnage.pagination.precedent' | transloco"
+      [libelleSuivant]="'echantillonnage.pagination.suivant' | transloco"
+      (pageChoisie)="choisirPage($event)"
+    />
+  }
+} @else if (ressource.isLoading()) {
+  <p class="message-etat" role="status">{{ 'echantillonnage.chargement' | transloco }}</p>
+}

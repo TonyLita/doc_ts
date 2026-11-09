@@ -1,0 +1,81 @@
+{
+  "titre": "Administration",
+  "chargement": "Chargement de l'administration…",
+  "erreur": "Impossible de charger la page d'administration.",
+  "reessayer": "Réessayer",
+  "erreurs": {
+    "interdit": "Cette action est réservée au Super Administrateur.",
+    "conflit": "Cet identifiant existe déjà, ou l'action laisserait la plateforme sans Super Administrateur.",
+    "invalide": "Les informations saisies ne sont pas valides (le mot de passe est peut-être trop court).",
+    "trop_de_demandes": "Trop de demandes en peu de temps. Patientez un instant avant de réessayer.",
+    "indisponible": "Le service est indisponible pour le moment.",
+    "delai_depasse": "L'opération a pris trop de temps. Réessayez.",
+    "generique": "L'action n'a pas pu être effectuée. Réessayez."
+  },
+  "profils": {
+    "super-administrateur": "Super Administrateur",
+    "utilisateur": "Utilisateur",
+    "visiteur": "Visiteur"
+  },
+  "campagne": {
+    "libelle": "Campagne active",
+    "detail": "Campagne qui alimente par défaut le tableau de bord",
+    "gerer": "Gérer les campagnes"
+  },
+  "permissions": {
+    "titre": "Permissions par rôle",
+    "droit": "Droit",
+    "autorise": "Autorisé",
+    "refuse": "Non autorisé"
+  },
+  "droits": {
+    "consultation": "Consultation de l'ensemble des modules",
+    "rapports": "Génération de rapports IA",
+    "exports": "Exports (Excel, PDF, images)",
+    "campagnes": "Changement de la campagne active",
+    "imports": "Import des référentiels",
+    "referentiels": "Paramétrage des référentiels",
+    "utilisateurs": "Gestion des utilisateurs",
+    "producteurs": "Édition directe des données producteurs"
+  },
+  "utilisateurs": {
+    "titre": "Utilisateurs",
+    "nouveau": "Nouvel utilisateur",
+    "identifiant": "Identifiant",
+    "role": "Rôle",
+    "langue": "Langue préférée",
+    "statut": "Statut du compte",
+    "actions": "Actions",
+    "vide": "Aucun utilisateur.",
+    "moi": "(vous)",
+    "changer_role": "Changer le rôle",
+    "desactiver": "Désactiver",
+    "reactiver": "Réactiver",
+    "actif": "Actif",
+    "desactive": "Désactivé",
+    "reserve": "La gestion des utilisateurs est réservée au Super Administrateur."
+  },
+  "formulaire": {
+    "titre_creation": "Nouvel utilisateur",
+    "titre_role": "Changer le rôle",
+    "identifiant": "Identifiant",
+    "mot_de_passe": "Mot de passe initial (8 caractères minimum)",
+    "role": "Rôle",
+    "langue": "Langue préférée",
+    "enregistrer": "Enregistrer",
+    "annuler": "Annuler",
+    "champs_invalides": "Renseignez l'identifiant et un mot de passe d'au moins 8 caractères."
+  },
+  "confirmation": {
+    "desactiver": {
+      "titre": "Désactiver le compte",
+      "message": "Le compte {{identifiant}} ne pourra plus se connecter. Ses données et son historique sont conservés."
+    },
+    "reactiver": {
+      "titre": "Réactiver le compte",
+      "message": "Le compte {{identifiant}} pourra de nouveau se connecter."
+    },
+    "confirmer": "Confirmer",
+    "annuler": "Annuler"
+  }
+}

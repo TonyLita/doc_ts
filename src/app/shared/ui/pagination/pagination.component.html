@@ -1,0 +1,33 @@
+<button type="button" class="pagination__bouton" [disabled]="page() <= 1" (click)="pageChoisie.emit(page() - 1)">
+  {{ libellePrecedent() }}
+</button>
+@if (numeros()) {
+  <ol class="pagination__numeros">
+    @for (element of elements(); track $index) {
+      <li>
+        @if (element === null) {
+          <span aria-hidden="true">…</span>
+        } @else {
+          <button
+            type="button"
+            class="pagination__numero"
+            [class.pagination__numero--active]="element === page()"
+            [attr.aria-current]="element === page() ? 'page' : null"
+            (click)="pageChoisie.emit(element)"
+          >
+            {{ element }}
+          </button>
+        }
+      </li>
+    }
+  </ol>
+}
+<span class="pagination__resume" aria-live="polite">{{ libelleResume() }}</span>
+<button
+  type="button"
+  class="pagination__bouton"
+  [disabled]="page() >= nombrePages()"
+  (click)="pageChoisie.emit(page() + 1)"
+>
+  {{ libelleSuivant() }}
+</button>

@@ -1,0 +1,15 @@
+{
+  "titre": "Connexion",
+  "identifiant": "Identifiant",
+  "mot_de_passe": "Mot de passe",
+  "bouton": "Se connecter",
+  "erreur_obligatoire": "Ce champ est obligatoire.",
+  "erreur_identifiants": "Identifiant ou mot de passe incorrect.",
+  "erreur_reseau": "Connexion impossible : vérifiez votre accès réseau puis réessayez.",
+  "erreur_inconnue": "Une erreur est survenue. Veuillez réessayer.",
+  "titre_plateforme": {
+    "ligne_1": "Plateforme de suivi de",
+    "ligne_2": "la floraison de la",
+    "ligne_3": "vanille"
+  }
+}

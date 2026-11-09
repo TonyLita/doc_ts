@@ -1,0 +1,34 @@
+<h2 class="carte__libelle">{{ titre() }}</h2>
+<form class="formulaire" [formGroup]="formulaire" (ngSubmit)="valider()" novalidate>
+  <label class="champ-filtre">
+    <span>{{ libelles().nom }}</span>
+    <input type="text" autocomplete="off" formControlName="nom" required [attr.maxlength]="longueurMaxNom" />
+  </label>
+  <label class="champ-filtre">
+    <span>{{ libelles().commune }}</span>
+    <select formControlName="commune" required (change)="reinitialiserVillage()">
+      <option value="">{{ libelles().choisir }}</option>
+      @for (commune of communes(); track commune.id) {
+        <option [value]="commune.id">{{ commune.nom }}</option>
+      }
+    </select>
+  </label>
+  <label class="champ-filtre">
+    <span>{{ libelles().village }}</span>
+    <select formControlName="village" required>
+      <option value="">{{ libelles().choisir }}</option>
+      @for (village of villages(); track village.id) {
+        <option [value]="village.id">{{ village.nom }}</option>
+      }
+    </select>
+  </label>
+
+  <div class="formulaire__actions">
+    <button type="submit" class="bouton" [disabled]="enCours()">{{ libelles().enregistrer }}</button>
+    <button type="button" class="bouton bouton--secondaire" (click)="annuler.emit()">{{ libelles().annuler }}</button>
+  </div>
+</form>
+
+@if (formulaire.touched && formulaire.invalid) {
+  <p class="carte__detail" role="alert">{{ libelles().champObligatoire }}</p>
+}
